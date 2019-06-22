@@ -6,4 +6,6 @@ Current problems that will be fixed asap:
 
 - All comments are missing
 - #define consts are replaced with their values
+- No indentation in functions
 - Music works fine, but monster and weapon sounds don't
+
