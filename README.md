@@ -24,7 +24,7 @@ v -lib translated p_enemy.v
 cp p_enemy.o ~/chocolate-doom/src/doom/CMakeFiles/doom.dir/p_enemy.c.o
 cd ~/chocolate-doom
 
-# Rebuild it again with p_enemy.v.o
+# Rebuild it again with p_enemy.v.o and launch it
 make chocolate-doom && src/chocolate-doom -width 640
 ```
 
