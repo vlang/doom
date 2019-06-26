@@ -19,7 +19,7 @@ cd chocolate-doom
 cmake .
 make chocolate-doom
 
-# Build p_enemy.v ane replace the object file
+# Build p_enemy.v and replace the object file
 wget https://raw.githubusercontent.com/vlang/doom/master/p_enemy.v
 v -lib translated p_enemy.v
 cp p_enemy.o src/doom/CMakeFiles/doom.dir/p_enemy.c.o
