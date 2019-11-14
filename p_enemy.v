@@ -2182,7 +2182,7 @@ enum cheat_t {
 	CF_GODMODE
 	CF_NOMOMENTUM
 }
-
+ 
 struct player_s { 
 	mo *mobj_t
 	playerstate playerstate_t
@@ -3609,108 +3609,104 @@ fn A_Fall(actor *mobj_t)
 
 __global soundtarget *mobj_t 
 
-fn P_RecursiveSound(sec *sector_t, soundblocks int)  {
-i := 0
-check := &line_t{!}
-other := &sector_t{!}
-if sec.validcount == validcount && sec.soundtraversed <= soundblocks + 1 {
-return 
-}
-sec.validcount = validcount
-sec.soundtraversed = soundblocks + 1
-sec.soundtarget = soundtarget
-for i = 0 ; i < sec.linecount ; i ++ {
-check = sec.lines [i] 
-if !(check.flags & 4) {
-continue
-
-}
-P_LineOpening(check)
-if openrange <= 0 {
-continue
-
-}
-if sides [check.sidenum [0] ] .sector == sec {
-other = sides [check.sidenum [1] ] .sector
-}
-else { 
-other = sides [check.sidenum [0] ] .sector
-}
-if check.flags & 64 {
-if !soundblocks {
-P_RecursiveSound(other, 1)
-}
-}
-else { 
-P_RecursiveSound(other, soundblocks)
-}
-}
+fn P_RecursiveSound(sec *sector_t, soundblocks int) {
+	i := 0
+	check := &line_t{!}
+	other := &sector_t{!}
+	if sec.validcount == validcount && sec.soundtraversed <= soundblocks + 1 {
+		return 
+	}
+	sec.validcount = validcount
+	sec.soundtraversed = soundblocks + 1
+	sec.soundtarget = soundtarget
+	for i = 0; i < sec.linecount; i ++ {
+		check = sec.lines [i] 
+		if !(check.flags & 4) {
+			continue
+		}
+		P_LineOpening(check)
+		if openrange <= 0 {
+			continue
+		}
+		if sides [check.sidenum [0] ] .sector == sec {
+			other = sides [check.sidenum [1] ] .sector
+		} else { 
+			other = sides [check.sidenum [0] ] .sector
+		}
+		if check.flags & 64 {
+			if !soundblocks {
+				P_RecursiveSound(other, 1)
+			}
+		} else { 
+			P_RecursiveSound(other, soundblocks)
+		}
+	}
 }
 
-fn P_NoiseAlert(target *mobj_t, emmiter *mobj_t)  {
-soundtarget = target
-validcount ++
-P_RecursiveSound(emmiter.subsector.sector, 0)
+fn P_NoiseAlert(target *mobj_t, emmiter *mobj_t) {
+	soundtarget = target
+	validcount ++
+	P_RecursiveSound(emmiter.subsector.sector, 0)
 }
 
 fn P_CheckMeleeRange(actor *mobj_t) bool {
-pl := &mobj_t{!}
-dist := 0
-if !actor.target {
-return _false
-}
-pl = actor.target
-dist = P_AproxDistance(pl.x - actor.x, pl.y - actor.y)
-if dist >= (64 * (1 << 16)) - 20 * (1 << 16) + pl.info.radius {
-return _false
-}
-if !P_CheckSight(actor, actor.target) {
-return _false
-}
-return _true
+	pl := &mobj_t{!}
+	dist := 0
+	if !actor.target {
+		return _false
+	}
+	pl = actor.target
+	dist = P_AproxDistance(pl.x - actor.x, pl.y - actor.y)
+	if dist >= (64 * (1 << 16)) - 20 * (1 << 16) + pl.info.radius {
+		return _false
+	}
+	if !P_CheckSight(actor, actor.target) {
+		return _false
+	}
+	return _true
 }
 
 fn P_CheckMissileRange(actor *mobj_t) bool {
-dist := 0
-if !P_CheckSight(actor, actor.target) {
-return _false
-}
-if actor.flags & MF_JUSTHIT {
-actor.flags &= ~MF_JUSTHIT
-return _true
-}
-if actor.reactiontime {
-return _false
-}
-dist = P_AproxDistance(actor.x - actor.target.x, actor.y - actor.target.y) - 64 * (1 << 16)
-if !actor.info.meleestate {
-dist -= 128 * (1 << 16)
-}
-dist >>= 16
-if actor._type == MT_VILE {
-if dist > 14 * 64 {
-return _false
-}
-}
-if actor._type == MT_UNDEAD {
-if dist < 196 {
-return _false
-}
-dist >>= 1
-}
-if actor._type == MT_CYBORG || actor._type == MT_SPIDER || actor._type == MT_SKULL {
-dist >>= 1
-}
-if dist > 200 {
-dist = 200
-}
-if actor._type == MT_CYBORG && dist > 160 {
-dist = 160
-}
-if P_Random() < dist {
-return _false
-}
-return _true
+	dist := 0
+	if !P_CheckSight(actor, actor.target) {
+		return _false
+	}
+	if actor.flags & MF_JUSTHIT {
+		actor.flags &= ~MF_JUSTHIT
+		return _true
+	}
+	if actor.reactiontime {
+		return _false
+	}
+	dist = P_AproxDistance(actor.x - actor.target.x, actor.y - actor.target.y) - 64 * (1 << 16)
+	if !actor.info.meleestate {
+		dist -= 128 * (1 << 16)
+	}
+	dist >>= 16
+	if actor._type == MT_VILE {
+		if dist > 14 * 64 {
+			return _false
+		}
+	}
+	if actor._type == MT_UNDEAD {
+		if dist < 196 {
+			return _false
+		}
+		dist >>= 1
+	}
+	if actor._type == MT_CYBORG || actor._type == MT_SPIDER || actor._type == MT_SKULL {
+		dist >>= 1
+	}
+	if dist > 200 {
+		dist = 200
+	}
+	if actor._type == MT_CYBORG && dist > 160 {
+		dist = 160
+	}
+	if P_Random() < dist {
+		return _false
+	}
+	return _true
 }
 
 const (
@@ -3724,569 +3720,555 @@ yspeed   = [ 0, 47000, (1 << 16), 47000, 0, -47000, -(1 << 16), -47000, ]
 )
 
 fn P_Move(actor *mobj_t) bool {
-tryx := 0
-tryy := 0
-ld := &line_t{!}
-try_ok := false
-good := false
-if actor.movedir == DI_NODIR {
-return _false
-}
-if u32(actor.movedir) >= 8 {
-I_Error('Weird actor->movedir!')
-}
-tryx = actor.x + actor.info.speed * xspeed [actor.movedir] 
-tryy = actor.y + actor.info.speed * yspeed [actor.movedir] 
-try_ok = P_TryMove(actor, tryx, tryy)
-if !try_ok {
-if actor.flags & MF_FLOAT && floatok {
-if actor.z < tmfloorz {
-actor.z += ((1 << 16) * 4)
-}
-else { 
-actor.z -= ((1 << 16) * 4)
-}
-actor.flags |= MF_INFLOAT
-return _true
-}
-if !numspechit {
-return _false
-}
-actor.movedir = DI_NODIR
-good = _false
-for numspechit -- {
-ld = spechit [numspechit] 
-if P_UseSpecialLine(actor, ld, 0) {
-good = _true
-}
-}
-return good
-}
-else {
-actor.flags &= ~MF_INFLOAT
-}
-if !(actor.flags & MF_FLOAT) {
-actor.z = actor.floorz
-}
-return _true
+	tryx := 0
+	tryy := 0
+	ld := &line_t{!}
+	try_ok := false
+	good := false
+	if actor.movedir == DI_NODIR {
+		return _false
+	}
+	if u32(actor.movedir) >= 8 {
+		I_Error('Weird actor->movedir!')
+	}
+	tryx = actor.x + actor.info.speed * xspeed [actor.movedir] 
+	tryy = actor.y + actor.info.speed * yspeed [actor.movedir] 
+	try_ok = P_TryMove(actor, tryx, tryy)
+	if !try_ok {
+		if actor.flags & MF_FLOAT && floatok {
+			if actor.z < tmfloorz {
+				actor.z += ((1 << 16) * 4)
+			} else { 
+				actor.z -= ((1 << 16) * 4)
+			}
+			actor.flags |= MF_INFLOAT
+			return _true
+		}
+		if !numspechit {
+			return _false
+		}
+		actor.movedir = DI_NODIR
+		good = _false
+		for numspechit-- {
+			ld = spechit [numspechit] 
+			if P_UseSpecialLine(actor, ld, 0) {
+				good = _true
+			}
+		}
+		return good
+	}
+	else {
+		actor.flags &= ~MF_INFLOAT
+	}
+	if !(actor.flags & MF_FLOAT) {
+		actor.z = actor.floorz
+	}
+	return _true
 }
 
 fn P_TryWalk(actor *mobj_t) bool {
-if !P_Move(actor) {
-return _false
-}
-actor.movecount = P_Random() & 15
-return _true
+	if !P_Move(actor) {
+		return _false
+	}
+	actor.movecount = P_Random() & 15
+	return _true
 }
 
-fn P_NewChaseDir(actor *mobj_t)  {
-deltax := 0
-deltay := 0
-d := [3]dirtype_t
-tdir := 0
-olddir := 0
-turnaround := 0
-if !actor.target {
-I_Error('P_NewChaseDir: called with no target')
-}
-olddir = actor.movedir
-turnaround = opposite [olddir] 
-deltax = actor.target.x - actor.x
-deltay = actor.target.y - actor.y
-if deltax > 10 * (1 << 16) {
-d [1]  = DI_EAST
-}
-else if deltax < -10 * (1 << 16) {
-d [1]  = DI_WEST
-}
-else { 
-d [1]  = DI_NODIR
-}
-if deltay < -10 * (1 << 16) {
-d [2]  = DI_SOUTH
-}
-else if deltay > 10 * (1 << 16) {
-d [2]  = DI_NORTH
-}
-else { 
-d [2]  = DI_NODIR
-}
-if d [1]  != DI_NODIR && d [2]  != DI_NODIR {
-actor.movedir = diags [((deltay < 0) << 1) + (deltax > 0)] 
-if actor.movedir != int(turnaround) && P_TryWalk(actor) {
-return 
-}
-}
-if P_Random() > 200 || abs(deltay) > abs(deltax) {
-tdir = d [1] 
-d [1]  = d [2] 
-d [2]  = tdir
-}
-if d [1]  == turnaround {
-d [1]  = DI_NODIR
-}
-if d [2]  == turnaround {
-d [2]  = DI_NODIR
-}
-if d [1]  != DI_NODIR {
-actor.movedir = d [1] 
-if P_TryWalk(actor) {
-return 
-}
-}
-if d [2]  != DI_NODIR {
-actor.movedir = d [2] 
-if P_TryWalk(actor) {
-return 
-}
-}
-if olddir != DI_NODIR {
-actor.movedir = olddir
-if P_TryWalk(actor) {
-return 
-}
-}
-if P_Random() & 1 {
-for tdir = DI_EAST ; tdir <= DI_SOUTHEAST ; tdir ++ {
-if tdir != int(turnaround) {
-actor.movedir = tdir
-if P_TryWalk(actor) {
-return 
-}
-}
-}
-}
-else {
-for tdir = DI_SOUTHEAST ; tdir != (DI_EAST - 1) ; tdir -- {
-if tdir != int(turnaround) {
-actor.movedir = tdir
-if P_TryWalk(actor) {
-return 
-}
-}
-}
-}
-if turnaround != DI_NODIR {
-actor.movedir = turnaround
-if P_TryWalk(actor) {
-return 
-}
-}
-actor.movedir = DI_NODIR
+fn P_NewChaseDir(actor *mobj_t) {
+	deltax := 0
+	deltay := 0
+	d := [3]dirtype_t
+	tdir := 0
+	olddir := 0
+	turnaround := 0
+	if !actor.target {
+		I_Error('P_NewChaseDir: called with no target')
+	}
+	olddir = actor.movedir
+	turnaround = opposite [olddir] 
+	deltax = actor.target.x - actor.x
+	deltay = actor.target.y - actor.y
+	if deltax > 10 * (1 << 16) {
+		d [1]  = DI_EAST
+	} else if deltax < -10 * (1 << 16) {
+		d [1]  = DI_WEST
+	} else { 
+		d [1]  = DI_NODIR
+	}
+	if deltay < -10 * (1 << 16) {
+		d [2]  = DI_SOUTH
+	} else if deltay > 10 * (1 << 16) {
+		d [2]  = DI_NORTH
+	} else { 
+		d [2]  = DI_NODIR
+	}
+	if d [1]  != DI_NODIR && d [2]  != DI_NODIR {
+		actor.movedir = diags [((deltay < 0) << 1) + (deltax > 0)] 
+		if actor.movedir != int(turnaround) && P_TryWalk(actor) {
+			return 
+		}
+	}
+	if P_Random() > 200 || abs(deltay) > abs(deltax) {
+		tdir = d [1] 
+		d [1]  = d [2] 
+		d [2]  = tdir
+	}
+	if d [1]  == turnaround {
+		d [1]  = DI_NODIR
+	}
+	if d [2]  == turnaround {
+		d [2]  = DI_NODIR
+	}
+	if d [1]  != DI_NODIR {
+		actor.movedir = d [1] 
+		if P_TryWalk(actor) {
+			return 
+		}
+	}
+	if d [2]  != DI_NODIR {
+		actor.movedir = d [2] 
+		if P_TryWalk(actor) {
+			return 
+		}
+	}
+	if olddir != DI_NODIR {
+		actor.movedir = olddir
+		if P_TryWalk(actor) {
+			return 
+		}
+	}
+	if P_Random() & 1 {
+		for tdir = DI_EAST; tdir <= DI_SOUTHEAST; tdir ++ {
+		if tdir != int(turnaround) {
+			actor.movedir = tdir
+				if P_TryWalk(actor) {
+					return 
+				}
+			}
+		}
+	} else {
+		for tdir = DI_SOUTHEAST; tdir != (DI_EAST - 1); tdir-- {
+			if tdir != int(turnaround) {
+				actor.movedir = tdir
+				if P_TryWalk(actor) {
+					return 
+				}
+			}
+		}
+	}
+	if turnaround != DI_NODIR {
+		actor.movedir = turnaround
+		if P_TryWalk(actor) {
+			return 
+		}
+	}
+	actor.movedir = DI_NODIR
 }
 
 fn P_LookForPlayers(actor *mobj_t, allaround bool) bool {
-c := 0
-stop := 0
-player := &player_t{!}
-an := 0
-dist := 0
-c = 0
-stop = (actor.lastlook - 1) & 3
-for  ;  ; actor.lastlook = (actor.lastlook + 1) & 3 {
-if !playeringame [actor.lastlook]  {
-continue
-
-}
-if c ++ == 2 || actor.lastlook == stop {
-return _false
-}
-player = &players [actor.lastlook] 
-if player.health <= 0 {
-continue
-
-}
-if !P_CheckSight(actor, player.mo) {
-continue
-
-}
-if !allaround {
-an = R_PointToAngle2(actor.x, actor.y, player.mo.x, player.mo.y) - actor.angle
-if an > 1073741824 && an < 3221225472 {
-dist = P_AproxDistance(player.mo.x - actor.x, player.mo.y - actor.y)
-if dist > (64 * (1 << 16)) {
-continue
-
-}
-}
-}
-actor.target = player.mo
-return _true
-}
-return _false
+	c := 0
+	stop := 0
+	player := &player_t{!}
+	an := 0
+	dist := 0
+	c = 0
+	stop = (actor.lastlook - 1) & 3
+	for ;; actor.lastlook = (actor.lastlook + 1) & 3 {
+		if !playeringame [actor.lastlook] {
+			continue
+		}
+		if c ++ == 2 || actor.lastlook == stop {
+			return _false
+		}
+		player = &players [actor.lastlook] 
+		if player.health <= 0 {
+			continue
+		}
+		if !P_CheckSight(actor, player.mo) {
+			continue
+		}
+		if !allaround {
+			an = R_PointToAngle2(actor.x, actor.y, player.mo.x, player.mo.y) - actor.angle
+			if an > 1073741824 && an < 3221225472 {
+				dist = P_AproxDistance(player.mo.x - actor.x, player.mo.y - actor.y)
+				if dist > (64 * (1 << 16)) {
+					continue
+				}
+			}
+		}
+		actor.target = player.mo
+		return _true
+	}
+	return _false
 }
 
-fn A_KeenDie(mo *mobj_t)  {
-th := &thinker_t{!}
-mo2 := &mobj_t{!}
-junk := line_t{}/*struct init "line_t" line_t:struct line_s*/
-A_Fall(mo)
-for th = thinkercap.next ; th != &thinkercap ; th = th.next {
-if th.function.acp1 != actionf_p1(P_MobjThinker) {
-continue
+fn A_KeenDie(mo *mobj_t) {
+	th := &thinker_t{!}
+	mo2 := &mobj_t{!}
+	junk := line_t{}/*struct init "line_t" line_t:struct line_s*/
+	A_Fall(mo)
+	for th = thinkercap.next; th != &thinkercap; th = th.next {
+		if th.function.acp1 != actionf_p1(P_MobjThinker) {
+			continue
+		}
+		mo2 = (*mobj_t)(th)
+		if mo2 != mo && mo2._type == mo._type && mo2.health > 0 {
+			return 
+		}
+	}
+	junk.tag = 666
+	EV_DoDoor(&junk, vld_open)
+}
 
-}
-mo2 = (*mobj_t)(th)
-if mo2 != mo && mo2._type == mo._type && mo2.health > 0 {
-return 
-}
-}
-junk.tag = 666
-EV_DoDoor(&junk, vld_open)
-}
+fn A_Look(actor *mobj_t) {
+	targ := &mobj_t{!}
+	actor.threshold = 0
+	targ = actor.subsector.sector.soundtarget
+	if targ && (targ.flags & MF_SHOOTABLE) {
+		actor.target = targ
+		if actor.flags & MF_AMBUSH {
+			if P_CheckSight(actor, actor.target) {
+				goto seeyou
+			}
+		}
+		else { 
+			goto seeyou
+		}
+	}
+	if !P_LookForPlayers(actor, _false) {
+		return 
+	}
 
-fn A_Look(actor *mobj_t)  {
-targ := &mobj_t{!}
-actor.threshold = 0
-targ = actor.subsector.sector.soundtarget
-if targ && (targ.flags & MF_SHOOTABLE) {
-actor.target = targ
-if actor.flags & MF_AMBUSH {
-if P_CheckSight(actor, actor.target) {
-goto seeyou
-}
-}
-else { 
-goto seeyou
-
-}
-}
-if !P_LookForPlayers(actor, _false) {
-return 
-}
 seeyou: 
-if actor.info.seesound {
-sound := 0
-switch actor.info.seesound {
-case sfx_posit1, sfx_posit2, sfx_posit3:
-sound = sfx_posit1 + P_Random() % 3
-case sfx_bgsit1, sfx_bgsit2:
-sound = sfx_bgsit1 + P_Random() % 2
-default: 
- {
-sound = actor.info.seesound
-}
-}
-if actor._type == MT_SPIDER || actor._type == MT_CYBORG {
-S_StartSound((voidptr(0)), sound)
-}
-else { 
-S_StartSound(actor, sound)
-}
-}
-P_SetMobjState(actor, actor.info.seestate)
+	if actor.info.seesound {
+		sound := 0
+		switch actor.info.seesound {
+			case sfx_posit1, sfx_posit2, sfx_posit3:
+				sound = sfx_posit1 + P_Random() % 3
+			case sfx_bgsit1, sfx_bgsit2:
+				sound = sfx_bgsit1 + P_Random() % 2
+			default: {
+				sound = actor.info.seesound
+			}
+		}
+		if actor._type == MT_SPIDER || actor._type == MT_CYBORG {
+			S_StartSound((voidptr(0)), sound)
+		}
+		else { 
+			S_StartSound(actor, sound)
+		}
+	}
+	P_SetMobjState(actor, actor.info.seestate)
 }
 
-fn A_Chase(actor *mobj_t)  {
-delta := 0
-if actor.reactiontime {
-actor.reactiontime --
-}
-if actor.threshold {
-if !actor.target || actor.target.health <= 0 {
-actor.threshold = 0
-}
-else { 
-actor.threshold --
-}
-}
-if actor.movedir < 8 {
-actor.angle &= (7 << 29)
-delta = actor.angle - (actor.movedir << 29)
-if delta > 0 {
-actor.angle -= 1073741824 / 2
-}
-else if delta < 0 {
-actor.angle += 1073741824 / 2
-}
-}
-if !actor.target || !(actor.target.flags & MF_SHOOTABLE) {
-if P_LookForPlayers(actor, _true) {
-return 
-}
-P_SetMobjState(actor, actor.info.spawnstate)
-return 
-}
-if actor.flags & MF_JUSTATTACKED {
-actor.flags &= ~MF_JUSTATTACKED
-if gameskill != sk_nightmare && !fastparm {
-P_NewChaseDir(actor)
-}
-return 
-}
-if actor.info.meleestate && P_CheckMeleeRange(actor) {
-if actor.info.attacksound {
-S_StartSound(actor, actor.info.attacksound)
-}
-P_SetMobjState(actor, actor.info.meleestate)
-return 
-}
-if actor.info.missilestate {
-if gameskill < sk_nightmare && !fastparm && actor.movecount {
-goto nomissile
-}
-if !P_CheckMissileRange(actor) {
-goto nomissile
-}
-P_SetMobjState(actor, actor.info.missilestate)
-actor.flags |= MF_JUSTATTACKED
-return 
-}
+fn A_Chase(actor *mobj_t) {
+	delta := 0
+	if actor.reactiontime {
+		actor.reactiontime--
+	}
+	if actor.threshold {
+		if !actor.target || actor.target.health <= 0 {
+			actor.threshold = 0
+		} else { 
+			actor.threshold--
+		}
+	}
+	if actor.movedir < 8 {
+		actor.angle &= (7 << 29)
+		delta = actor.angle - (actor.movedir << 29)
+		if delta > 0 {
+			actor.angle -= 1073741824 / 2
+		}
+		else if delta < 0 {
+			actor.angle += 1073741824 / 2
+		}
+	}
+	if !actor.target || !(actor.target.flags & MF_SHOOTABLE) {
+		if P_LookForPlayers(actor, _true) {
+			return 
+		}
+		P_SetMobjState(actor, actor.info.spawnstate)
+		return 
+	}
+	if actor.flags & MF_JUSTATTACKED {
+		actor.flags &= ~MF_JUSTATTACKED
+		if gameskill != sk_nightmare && !fastparm {
+			P_NewChaseDir(actor)
+		}
+		return 
+	}
+	if actor.info.meleestate && P_CheckMeleeRange(actor) {
+		if actor.info.attacksound {
+			S_StartSound(actor, actor.info.attacksound)
+		}
+		P_SetMobjState(actor, actor.info.meleestate)
+		return 
+	}
+	if actor.info.missilestate {
+		if gameskill < sk_nightmare && !fastparm && actor.movecount {
+			goto nomissile
+		}
+		if !P_CheckMissileRange(actor) {
+			goto nomissile
+		}
+		P_SetMobjState(actor, actor.info.missilestate)
+		actor.flags |= MF_JUSTATTACKED
+		return 
+	}
+
 nomissile: 
-if netgame && !actor.threshold && !P_CheckSight(actor, actor.target) {
-if P_LookForPlayers(actor, _true) {
-return 
-}
-}
-if actor.movecount -- < 0 || !P_Move(actor) {
-P_NewChaseDir(actor)
-}
-if actor.info.activesound && P_Random() < 3 {
-S_StartSound(actor, actor.info.activesound)
-}
-}
-
-fn A_FaceTarget(actor *mobj_t)  {
-if !actor.target {
-return 
-}
-actor.flags &= ~MF_AMBUSH
-actor.angle = R_PointToAngle2(actor.x, actor.y, actor.target.x, actor.target.y)
-if actor.target.flags & MF_SHADOW {
-actor.angle += P_SubRandom() << 21
-}
+	if netgame && !actor.threshold && !P_CheckSight(actor, actor.target) {
+		if P_LookForPlayers(actor, _true) {
+			return 
+		}
+	}
+	if actor.movecount-- < 0 || !P_Move(actor) {
+		P_NewChaseDir(actor)
+	}
+	if actor.info.activesound && P_Random() < 3 {
+		S_StartSound(actor, actor.info.activesound)
+	}
 }
 
-fn A_PosAttack(actor *mobj_t)  {
-angle := 0
-damage := 0
-slope := 0
-if !actor.target {
-return 
-}
-A_FaceTarget(actor)
-angle = actor.angle
-slope = P_AimLineAttack(actor, angle, (32 * 64 * (1 << 16)))
-S_StartSound(actor, sfx_pistol)
-angle += P_SubRandom() << 20
-damage = ((P_Random() % 5) + 1) * 3
-P_LineAttack(actor, angle, (32 * 64 * (1 << 16)), slope, damage)
+fn A_FaceTarget(actor *mobj_t) {
+	if !actor.target {
+		return 
+	}
+	actor.flags &= ~MF_AMBUSH
+	actor.angle = R_PointToAngle2(actor.x, actor.y, actor.target.x, actor.target.y)
+	if actor.target.flags & MF_SHADOW {
+		actor.angle += P_SubRandom() << 21
+	}
 }
 
-fn A_SPosAttack(actor *mobj_t)  {
-i := 0
-angle := 0
-bangle := 0
-damage := 0
-slope := 0
-if !actor.target {
-return 
-}
-S_StartSound(actor, sfx_shotgn)
-A_FaceTarget(actor)
-bangle = actor.angle
-slope = P_AimLineAttack(actor, bangle, (32 * 64 * (1 << 16)))
-for i = 0 ; i < 3 ; i ++ {
-angle = bangle + (P_SubRandom() << 20)
-damage = ((P_Random() % 5) + 1) * 3
-P_LineAttack(actor, angle, (32 * 64 * (1 << 16)), slope, damage)
-}
+fn A_PosAttack(actor *mobj_t) {
+	angle := 0
+	damage := 0
+	slope := 0
+	if !actor.target {
+		return 
+	}
+	A_FaceTarget(actor)
+	angle = actor.angle
+	slope = P_AimLineAttack(actor, angle, (32 * 64 * (1 << 16)))
+	S_StartSound(actor, sfx_pistol)
+	angle += P_SubRandom() << 20
+	damage = ((P_Random() % 5) + 1) * 3
+	P_LineAttack(actor, angle, (32 * 64 * (1 << 16)), slope, damage)
 }
 
-fn A_CPosAttack(actor *mobj_t)  {
-angle := 0
-bangle := 0
-damage := 0
-slope := 0
-if !actor.target {
-return 
-}
-S_StartSound(actor, sfx_shotgn)
-A_FaceTarget(actor)
-bangle = actor.angle
-slope = P_AimLineAttack(actor, bangle, (32 * 64 * (1 << 16)))
-angle = bangle + (P_SubRandom() << 20)
-damage = ((P_Random() % 5) + 1) * 3
-P_LineAttack(actor, angle, (32 * 64 * (1 << 16)), slope, damage)
-}
-
-fn A_CPosRefire(actor *mobj_t)  {
-A_FaceTarget(actor)
-if P_Random() < 40 {
-return 
-}
-if !actor.target || actor.target.health <= 0 || !P_CheckSight(actor, actor.target) {
-P_SetMobjState(actor, actor.info.seestate)
-}
+fn A_SPosAttack(actor *mobj_t) {
+	i := 0
+	angle := 0
+	bangle := 0
+	damage := 0
+	slope := 0
+	if !actor.target {
+		return 
+	}
+	S_StartSound(actor, sfx_shotgn)
+	A_FaceTarget(actor)
+	bangle = actor.angle
+	slope = P_AimLineAttack(actor, bangle, (32 * 64 * (1 << 16)))
+	for i = 0; i < 3; i ++ {
+		angle = bangle + (P_SubRandom() << 20)
+		damage = ((P_Random() % 5) + 1) * 3
+		P_LineAttack(actor, angle, (32 * 64 * (1 << 16)), slope, damage)
+	}
 }
 
-fn A_SpidRefire(actor *mobj_t)  {
-A_FaceTarget(actor)
-if P_Random() < 10 {
-return 
-}
-if !actor.target || actor.target.health <= 0 || !P_CheckSight(actor, actor.target) {
-P_SetMobjState(actor, actor.info.seestate)
-}
-}
-
-fn A_BspiAttack(actor *mobj_t)  {
-if !actor.target {
-return 
-}
-A_FaceTarget(actor)
-P_SpawnMissile(actor, actor.target, MT_ARACHPLAZ)
-}
-
-fn A_TroopAttack(actor *mobj_t)  {
-damage := 0
-if !actor.target {
-return 
-}
-A_FaceTarget(actor)
-if P_CheckMeleeRange(actor) {
-S_StartSound(actor, sfx_claw)
-damage = (P_Random() % 8 + 1) * 3
-P_DamageMobj(actor.target, actor, actor, damage)
-return 
-}
-P_SpawnMissile(actor, actor.target, MT_TROOPSHOT)
+fn A_CPosAttack(actor *mobj_t) {
+	angle := 0
+	bangle := 0
+	damage := 0
+	slope := 0
+	if !actor.target {
+		return 
+	}
+	S_StartSound(actor, sfx_shotgn)
+	A_FaceTarget(actor)
+	bangle = actor.angle
+	slope = P_AimLineAttack(actor, bangle, (32 * 64 * (1 << 16)))
+	angle = bangle + (P_SubRandom() << 20)
+	damage = ((P_Random() % 5) + 1) * 3
+	P_LineAttack(actor, angle, (32 * 64 * (1 << 16)), slope, damage)
 }
 
-fn A_SargAttack(actor *mobj_t)  {
-damage := 0
-if !actor.target {
-return 
-}
-A_FaceTarget(actor)
-if P_CheckMeleeRange(actor) {
-damage = ((P_Random() % 10) + 1) * 4
-P_DamageMobj(actor.target, actor, actor, damage)
-}
+fn A_CPosRefire(actor *mobj_t) {
+	A_FaceTarget(actor)
+	if P_Random() < 40 {
+		return 
+	}
+	if !actor.target || actor.target.health <= 0 || !P_CheckSight(actor, actor.target) {
+		P_SetMobjState(actor, actor.info.seestate)
+	}
 }
 
-fn A_HeadAttack(actor *mobj_t)  {
-damage := 0
-if !actor.target {
-return 
-}
-A_FaceTarget(actor)
-if P_CheckMeleeRange(actor) {
-damage = (P_Random() % 6 + 1) * 10
-P_DamageMobj(actor.target, actor, actor, damage)
-return 
-}
-P_SpawnMissile(actor, actor.target, MT_HEADSHOT)
+fn A_SpidRefire(actor *mobj_t) {
+	A_FaceTarget(actor)
+	if P_Random() < 10 {
+		return 
+	}
+	if !actor.target || actor.target.health <= 0 || !P_CheckSight(actor, actor.target) {
+		P_SetMobjState(actor, actor.info.seestate)
+	}
 }
 
-fn A_CyberAttack(actor *mobj_t)  {
-if !actor.target {
-return 
-}
-A_FaceTarget(actor)
-P_SpawnMissile(actor, actor.target, MT_ROCKET)
-}
-
-fn A_BruisAttack(actor *mobj_t)  {
-damage := 0
-if !actor.target {
-return 
-}
-if P_CheckMeleeRange(actor) {
-S_StartSound(actor, sfx_claw)
-damage = (P_Random() % 8 + 1) * 10
-P_DamageMobj(actor.target, actor, actor, damage)
-return 
-}
-P_SpawnMissile(actor, actor.target, MT_BRUISERSHOT)
+fn A_BspiAttack(actor *mobj_t) {
+	if !actor.target {
+		return 
+	}
+	A_FaceTarget(actor)
+	P_SpawnMissile(actor, actor.target, MT_ARACHPLAZ)
 }
 
-fn A_SkelMissile(actor *mobj_t)  {
-mo := &mobj_t{!}
-if !actor.target {
-return 
+fn A_TroopAttack(actor *mobj_t) {
+	damage := 0
+	if !actor.target {
+		return 
+	}
+	A_FaceTarget(actor)
+	if P_CheckMeleeRange(actor) {
+		S_StartSound(actor, sfx_claw)
+		damage = (P_Random() % 8 + 1) * 3
+		P_DamageMobj(actor.target, actor, actor, damage)
+		return 
+	}
+	P_SpawnMissile(actor, actor.target, MT_TROOPSHOT)
 }
-A_FaceTarget(actor)
-actor.z += 16 * (1 << 16)
-mo = P_SpawnMissile(actor, actor.target, MT_TRACER)
-actor.z -= 16 * (1 << 16)
-mo.x += mo.momx
-mo.y += mo.momy
-mo.tracer = actor.target
+
+fn A_SargAttack(actor *mobj_t) {
+	damage := 0
+	if !actor.target {
+		return 
+	}
+	A_FaceTarget(actor)
+	if P_CheckMeleeRange(actor) {
+		damage = ((P_Random() % 10) + 1) * 4
+		P_DamageMobj(actor.target, actor, actor, damage)
+	}
+}
+
+fn A_HeadAttack(actor *mobj_t) {
+	damage := 0
+	if !actor.target {
+		return 
+	}
+	A_FaceTarget(actor)
+	if P_CheckMeleeRange(actor) {
+		damage = (P_Random() % 6 + 1) * 10
+		P_DamageMobj(actor.target, actor, actor, damage)
+		return 
+	}
+	P_SpawnMissile(actor, actor.target, MT_HEADSHOT)
+}
+
+fn A_CyberAttack(actor *mobj_t) {
+	if !actor.target {
+		return 
+	}
+	A_FaceTarget(actor)
+	P_SpawnMissile(actor, actor.target, MT_ROCKET)
+}
+
+fn A_BruisAttack(actor *mobj_t) {
+	damage := 0
+	if !actor.target {
+		return 
+	}
+	if P_CheckMeleeRange(actor) {
+		S_StartSound(actor, sfx_claw)
+		damage = (P_Random() % 8 + 1) * 10
+		P_DamageMobj(actor.target, actor, actor, damage)
+		return 
+	}
+	P_SpawnMissile(actor, actor.target, MT_BRUISERSHOT)
+}
+
+fn A_SkelMissile(actor *mobj_t) {
+	mo := &mobj_t{!}
+	if !actor.target {
+		return 
+	}
+	A_FaceTarget(actor)
+	actor.z += 16 * (1 << 16)
+	mo = P_SpawnMissile(actor, actor.target, MT_TRACER)
+	actor.z -= 16 * (1 << 16)
+	mo.x += mo.momx
+	mo.y += mo.momy
+	mo.tracer = actor.target
 }
 
 __global TRACEANGLE int  = 201326592
-fn A_Tracer(actor *mobj_t)  {
-exact := 0
-dist := 0
-slope := 0
-dest := &mobj_t{!}
-th := &mobj_t{!}
-if gametic & 3 {
-return 
-}
-P_SpawnPuff(actor.x, actor.y, actor.z)
-th = P_SpawnMobj(actor.x - actor.momx, actor.y - actor.momy, actor.z, MT_SMOKE)
-th.momz = (1 << 16)
-th.tics -= P_Random() & 3
-if th.tics < 1 {
-th.tics = 1
-}
-dest = actor.tracer
-if !dest || dest.health <= 0 {
-return 
-}
-exact = R_PointToAngle2(actor.x, actor.y, dest.x, dest.y)
-if exact != actor.angle {
-if exact - actor.angle > 2147483648 {
-actor.angle -= TRACEANGLE
-if exact - actor.angle < 2147483648 {
-actor.angle = exact
-}
-}
-else {
-actor.angle += TRACEANGLE
-if exact - actor.angle > 2147483648 {
-actor.angle = exact
-}
-}
-}
-exact = actor.angle >> 19
-actor.momx = FixedMul(actor.info.speed, finecosine [exact] )
-actor.momy = FixedMul(actor.info.speed, finesine [exact] )
-dist = P_AproxDistance(dest.x - actor.x, dest.y - actor.y)
-dist = dist / actor.info.speed
-if dist < 1 {
-dist = 1
-}
-slope = (dest.z + 40 * (1 << 16) - actor.z) / dist
-if slope < actor.momz {
-actor.momz -= (1 << 16) / 8
-}
-else { 
-actor.momz += (1 << 16) / 8
-}
+fn A_Tracer(actor *mobj_t) {
+	exact := 0
+	dist := 0
+	slope := 0
+	dest := &mobj_t{!}
+	th := &mobj_t{!}
+	if gametic & 3 {
+		return 
+	}
+	P_SpawnPuff(actor.x, actor.y, actor.z)
+	th = P_SpawnMobj(actor.x - actor.momx, actor.y - actor.momy, actor.z, MT_SMOKE)
+	th.momz = (1 << 16)
+	th.tics -= P_Random() & 3
+	if th.tics < 1 {
+		th.tics = 1
+	}
+	dest = actor.tracer
+	if !dest || dest.health <= 0 {
+		return 
+	}
+	exact = R_PointToAngle2(actor.x, actor.y, dest.x, dest.y)
+	if exact != actor.angle {
+		if exact - actor.angle > 2147483648 {
+			actor.angle -= TRACEANGLE
+			if exact - actor.angle < 2147483648 {
+				actor.angle = exact
+			}
+		} else {
+			actor.angle += TRACEANGLE
+			if exact - actor.angle > 2147483648 {
+				actor.angle = exact
+			}
+		}
+	}
+	exact = actor.angle >> 19
+	actor.momx = FixedMul(actor.info.speed, finecosine [exact] )
+	actor.momy = FixedMul(actor.info.speed, finesine [exact] )
+	dist = P_AproxDistance(dest.x - actor.x, dest.y - actor.y)
+	dist = dist / actor.info.speed
+	if dist < 1 {
+		dist = 1
+	}
+	slope = (dest.z + 40 * (1 << 16) - actor.z) / dist
+	if slope < actor.momz {
+		actor.momz -= (1 << 16) / 8
+	} else { 
+		actor.momz += (1 << 16) / 8
+	}
 }
 
-fn A_SkelWhoosh(actor *mobj_t)  {
-if !actor.target {
-return 
-}
-A_FaceTarget(actor)
-S_StartSound(actor, sfx_skeswg)
+fn A_SkelWhoosh(actor *mobj_t) {
+	if !actor.target {
+		return 
+	}
+	A_FaceTarget(actor)
+	S_StartSound(actor, sfx_skeswg)
 }
 
-fn A_SkelFist(actor *mobj_t)  {
-damage := 0
-if !actor.target {
-return 
-}
-A_FaceTarget(actor)
-if P_CheckMeleeRange(actor) {
-damage = ((P_Random() % 10) + 1) * 6
-S_StartSound(actor, sfx_skepch)
-P_DamageMobj(actor.target, actor, actor, damage)
-}
+fn A_SkelFist(actor *mobj_t) {
+	damage := 0
+	if !actor.target {
+		return 
+	}
+	A_FaceTarget(actor)
+	if P_CheckMeleeRange(actor) {
+		damage = ((P_Random() % 10) + 1) * 6
+		S_StartSound(actor, sfx_skepch)
+		P_DamageMobj(actor.target, actor, actor, damage)
+	}
 }
 
 __global corpsehit *mobj_t 
@@ -4298,449 +4280,435 @@ __global viletryx int
 __global viletryy int 
 
 fn PIT_VileCheck(thing *mobj_t) bool {
-maxdist := 0
-check := false
-if !(thing.flags & MF_CORPSE) {
-return _true
-}
-if thing.tics != -1 {
-return _true
-}
-if thing.info.raisestate == S_NULL {
-return _true
-}
-maxdist = thing.info.radius + mobjinfo [MT_VILE] .radius
-if abs(thing.x - viletryx) > maxdist || abs(thing.y - viletryy) > maxdist {
-return _true
-}
-corpsehit = thing
-corpsehit.momx = corpsehit.momy = 0
-corpsehit.height <<= 2
-check = P_CheckPosition(corpsehit, corpsehit.x, corpsehit.y)
-corpsehit.height >>= 2
-if !check {
-return _true
-}
-return _false
-}
-
-fn A_VileChase(actor *mobj_t)  {
-xl := 0
-xh := 0
-yl := 0
-yh := 0
-bx := 0
-by := 0
-info := &mobjinfo_t{!}
-temp := &mobj_t{!}
-if actor.movedir != DI_NODIR {
-viletryx = actor.x + actor.info.speed * xspeed [actor.movedir] 
-viletryy = actor.y + actor.info.speed * yspeed [actor.movedir] 
-xl = (viletryx - bmaporgx - 32 * (1 << 16) * 2) >> (16 + 7)
-xh = (viletryx - bmaporgx + 32 * (1 << 16) * 2) >> (16 + 7)
-yl = (viletryy - bmaporgy - 32 * (1 << 16) * 2) >> (16 + 7)
-yh = (viletryy - bmaporgy + 32 * (1 << 16) * 2) >> (16 + 7)
-vileobj = actor
-for bx = xl ; bx <= xh ; bx ++ {
-for by = yl ; by <= yh ; by ++ {
-if !P_BlockThingsIterator(bx, by, PIT_VileCheck) {
-temp = actor.target
-actor.target = corpsehit
-A_FaceTarget(actor)
-actor.target = temp
-P_SetMobjState(actor, S_VILE_HEAL1)
-S_StartSound(corpsehit, sfx_slop)
-info = corpsehit.info
-P_SetMobjState(corpsehit, info.raisestate)
-corpsehit.height <<= 2
-corpsehit.flags = info.flags
-corpsehit.health = info.spawnhealth
-corpsehit.target = (voidptr(0))
-return 
-}
-}
-}
-}
-A_Chase(actor)
+	maxdist := 0
+	check := false
+	if !(thing.flags & MF_CORPSE) {
+		return _true
+	}
+	if thing.tics != -1 {
+		return _true
+	}
+	if thing.info.raisestate == S_NULL {
+		return _true
+	}
+	maxdist = thing.info.radius + mobjinfo [MT_VILE] .radius
+	if abs(thing.x - viletryx) > maxdist || abs(thing.y - viletryy) > maxdist {
+		return _true
+	}
+	corpsehit = thing
+	corpsehit.momx = corpsehit.momy = 0
+	corpsehit.height <<= 2
+	check = P_CheckPosition(corpsehit, corpsehit.x, corpsehit.y)
+	corpsehit.height >>= 2
+	if !check {
+		return _true
+	}
+	return _false
 }
 
-fn A_VileStart(actor *mobj_t)  {
-S_StartSound(actor, sfx_vilatk)
+fn A_VileChase(actor *mobj_t) {
+	xl := 0
+	xh := 0
+	yl := 0
+	yh := 0
+	bx := 0
+	by := 0
+	info := &mobjinfo_t{!}
+	temp := &mobj_t{!}
+	if actor.movedir != DI_NODIR {
+		viletryx = actor.x + actor.info.speed * xspeed [actor.movedir] 
+		viletryy = actor.y + actor.info.speed * yspeed [actor.movedir] 
+		xl = (viletryx - bmaporgx - 32 * (1 << 16) * 2) >> (16 + 7)
+		xh = (viletryx - bmaporgx + 32 * (1 << 16) * 2) >> (16 + 7)
+		yl = (viletryy - bmaporgy - 32 * (1 << 16) * 2) >> (16 + 7)
+		yh = (viletryy - bmaporgy + 32 * (1 << 16) * 2) >> (16 + 7)
+		vileobj = actor
+		for bx = xl; bx <= xh; bx ++ {
+			for by = yl; by <= yh; by ++ {
+				if !P_BlockThingsIterator(bx, by, PIT_VileCheck) {
+					temp = actor.target
+					actor.target = corpsehit
+					A_FaceTarget(actor)
+					actor.target = temp
+					P_SetMobjState(actor, S_VILE_HEAL1)
+					S_StartSound(corpsehit, sfx_slop)
+					info = corpsehit.info
+					P_SetMobjState(corpsehit, info.raisestate)
+					corpsehit.height <<= 2
+					corpsehit.flags = info.flags
+					corpsehit.health = info.spawnhealth
+					corpsehit.target = (voidptr(0))
+					return 
+				}
+			}
+		}
+	}
+	A_Chase(actor)
+}
+
+fn A_VileStart(actor *mobj_t) {
+	S_StartSound(actor, sfx_vilatk)
 }
 
 fn A_Fire(actor *mobj_t)  
 
-fn A_StartFire(actor *mobj_t)  {
-S_StartSound(actor, sfx_flamst)
-A_Fire(actor)
+fn A_StartFire(actor *mobj_t) {
+	S_StartSound(actor, sfx_flamst)
+	A_Fire(actor)
 }
 
-fn A_FireCrackle(actor *mobj_t)  {
-S_StartSound(actor, sfx_flame)
-A_Fire(actor)
+fn A_FireCrackle(actor *mobj_t) {
+	S_StartSound(actor, sfx_flame)
+	A_Fire(actor)
 }
 
-fn A_Fire(actor *mobj_t)  {
-dest := &mobj_t{!}
-target := &mobj_t{!}
-an := u32(0)
-dest = actor.tracer
-if !dest {
-return 
-}
-target = P_SubstNullMobj(actor.target)
-if !P_CheckSight(target, dest) {
-return 
-}
-an = dest.angle >> 19
-P_UnsetThingPosition(actor)
-actor.x = dest.x + FixedMul(24 * (1 << 16), finecosine [an] )
-actor.y = dest.y + FixedMul(24 * (1 << 16), finesine [an] )
-actor.z = dest.z
-P_SetThingPosition(actor)
-}
-
-fn A_VileTarget(actor *mobj_t)  {
-fog := &mobj_t{!}
-if !actor.target {
-return 
-}
-A_FaceTarget(actor)
-fog = P_SpawnMobj(actor.target.x, actor.target.x, actor.target.z, MT_FIRE)
-actor.tracer = fog
-fog.target = actor
-fog.tracer = actor.target
-A_Fire(fog)
+fn A_Fire(actor *mobj_t) {
+	dest := &mobj_t{!}
+	target := &mobj_t{!}
+	an := u32(0)
+	dest = actor.tracer
+	if !dest {
+		return 
+	}
+	target = P_SubstNullMobj(actor.target)
+	if !P_CheckSight(target, dest) {
+		return 
+	}
+	an = dest.angle >> 19
+	P_UnsetThingPosition(actor)
+	actor.x = dest.x + FixedMul(24 * (1 << 16), finecosine [an] )
+	actor.y = dest.y + FixedMul(24 * (1 << 16), finesine [an] )
+	actor.z = dest.z
+	P_SetThingPosition(actor)
 }
 
-fn A_VileAttack(actor *mobj_t)  {
-fire := &mobj_t{!}
-an := 0
-if !actor.target {
-return 
-}
-A_FaceTarget(actor)
-if !P_CheckSight(actor, actor.target) {
-return 
-}
-S_StartSound(actor, sfx_barexp)
-P_DamageMobj(actor.target, actor, actor, 20)
-actor.target.momz = 1000 * (1 << 16) / actor.target.info.mass
-an = actor.angle >> 19
-fire = actor.tracer
-if !fire {
-return 
-}
-fire.x = actor.target.x - FixedMul(24 * (1 << 16), finecosine [an] )
-fire.y = actor.target.y - FixedMul(24 * (1 << 16), finesine [an] )
-P_RadiusAttack(fire, actor, 70)
+fn A_VileTarget(actor *mobj_t) {
+	fog := &mobj_t{!}
+	if !actor.target {
+		return 
+	}
+	A_FaceTarget(actor)
+	fog = P_SpawnMobj(actor.target.x, actor.target.x, actor.target.z, MT_FIRE)
+	actor.tracer = fog
+	fog.target = actor
+	fog.tracer = actor.target
+	A_Fire(fog)
 }
 
-fn A_FatRaise(actor *mobj_t)  {
-A_FaceTarget(actor)
-S_StartSound(actor, sfx_manatk)
+fn A_VileAttack(actor *mobj_t) {
+	fire := &mobj_t{!}
+	an := 0
+	if !actor.target {
+		return 
+	}
+	A_FaceTarget(actor)
+	if !P_CheckSight(actor, actor.target) {
+		return 
+	}
+	S_StartSound(actor, sfx_barexp)
+	P_DamageMobj(actor.target, actor, actor, 20)
+	actor.target.momz = 1000 * (1 << 16) / actor.target.info.mass
+	an = actor.angle >> 19
+	fire = actor.tracer
+	if !fire {
+		return 
+	}
+	fire.x = actor.target.x - FixedMul(24 * (1 << 16), finecosine [an] )
+	fire.y = actor.target.y - FixedMul(24 * (1 << 16), finesine [an] )
+	P_RadiusAttack(fire, actor, 70)
 }
 
-fn A_FatAttack1(actor *mobj_t)  {
-mo := &mobj_t{!}
-target := &mobj_t{!}
-an := 0
-A_FaceTarget(actor)
-actor.angle += (1073741824 / 8)
-target = P_SubstNullMobj(actor.target)
-P_SpawnMissile(actor, target, MT_FATSHOT)
-mo = P_SpawnMissile(actor, target, MT_FATSHOT)
-mo.angle += (1073741824 / 8)
-an = mo.angle >> 19
-mo.momx = FixedMul(mo.info.speed, finecosine [an] )
-mo.momy = FixedMul(mo.info.speed, finesine [an] )
+fn A_FatRaise(actor *mobj_t) {
+	A_FaceTarget(actor)
+	S_StartSound(actor, sfx_manatk)
 }
 
-fn A_FatAttack2(actor *mobj_t)  {
-mo := &mobj_t{!}
-target := &mobj_t{!}
-an := 0
-A_FaceTarget(actor)
-actor.angle -= (1073741824 / 8)
-target = P_SubstNullMobj(actor.target)
-P_SpawnMissile(actor, target, MT_FATSHOT)
-mo = P_SpawnMissile(actor, target, MT_FATSHOT)
-mo.angle -= (1073741824 / 8) * 2
-an = mo.angle >> 19
-mo.momx = FixedMul(mo.info.speed, finecosine [an] )
-mo.momy = FixedMul(mo.info.speed, finesine [an] )
+fn A_FatAttack1(actor *mobj_t) {
+	mo := &mobj_t{!}
+	target := &mobj_t{!}
+	an := 0
+	A_FaceTarget(actor)
+	actor.angle += (1073741824 / 8)
+	target = P_SubstNullMobj(actor.target)
+	P_SpawnMissile(actor, target, MT_FATSHOT)
+	mo = P_SpawnMissile(actor, target, MT_FATSHOT)
+	mo.angle += (1073741824 / 8)
+	an = mo.angle >> 19
+	mo.momx = FixedMul(mo.info.speed, finecosine [an] )
+	mo.momy = FixedMul(mo.info.speed, finesine [an] )
 }
 
-fn A_FatAttack3(actor *mobj_t)  {
-mo := &mobj_t{!}
-target := &mobj_t{!}
-an := 0
-A_FaceTarget(actor)
-target = P_SubstNullMobj(actor.target)
-mo = P_SpawnMissile(actor, target, MT_FATSHOT)
-mo.angle -= (1073741824 / 8) / 2
-an = mo.angle >> 19
-mo.momx = FixedMul(mo.info.speed, finecosine [an] )
-mo.momy = FixedMul(mo.info.speed, finesine [an] )
-mo = P_SpawnMissile(actor, target, MT_FATSHOT)
-mo.angle += (1073741824 / 8) / 2
-an = mo.angle >> 19
-mo.momx = FixedMul(mo.info.speed, finecosine [an] )
-mo.momy = FixedMul(mo.info.speed, finesine [an] )
+fn A_FatAttack2(actor *mobj_t) {
+	mo := &mobj_t{!}
+	target := &mobj_t{!}
+	an := 0
+	A_FaceTarget(actor)
+	actor.angle -= (1073741824 / 8)
+	target = P_SubstNullMobj(actor.target)
+	P_SpawnMissile(actor, target, MT_FATSHOT)
+	mo = P_SpawnMissile(actor, target, MT_FATSHOT)
+	mo.angle -= (1073741824 / 8) * 2
+	an = mo.angle >> 19
+	mo.momx = FixedMul(mo.info.speed, finecosine [an] )
+	mo.momy = FixedMul(mo.info.speed, finesine [an] )
 }
 
-fn A_SkullAttack(actor *mobj_t)  {
-dest := &mobj_t{!}
-an := 0
-dist := 0
-if !actor.target {
-return 
-}
-dest = actor.target
-actor.flags |= MF_SKULLFLY
-S_StartSound(actor, actor.info.attacksound)
-A_FaceTarget(actor)
-an = actor.angle >> 19
-actor.momx = FixedMul((20 * (1 << 16)), finecosine [an] )
-actor.momy = FixedMul((20 * (1 << 16)), finesine [an] )
-dist = P_AproxDistance(dest.x - actor.x, dest.y - actor.y)
-dist = dist / (20 * (1 << 16))
-if dist < 1 {
-dist = 1
-}
-actor.momz = (dest.z + (dest.height >> 1) - actor.z) / dist
+fn A_FatAttack3(actor *mobj_t) {
+	mo := &mobj_t{!}
+	target := &mobj_t{!}
+	an := 0
+	A_FaceTarget(actor)
+	target = P_SubstNullMobj(actor.target)
+	mo = P_SpawnMissile(actor, target, MT_FATSHOT)
+	mo.angle -= (1073741824 / 8) / 2
+	an = mo.angle >> 19
+	mo.momx = FixedMul(mo.info.speed, finecosine [an] )
+	mo.momy = FixedMul(mo.info.speed, finesine [an] )
+	mo = P_SpawnMissile(actor, target, MT_FATSHOT)
+	mo.angle += (1073741824 / 8) / 2
+	an = mo.angle >> 19
+	mo.momx = FixedMul(mo.info.speed, finecosine [an] )
+	mo.momy = FixedMul(mo.info.speed, finesine [an] )
 }
 
-fn A_PainShootSkull(actor *mobj_t, angle angle_t)  {
-x := 0
-y := 0
-z := 0
-newmobj := &mobj_t{!}
-an := 0
-prestep := 0
-count := 0
-currentthinker := &thinker_t{!}
-count = 0
-currentthinker = thinkercap.next
-for currentthinker != &thinkercap {
-if (currentthinker.function.acp1 == actionf_p1(P_MobjThinker)) && ((*mobj_t)(currentthinker))._type == MT_SKULL {
-count ++
-}
-currentthinker = currentthinker.next
-}
-if count > 20 {
-return 
-}
-an = angle >> 19
-prestep = 4 * (1 << 16) + 3 * (actor.info.radius + mobjinfo [MT_SKULL] .radius) / 2
-x = actor.x + FixedMul(prestep, finecosine [an] )
-y = actor.y + FixedMul(prestep, finesine [an] )
-z = actor.z + 8 * (1 << 16)
-newmobj = P_SpawnMobj(x, y, z, MT_SKULL)
-if !P_TryMove(newmobj, newmobj.x, newmobj.y) {
-P_DamageMobj(newmobj, actor, actor, 10000)
-return 
-}
-newmobj.target = actor.target
-A_SkullAttack(newmobj)
+fn A_SkullAttack(actor *mobj_t) {
+	dest := &mobj_t{!}
+	an := 0
+	dist := 0
+	if !actor.target {
+		return 
+	}
+	dest = actor.target
+	actor.flags |= MF_SKULLFLY
+	S_StartSound(actor, actor.info.attacksound)
+	A_FaceTarget(actor)
+	an = actor.angle >> 19
+	actor.momx = FixedMul((20 * (1 << 16)), finecosine [an] )
+	actor.momy = FixedMul((20 * (1 << 16)), finesine [an] )
+	dist = P_AproxDistance(dest.x - actor.x, dest.y - actor.y)
+	dist = dist / (20 * (1 << 16))
+	if dist < 1 {
+		dist = 1
+	}
+	actor.momz = (dest.z + (dest.height >> 1) - actor.z) / dist
 }
 
-fn A_PainAttack(actor *mobj_t)  {
-if !actor.target {
-return 
-}
-A_FaceTarget(actor)
-A_PainShootSkull(actor, actor.angle)
-}
-
-fn A_PainDie(actor *mobj_t)  {
-A_Fall(actor)
-A_PainShootSkull(actor, actor.angle + 1073741824)
-A_PainShootSkull(actor, actor.angle + 2147483648)
-A_PainShootSkull(actor, actor.angle + 3221225472)
-}
-
-fn A_Scream(actor *mobj_t)  {
-sound := 0
-switch actor.info.deathsound {
-case 0:
- {
-return 
-}
-case sfx_podth1, sfx_podth2, sfx_podth3:
-sound = sfx_podth1 + P_Random() % 3
-case sfx_bgdth1, sfx_bgdth2:
-sound = sfx_bgdth1 + P_Random() % 2
-default: 
- {
-sound = actor.info.deathsound
-}
-}
-if actor._type == MT_SPIDER || actor._type == MT_CYBORG {
-S_StartSound((voidptr(0)), sound)
-}
-else { 
-S_StartSound(actor, sound)
-}
+fn A_PainShootSkull(actor *mobj_t, angle angle_t) {
+	x := 0
+	y := 0
+	z := 0
+	newmobj := &mobj_t{!}
+	an := 0
+	prestep := 0
+	count := 0
+	currentthinker := &thinker_t{!}
+	count = 0
+	currentthinker = thinkercap.next
+	for currentthinker != &thinkercap {
+		if (currentthinker.function.acp1 == actionf_p1(P_MobjThinker)) && ((*mobj_t)(currentthinker))._type == MT_SKULL {
+			count ++
+		}
+		currentthinker = currentthinker.next
+	}
+	if count > 20 {
+		return 
+	}
+	an = angle >> 19
+	prestep = 4 * (1 << 16) + 3 * (actor.info.radius + mobjinfo [MT_SKULL] .radius) / 2
+	x = actor.x + FixedMul(prestep, finecosine [an] )
+	y = actor.y + FixedMul(prestep, finesine [an] )
+	z = actor.z + 8 * (1 << 16)
+	newmobj = P_SpawnMobj(x, y, z, MT_SKULL)
+	if !P_TryMove(newmobj, newmobj.x, newmobj.y) {
+		P_DamageMobj(newmobj, actor, actor, 10000)
+		return 
+	}
+	newmobj.target = actor.target
+	A_SkullAttack(newmobj)
 }
 
-fn A_XScream(actor *mobj_t)  {
-S_StartSound(actor, sfx_slop)
+fn A_PainAttack(actor *mobj_t) {
+	if !actor.target {
+		return 
+	}
+	A_FaceTarget(actor)
+	A_PainShootSkull(actor, actor.angle)
 }
 
-fn A_Pain(actor *mobj_t)  {
-if actor.info.painsound {
-S_StartSound(actor, actor.info.painsound)
-}
-}
-
-fn A_Fall(actor *mobj_t)  {
-actor.flags &= ~MF_SOLID
+fn A_PainDie(actor *mobj_t) {
+	A_Fall(actor)
+	A_PainShootSkull(actor, actor.angle + 1073741824)
+	A_PainShootSkull(actor, actor.angle + 2147483648)
+	A_PainShootSkull(actor, actor.angle + 3221225472)
 }
 
-fn A_Explode(thingy *mobj_t)  {
-P_RadiusAttack(thingy, thingy.target, 128)
+fn A_Scream(actor *mobj_t) {
+	sound := 0
+	switch actor.info.deathsound {
+		case 0: {
+			return 
+		}
+		case sfx_podth1, sfx_podth2, sfx_podth3:
+			sound = sfx_podth1 + P_Random() % 3
+		case sfx_bgdth1, sfx_bgdth2:
+			sound = sfx_bgdth1 + P_Random() % 2
+		default: {
+			sound = actor.info.deathsound
+		}
+	}
+	if actor._type == MT_SPIDER || actor._type == MT_CYBORG {
+		S_StartSound((voidptr(0)), sound)
+	} else { 
+		S_StartSound(actor, sound)
+	}
+}
+
+fn A_XScream(actor *mobj_t) {
+	S_StartSound(actor, sfx_slop)
+}
+
+fn A_Pain(actor *mobj_t) {
+	if actor.info.painsound {
+		S_StartSound(actor, actor.info.painsound)
+	}
+}
+
+fn A_Fall(actor *mobj_t) {
+	actor.flags &= ~MF_SOLID
+}
+
+fn A_Explode(thingy *mobj_t) {
+	P_RadiusAttack(thingy, thingy.target, 128)
 }
 
 fn CheckBossEnd(motype mobjtype_t) bool {
-if gameversion < exe_ultimate {
-if gamemap != 8 {
-return _false
-}
-if motype == MT_BRUISER && gameepisode != 1 {
-return _false
-}
-return _true
-}
-else {
-switch gameepisode {
-case 1:
- {
-return gamemap == 8 && motype == MT_BRUISER
-}
-case 2:
- {
-return gamemap == 8 && motype == MT_CYBORG
-}
-case 3:
- {
-return gamemap == 8 && motype == MT_SPIDER
-}
-case 4:
- {
-return (gamemap == 6 && motype == MT_CYBORG) || (gamemap == 8 && motype == MT_SPIDER)
-}
-default: 
- {
-return gamemap == 8
-}
-}
-}
+	if gameversion < exe_ultimate {
+		if gamemap != 8 {
+			return _false
+		}
+		if motype == MT_BRUISER && gameepisode != 1 {
+			return _false
+		}
+		return _true
+	}
+	else {
+		switch gameepisode {
+			case 1: {
+				return gamemap == 8 && motype == MT_BRUISER
+			}
+			case 2: {
+				return gamemap == 8 && motype == MT_CYBORG
+			}
+			case 3: {
+				return gamemap == 8 && motype == MT_SPIDER
+			}
+			case 4: {
+				return (gamemap == 6 && motype == MT_CYBORG) || (gamemap == 8 && motype == MT_SPIDER)
+			}
+			default: {
+				return gamemap == 8
+			}
+		}
+	}
 }
 
-fn A_BossDeath(mo *mobj_t)  {
-th := &thinker_t{!}
-mo2 := &mobj_t{!}
-junk := line_t{}/*struct init "line_t" line_t:struct line_s*/
-i := 0
-if gamemode == commercial {
-if gamemap != 7 {
-return 
-}
-if (mo._type != MT_FATSO) && (mo._type != MT_BABY) {
-return 
-}
-}
-else {
-if !CheckBossEnd(mo._type) {
-return 
-}
-}
-for i = 0 ; i < 4 ; i ++ {
-if playeringame [i]  && players [i] .health > 0 {
-break
-
-}
-}
-if i == 4 {
-return 
-}
-for th = thinkercap.next ; th != &thinkercap ; th = th.next {
-if th.function.acp1 != actionf_p1(P_MobjThinker) {
-continue
-
-}
-mo2 = (*mobj_t)(th)
-if mo2 != mo && mo2._type == mo._type && mo2.health > 0 {
-return 
-}
-}
-if gamemode == commercial {
-if gamemap == 7 {
-if mo._type == MT_FATSO {
-junk.tag = 666
-EV_DoFloor(&junk, lowerFloorToLowest)
-return 
-}
-if mo._type == MT_BABY {
-junk.tag = 667
-EV_DoFloor(&junk, raiseToTexture)
-return 
-}
-}
-}
-else {
-switch gameepisode {
-case 1:
- {
-junk.tag = 666
-}
-case 4:
- {
-switch gamemap {
-case 6:
- {
-junk.tag = 666
-}
-case 8:
- {
-junk.tag = 666
-}
-}
-}
-}
-}
-G_ExitLevel()
+fn A_BossDeath(mo *mobj_t) {
+	th := &thinker_t{!}
+	mo2 := &mobj_t{!}
+	junk := line_t{}/*struct init "line_t" line_t:struct line_s*/
+	i := 0
+	if gamemode == commercial {
+		if gamemap != 7 {
+			return 
+		}
+		if (mo._type != MT_FATSO) && (mo._type != MT_BABY) {
+			return 
+		}
+	}
+	else {
+		if !CheckBossEnd(mo._type) {
+			return 
+		}
+	}
+	for i = 0; i < 4; i ++ {
+		if playeringame [i]  && players [i] .health > 0 {
+			break
+		}
+	}
+	if i == 4 {
+		return 
+	}
+	for th = thinkercap.next; th != &thinkercap; th = th.next {
+		if th.function.acp1 != actionf_p1(P_MobjThinker) {
+			continue
+		}
+		mo2 = (*mobj_t)(th)
+		if mo2 != mo && mo2._type == mo._type && mo2.health > 0 {
+			return 
+		}
+	}
+	if gamemode == commercial {
+		if gamemap == 7 {
+			if mo._type == MT_FATSO {
+				junk.tag = 666
+				EV_DoFloor(&junk, lowerFloorToLowest)
+				return 
+			}
+			if mo._type == MT_BABY {
+				junk.tag = 667
+				EV_DoFloor(&junk, raiseToTexture)
+				return 
+			}
+		}
+	}
+	else {
+		switch gameepisode {
+			case 1: {
+				junk.tag = 666
+			}
+			case 4: {
+				switch gamemap {
+					case 6: {
+						junk.tag = 666
+					}
+					case 8: {
+						junk.tag = 666
+					}
+				}
+			}
+		}
+	}
+	G_ExitLevel()
 }
 
-fn A_Hoof(mo *mobj_t)  {
-S_StartSound(mo, sfx_hoof)
-A_Chase(mo)
+fn A_Hoof(mo *mobj_t) {
+	S_StartSound(mo, sfx_hoof)
+	A_Chase(mo)
 }
 
-fn A_Metal(mo *mobj_t)  {
-S_StartSound(mo, sfx_metal)
-A_Chase(mo)
+fn A_Metal(mo *mobj_t) {
+	S_StartSound(mo, sfx_metal)
+	A_Chase(mo)
 }
 
-fn A_BabyMetal(mo *mobj_t)  {
-S_StartSound(mo, sfx_bspwlk)
-A_Chase(mo)
+fn A_BabyMetal(mo *mobj_t) {
+	S_StartSound(mo, sfx_bspwlk)
+	A_Chase(mo)
 }
 
-fn A_OpenShotgun2(player *player_t, psp *pspdef_t)  {
-S_StartSound(player.mo, sfx_dbopn)
+fn A_OpenShotgun2(player *player_t, psp *pspdef_t) {
+	S_StartSound(player.mo, sfx_dbopn)
 }
 
-fn A_LoadShotgun2(player *player_t, psp *pspdef_t)  {
-S_StartSound(player.mo, sfx_dbload)
+fn A_LoadShotgun2(player *player_t, psp *pspdef_t) {
+	S_StartSound(player.mo, sfx_dbload)
 }
 
 fn A_ReFire(player *player_t, psp *pspdef_t)  
 
-fn A_CloseShotgun2(player *player_t, psp *pspdef_t)  {
-S_StartSound(player.mo, sfx_dbcls)
-A_ReFire(player, psp)
+fn A_CloseShotgun2(player *player_t, psp *pspdef_t) {
+	S_StartSound(player.mo, sfx_dbcls)
+	A_ReFire(player, psp)
 }
 
 __global braintargets [32]*mobj_t 
@@ -4748,150 +4716,138 @@ __global braintargets [32]*mobj_t
 __global numbraintargets int 
 
 __global braintargeton int  = 0
-fn A_BrainAwake(mo *mobj_t)  {
-thinker := &thinker_t{!}
-m := &mobj_t{!}
-numbraintargets = 0
-braintargeton = 0
-thinker = thinkercap.next
-for thinker = thinkercap.next ; thinker != &thinkercap ; thinker = thinker.next {
-if thinker.function.acp1 != actionf_p1(P_MobjThinker) {
-continue
-
-}
-m = (*mobj_t)(thinker)
-if m._type == MT_BOSSTARGET {
-braintargets [numbraintargets]  = m
-numbraintargets ++
-}
-}
-S_StartSound((voidptr(0)), sfx_bossit)
-}
-
-fn A_BrainPain(mo *mobj_t)  {
-S_StartSound((voidptr(0)), sfx_bospn)
+fn A_BrainAwake(mo *mobj_t) {
+	thinker := &thinker_t{!}
+	m := &mobj_t{!}
+	numbraintargets = 0
+	braintargeton = 0
+	thinker = thinkercap.next
+	for thinker = thinkercap.next; thinker != &thinkercap; thinker = thinker.next {
+		if thinker.function.acp1 != actionf_p1(P_MobjThinker) {
+			continue
+		}
+		m = (*mobj_t)(thinker)
+		if m._type == MT_BOSSTARGET {
+			braintargets [numbraintargets]  = m
+			numbraintargets ++
+		}
+	}
+	S_StartSound((voidptr(0)), sfx_bossit)
 }
 
-fn A_BrainScream(mo *mobj_t)  {
-x := 0
-y := 0
-z := 0
-th := &mobj_t{!}
-for x = mo.x - 196 * (1 << 16) ; x < mo.x + 320 * (1 << 16) ; x += (1 << 16) * 8 {
-y = mo.y - 320 * (1 << 16)
-z = 128 + P_Random() * 2 * (1 << 16)
-th = P_SpawnMobj(x, y, z, MT_ROCKET)
-th.momz = P_Random() * 512
-P_SetMobjState(th, S_BRAINEXPLODE1)
-th.tics -= P_Random() & 7
-if th.tics < 1 {
-th.tics = 1
-}
-}
-S_StartSound((voidptr(0)), sfx_bosdth)
+fn A_BrainPain(mo *mobj_t) {
+	S_StartSound((voidptr(0)), sfx_bospn)
 }
 
-fn A_BrainExplode(mo *mobj_t)  {
-x := 0
-y := 0
-z := 0
-th := &mobj_t{!}
-x = mo.x + P_SubRandom() * 2048
-y = mo.y
-z = 128 + P_Random() * 2 * (1 << 16)
-th = P_SpawnMobj(x, y, z, MT_ROCKET)
-th.momz = P_Random() * 512
-P_SetMobjState(th, S_BRAINEXPLODE1)
-th.tics -= P_Random() & 7
-if th.tics < 1 {
-th.tics = 1
-}
-}
-
-fn A_BrainDie(mo *mobj_t)  {
-G_ExitLevel()
+fn A_BrainScream(mo *mobj_t) {
+	x := 0
+	y := 0
+	z := 0
+	th := &mobj_t{!}
+	for x = mo.x - 196 * (1 << 16); x < mo.x + 320 * (1 << 16); x += (1 << 16) * 8 {
+		y = mo.y - 320 * (1 << 16)
+		z = 128 + P_Random() * 2 * (1 << 16)
+		th = P_SpawnMobj(x, y, z, MT_ROCKET)
+		th.momz = P_Random() * 512
+		P_SetMobjState(th, S_BRAINEXPLODE1)
+		th.tics -= P_Random() & 7
+		if th.tics < 1 {
+			th.tics = 1
+		}
+	}
+	S_StartSound((voidptr(0)), sfx_bosdth)
 }
 
-fn A_BrainSpit(mo *mobj_t)  {
-targ := &mobj_t{!}
-newmobj := &mobj_t{!}
-targ = braintargets [braintargeton] 
-if numbraintargets == 0 {
-I_Error('A_BrainSpit: numbraintargets was 0 (vanilla crashes here)')
+fn A_BrainExplode(mo *mobj_t) {
+	x := 0
+	y := 0
+	z := 0
+	th := &mobj_t{!}
+	x = mo.x + P_SubRandom() * 2048
+	y = mo.y
+	z = 128 + P_Random() * 2 * (1 << 16)
+	th = P_SpawnMobj(x, y, z, MT_ROCKET)
+	th.momz = P_Random() * 512
+	P_SetMobjState(th, S_BRAINEXPLODE1)
+	th.tics -= P_Random() & 7
+	if th.tics < 1 {
+		th.tics = 1
+	}
 }
-braintargeton = (braintargeton + 1) % numbraintargets
-newmobj = P_SpawnMissile(mo, targ, MT_SPAWNSHOT)
-newmobj.target = targ
-newmobj.reactiontime = ((targ.y - mo.y) / newmobj.momy) / newmobj.state.tics
-S_StartSound((voidptr(0)), sfx_bospit)
+
+fn A_BrainDie(mo *mobj_t) {
+	G_ExitLevel()
+}
+
+fn A_BrainSpit(mo *mobj_t) {
+	targ := &mobj_t{!}
+	newmobj := &mobj_t{!}
+	targ = braintargets [braintargeton] 
+	if numbraintargets == 0 {
+		I_Error('A_BrainSpit: numbraintargets was 0 (vanilla crashes here)')
+	}
+	braintargeton = (braintargeton + 1) % numbraintargets
+	newmobj = P_SpawnMissile(mo, targ, MT_SPAWNSHOT)
+	newmobj.target = targ
+	newmobj.reactiontime = ((targ.y - mo.y) / newmobj.momy) / newmobj.state.tics
+	S_StartSound((voidptr(0)), sfx_bospit)
 }
 
 fn A_SpawnFly(mo *mobj_t)  
 
-fn A_SpawnSound(mo *mobj_t)  {
-S_StartSound(mo, sfx_boscub)
-A_SpawnFly(mo)
+fn A_SpawnSound(mo *mobj_t) {
+	S_StartSound(mo, sfx_boscub)
+	A_SpawnFly(mo)
 }
 
-fn A_SpawnFly(mo *mobj_t)  {
-newmobj := &mobj_t{!}
-fog := &mobj_t{!}
-targ := &mobj_t{!}
-r := 0
-_type := 0
-if mo.reactiontime -- {
-return 
-}
-targ = P_SubstNullMobj(mo.target)
-fog = P_SpawnMobj(targ.x, targ.y, targ.z, MT_SPAWNFIRE)
-S_StartSound(fog, sfx_telept)
-r = P_Random()
-if r < 50 {
-_type = MT_TROOP
-}
-else if r < 90 {
-_type = MT_SERGEANT
-}
-else if r < 120 {
-_type = MT_SHADOWS
-}
-else if r < 130 {
-_type = MT_PAIN
-}
-else if r < 160 {
-_type = MT_HEAD
-}
-else if r < 162 {
-_type = MT_VILE
-}
-else if r < 172 {
-_type = MT_UNDEAD
-}
-else if r < 192 {
-_type = MT_BABY
-}
-else if r < 222 {
-_type = MT_FATSO
-}
-else if r < 246 {
-_type = MT_KNIGHT
-}
-else { 
-_type = MT_BRUISER
-}
-newmobj = P_SpawnMobj(targ.x, targ.y, targ.z, _type)
-if P_LookForPlayers(newmobj, _true) {
-P_SetMobjState(newmobj, newmobj.info.seestate)
-}
-P_TeleportMove(newmobj, newmobj.x, newmobj.y)
-P_RemoveMobj(mo)
+fn A_SpawnFly(mo *mobj_t) {
+	newmobj := &mobj_t{!}
+	fog := &mobj_t{!}
+	targ := &mobj_t{!}
+	r := 0
+	_type := 0
+	if mo.reactiontime-- {
+		return 
+	}
+	targ = P_SubstNullMobj(mo.target)
+	fog = P_SpawnMobj(targ.x, targ.y, targ.z, MT_SPAWNFIRE)
+	S_StartSound(fog, sfx_telept)
+	r = P_Random()
+	if r < 50 {
+		_type = MT_TROOP
+	} else if r < 90 {
+		_type = MT_SERGEANT
+	} else if r < 120 {
+		_type = MT_SHADOWS
+	} else if r < 130 {
+		_type = MT_PAIN
+	} else if r < 160 {
+		_type = MT_HEAD
+	} else if r < 162 {
+		_type = MT_VILE
+	} else if r < 172 {
+		_type = MT_UNDEAD
+	} else if r < 192 {
+		_type = MT_BABY
+	} else if r < 222 {
+		_type = MT_FATSO
+	} else if r < 246 {
+		_type = MT_KNIGHT
+	} else { 
+		_type = MT_BRUISER
+	}
+	newmobj = P_SpawnMobj(targ.x, targ.y, targ.z, _type)
+	if P_LookForPlayers(newmobj, _true) {
+		P_SetMobjState(newmobj, newmobj.info.seestate)
+	}
+	P_TeleportMove(newmobj, newmobj.x, newmobj.y)
+	P_RemoveMobj(mo)
 }
 
-fn A_PlayerScream(mo *mobj_t)  {
-sound := sfx_pldeth
-if (gamemode == commercial) && (mo.health < -50) {
-sound = sfx_pdiehi
+fn A_PlayerScream(mo *mobj_t) {
+	sound := sfx_pldeth
+	if (gamemode == commercial) && (mo.health < -50) {
+		sound = sfx_pdiehi
+	}
+	S_StartSound(mo, sound)
 }
-S_StartSound(mo, sound)
-}
-
