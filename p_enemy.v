@@ -1,39 +1,39 @@
-struct C.FILE{} 
-fn C.memcpy(voidptr, voidptr, int) 
-fn C.memmove(voidptr, voidptr, int) 
-fn C.memset(voidptr, voidptr, int) 
-fn C.puts(voidptr) 
-fn C.printf(voidptr, ..) 
-fn C.sscanf(voidptr,voidptr, ..) voidptr 
-fn C.strcasecmp(voidptr, voidptr) int 
-fn C.strncasecmp(voidptr, voidptr, int) int 
-fn C.strcmp(voidptr, voidptr) int  
-fn C.strncmp(voidptr, voidptr, int) int  
-fn C.fopen(byteptr, byteptr) *C.FILE 
-fn C.fclose(*C.FILE)  
-fn C.ftell(*C.FILE) int 
-fn C.remove (byteptr) 
-fn C.rename ( byteptr, byteptr)  
-fn C.isspace(byte) int 
-fn C.atoi(byteptr) int 
+struct C.FILE{}
+fn C.memcpy(voidptr, voidptr, int)
+fn C.memmove(voidptr, voidptr, int)
+fn C.memset(voidptr, voidptr, int)
+fn C.puts(voidptr)
+fn C.printf(voidptr, ..)
+fn C.sscanf(voidptr,voidptr, ..) voidptr
+fn C.strcasecmp(voidptr, voidptr) int
+fn C.strncasecmp(voidptr, voidptr, int) int
+fn C.strcmp(voidptr, voidptr) int
+fn C.strncmp(voidptr, voidptr, int) int
+fn C.fopen(byteptr, byteptr) *C.FILE
+fn C.fclose(*C.FILE)
+fn C.ftell(*C.FILE) int
+fn C.remove (byteptr)
+fn C.rename ( byteptr, byteptr)
+fn C.isspace(byte) int
+fn C.atoi(byteptr) int
 
 enum boolean {
 	_false
 	_true
 }
 
-type _byte byte 
-type pixel_t byte 
-type dpixel_t i16 
-fn M_Random() int 
+type _byte byte
+type pixel_t byte
+type dpixel_t i16
+fn M_Random() int
 
-fn P_Random() int 
+fn P_Random() int
 
-fn M_ClearRandom()  
+fn M_ClearRandom()
 
-fn P_SubRandom() int 
+fn P_SubRandom() int
 
-struct ticcmd_t { 
+struct ticcmd_t {
 	forwardmove byte
 	sidemove byte
 	angleturn i16
@@ -45,7 +45,7 @@ struct ticcmd_t {
 	lookfly byte
 	arti byte
 }
- 
+
 enum evtype_t {
 	ev_keydown
 	ev_keyup
@@ -54,7 +54,7 @@ enum evtype_t {
 	ev_quit
 }
 
-struct event_t { 
+struct event_t {
 	_type evtype_t
 	data1 int
 	data2 int
@@ -62,7 +62,7 @@ struct event_t {
 	data4 int
 	data5 int
 }
- 
+
 enum buttoncode_t {
 	BT_ATTACK
 	BT_USE
@@ -87,48 +87,48 @@ enum buttoncode2_t {
 	BT2_HEALTH
 }
 
-fn D_PostEvent(ev *event_t)  
+fn D_PostEvent(ev *event_t)
 
-fn D_PopEvent() *event_t 
+fn D_PopEvent() *event_t
 
-type atexit_func_t fn () 
-fn I_Init()  
+type atexit_func_t fn ()
+fn I_Init()
 
-fn I_ZoneBase(size *int) byteptr 
+fn I_ZoneBase(size *int) byteptr
 
-fn I_ConsoleStdout() bool 
+fn I_ConsoleStdout() bool
 
-fn I_BaseTiccmd() *ticcmd_t 
+fn I_BaseTiccmd() *ticcmd_t
 
-fn I_Quit()  
+fn I_Quit()
 
-fn I_Error(error byteptr, ..)  
+fn I_Error(error byteptr, ..)
 
-fn I_Tactile(on int, off int, total int)  
+fn I_Tactile(on int, off int, total int)
 
-fn I_Realloc(ptr voidptr, size size_t) voidptr 
+fn I_Realloc(ptr voidptr, size size_t) voidptr
 
-fn I_GetMemoryValue(offset u32, value voidptr, size int) bool 
+fn I_GetMemoryValue(offset u32, value voidptr, size int) bool
 
-fn I_AtExit(func atexit_func_t, run_if_error bool)  
+fn I_AtExit(func atexit_func_t, run_if_error bool)
 
-fn I_BindVariables()  
+fn I_BindVariables()
 
-fn I_PrintStartupBanner(gamedescription byteptr)  
+fn I_PrintStartupBanner(gamedescription byteptr)
 
-fn I_PrintBanner(text byteptr)  
+fn I_PrintBanner(text byteptr)
 
-fn I_PrintDivider()  
+fn I_PrintDivider()
 
-fn I_GetTime() int 
+fn I_GetTime() int
 
-fn I_GetTimeMS() int 
+fn I_GetTimeMS() int
 
-fn I_Sleep(ms int)  
+fn I_Sleep(ms int)
 
-fn I_InitTimer()  
+fn I_InitTimer()
 
-fn I_WaitVBL(count int)  
+fn I_WaitVBL(count int)
 
 enum GameMission_t {
 	doom
@@ -184,19 +184,19 @@ enum skill_t {
 	sk_nightmare
 }
 
-fn D_ValidGameMode(mission GameMission_t, mode GameMode_t) bool 
+fn D_ValidGameMode(mission GameMission_t, mode GameMode_t) bool
 
-fn D_ValidGameVersion(mission GameMission_t, version GameVersion_t) bool 
+fn D_ValidGameVersion(mission GameMission_t, version GameVersion_t) bool
 
-fn D_ValidEpisodeMap(mission GameMission_t, mode GameMode_t, episode int, map int) bool 
+fn D_ValidEpisodeMap(mission GameMission_t, mode GameMode_t, episode int, map int) bool
 
-fn D_GetNumEpisodes(mission GameMission_t, mode GameMode_t) int 
+fn D_GetNumEpisodes(mission GameMission_t, mode GameMode_t) int
 
-fn D_IsEpisodeMap(mission GameMission_t) bool 
+fn D_IsEpisodeMap(mission GameMission_t) bool
 
-fn D_GameMissionString(mission GameMission_t) byteptr 
+fn D_GameMissionString(mission GameMission_t) byteptr
 
-fn D_GameModeString(mode GameMode_t) byteptr 
+fn D_GameModeString(mode GameMode_t) byteptr
 
 enum gamestate_t {
 	GS_LEVEL
@@ -268,41 +268,41 @@ enum powerduration_t {
 	IRONTICS
 }
 
-type fixed_t int 
-fn FixedMul(a int, b int) int 
+type fixed_t int
+fn FixedMul(a int, b int) int
 
-fn FixedDiv(a int, b int) int 
+fn FixedDiv(a int, b int) int
 
-__global finesine [10240]int 
+__global finesine [10240]int
 
-__global finecosine *int 
+__global finecosine *int
 
-__global finetangent [4096]int 
+__global finetangent [4096]int
 
-__global gammatable [5][256]byte 
+__global gammatable [5][256]byte
 
-type angle_t int 
-__global tantoangle [2049]angle_t 
+type angle_t int
+__global tantoangle [2049]angle_t
 
-fn SlopeDiv(num u32, den u32) int 
+fn SlopeDiv(num u32, den u32) int
 
-type actionf_v fn () 
-type actionf_p1 fn (voidptr) 
-type actionf_p2 fn (voidptr, voidptr) 
+type actionf_v fn ()
+type actionf_p1 fn (voidptr)
+type actionf_p2 fn (voidptr, voidptr)
 union actionf_t {
 	acv actionf_v
 	acp1 actionf_p1
 	acp2 actionf_p2
 }
- 
-type think_t actionf_t 
-struct thinker_s { 
+
+type think_t actionf_t
+struct thinker_s {
 	prev * thinker_s
 	next * thinker_s
 	function think_t
 }
- 
-type thinker_t thinker_s 
+
+type thinker_t thinker_s
 enum {
 	ML_LABEL
 	ML_THINGS
@@ -317,12 +317,12 @@ enum {
 	ML_BLOCKMAP
 }
 
-struct mapvertex_t { 
+struct mapvertex_t {
 	x i16
 	y i16
 }
- 
-struct mapsidedef_t { 
+
+struct mapsidedef_t {
 	textureoffset i16
 	rowoffset i16
 	toptexture [8]byte
@@ -330,8 +330,8 @@ struct mapsidedef_t {
 	midtexture [8]byte
 	sector i16
 }
- 
-struct maplinedef_t { 
+
+struct maplinedef_t {
 	v1 i16
 	v2 i16
 	flags i16
@@ -339,8 +339,8 @@ struct maplinedef_t {
 	tag i16
 	sidenum [2]i16
 }
- 
-struct mapsector_t { 
+
+struct mapsector_t {
 	floorheight i16
 	ceilingheight i16
 	floorpic [8]byte
@@ -349,13 +349,13 @@ struct mapsector_t {
 	special i16
 	tag i16
 }
- 
-struct mapsubsector_t { 
+
+struct mapsubsector_t {
 	numsegs i16
 	firstseg i16
 }
- 
-struct mapseg_t { 
+
+struct mapseg_t {
 	v1 i16
 	v2 i16
 	angle i16
@@ -363,8 +363,8 @@ struct mapseg_t {
 	side i16
 	offset i16
 }
- 
-struct mapnode_t { 
+
+struct mapnode_t {
 	x i16
 	y i16
 	dx i16
@@ -372,15 +372,15 @@ struct mapnode_t {
 	bbox [2][4]i16
 	children [2]u16
 }
- 
-struct mapthing_t { 
+
+struct mapthing_t {
 	x i16
 	y i16
 	angle i16
 	_type i16
 	options i16
 }
- 
+
 enum spritenum_t {
 	SPR_TROO
 	SPR_SHTG
@@ -1494,7 +1494,7 @@ enum statenum_t {
 	NUMSTATES
 }
 
-struct state_t { 
+struct state_t {
 	sprite spritenum_t
 	frame int
 	tics int
@@ -1503,10 +1503,10 @@ struct state_t {
 	misc1 int
 	misc2 int
 }
- 
-__global states [967]state_t 
 
-__global sprnames []byteptr 
+__global states [967]state_t
+
+__global sprnames []byteptr
 
 enum mobjtype_t {
 	MT_PLAYER
@@ -1649,7 +1649,7 @@ enum mobjtype_t {
 	NUMMOBJTYPES
 }
 
-struct mobjinfo_t { 
+struct mobjinfo_t {
 	doomednum int
 	spawnstate int
 	spawnhealth int
@@ -1674,8 +1674,8 @@ struct mobjinfo_t {
 	flags int
 	raisestate int
 }
- 
-__global mobjinfo [137]mobjinfo_t 
+
+__global mobjinfo [137]mobjinfo_t
 
 enum mobjflag_t {
 	MF_SPECIAL
@@ -1708,7 +1708,7 @@ enum mobjflag_t {
 	MF_TRANSSHIFT
 }
 
-struct mobj_s { 
+struct mobj_s {
 	thinker thinker_t
 	x int
 	y int
@@ -1745,106 +1745,106 @@ struct mobj_s {
 	spawnpoint mapthing_t
 	tracer * mobj_s
 }
- 
-type mobj_t mobj_s 
-type grabmouse_callback_t fn () bool 
-fn I_InitGraphics()  
 
-fn I_GraphicsCheckCommandLine()  
+type mobj_t mobj_s
+type grabmouse_callback_t fn () bool
+fn I_InitGraphics()
 
-fn I_ShutdownGraphics()  
+fn I_GraphicsCheckCommandLine()
 
-fn I_SetPalette(palette byteptr)  
+fn I_ShutdownGraphics()
 
-fn I_GetPaletteIndex(r int, g int, b int) int 
+fn I_SetPalette(palette byteptr)
 
-fn I_UpdateNoBlit()  
+fn I_GetPaletteIndex(r int, g int, b int) int
 
-fn I_FinishUpdate()  
+fn I_UpdateNoBlit()
 
-fn I_ReadScreen(scr *pixel_t)  
+fn I_FinishUpdate()
 
-fn I_BeginRead()  
+fn I_ReadScreen(scr *pixel_t)
 
-fn I_SetWindowTitle(title byteptr)  
+fn I_BeginRead()
 
-fn I_CheckIsScreensaver()  
+fn I_SetWindowTitle(title byteptr)
 
-fn I_SetGrabMouseCallback(func grabmouse_callback_t)  
+fn I_CheckIsScreensaver()
 
-fn I_DisplayFPSDots(dots_on bool)  
+fn I_SetGrabMouseCallback(func grabmouse_callback_t)
 
-fn I_BindVideoVariables()  
+fn I_DisplayFPSDots(dots_on bool)
 
-fn I_InitWindowTitle()  
+fn I_BindVideoVariables()
 
-fn I_InitWindowIcon()  
+fn I_InitWindowTitle()
 
-fn I_StartFrame()  
+fn I_InitWindowIcon()
 
-fn I_StartTic()  
+fn I_StartFrame()
 
-fn I_EnableLoadingDisk(xoffs int, yoffs int)  
+fn I_StartTic()
 
-__global video_driver byteptr 
+fn I_EnableLoadingDisk(xoffs int, yoffs int)
 
-__global screenvisible bool 
+__global video_driver byteptr
 
-__global vanilla_keyboard_mapping int 
+__global screenvisible bool
 
-__global screensaver_mode bool 
+__global vanilla_keyboard_mapping int
 
-__global usegamma int 
+__global screensaver_mode bool
 
-__global I_VideoBuffer *pixel_t 
+__global usegamma int
 
-__global screen_width int 
+__global I_VideoBuffer *pixel_t
 
-__global screen_height int 
+__global screen_width int
 
-__global fullscreen int 
+__global screen_height int
 
-__global aspect_ratio_correct int 
+__global fullscreen int
 
-__global integer_scaling int 
+__global aspect_ratio_correct int
 
-__global vga_porch_flash int 
+__global integer_scaling int
 
-__global force_software_renderer int 
+__global vga_porch_flash int
 
-__global window_position byteptr 
+__global force_software_renderer int
 
-fn I_GetWindowPosition(x *int, y *int, w int, h int)  
+__global window_position byteptr
 
-__global joywait u32 
+fn I_GetWindowPosition(x *int, y *int, w int, h int)
 
-struct patch_t { 
+__global joywait u32
+
+struct patch_t {
 	width i16
 	height i16
 	leftoffset i16
 	topoffset i16
 	columnofs [8]int
 }
- 
-struct post_t { 
+
+struct post_t {
 	topdelta byte
 	length byte
 }
- 
-type column_t post_t 
-struct vertex_t { 
+
+type column_t post_t
+struct vertex_t {
 	x int
 	y int
 }
- 
-struct degenmobj_t { 
+
+struct degenmobj_t {
 	thinker thinker_t
 	x int
 	y int
 	z int
 }
- 
-struct sector_t { 
+
+struct sector_t {
 	floorheight int
 	ceilingheight int
 	floorpic i16
@@ -1863,8 +1863,8 @@ struct sector_t {
 	lines ** line_s
 	LULKEK int
 }
- 
-struct side_t { 
+
+struct side_t {
 	textureoffset int
 	rowoffset int
 	toptexture i16
@@ -1872,7 +1872,7 @@ struct side_t {
 	midtexture i16
 	sector *sector_t
 }
- 
+
 enum slopetype_t {
 	ST_HORIZONTAL
 	ST_VERTICAL
@@ -1880,7 +1880,7 @@ enum slopetype_t {
 	ST_NEGATIVE
 }
 
-struct line_s { 
+struct line_s {
 	v1 *vertex_t
 	v2 *vertex_t
 	dx int
@@ -1896,16 +1896,16 @@ struct line_s {
 	validcount int
 	specialdata voidptr
 }
- 
-type line_t line_s 
-struct subsector_s { 
+
+type line_t line_s
+struct subsector_s {
 	sector *sector_t
 	numlines i16
 	firstline i16
 }
- 
-type subsector_t subsector_s 
-struct seg_t { 
+
+type subsector_t subsector_s
+struct seg_t {
 	v1 *vertex_t
 	v2 *vertex_t
 	offset int
@@ -1915,8 +1915,8 @@ struct seg_t {
 	frontsector *sector_t
 	backsector *sector_t
 }
- 
-struct node_t { 
+
+struct node_t {
 	x int
 	y int
 	dx int
@@ -1924,9 +1924,9 @@ struct node_t {
 	bbox [2][4]int
 	children [2]u16
 }
- 
-type lighttable_t byte 
-struct drawseg_s { 
+
+type lighttable_t byte
+struct drawseg_s {
 	curline *seg_t
 	x1 int
 	x2 int
@@ -1940,9 +1940,9 @@ struct drawseg_s {
 	sprbottomclip *short
 	maskedtexturecol *short
 }
- 
-type drawseg_t drawseg_s 
-struct vissprite_s { 
+
+type drawseg_t drawseg_s
+struct vissprite_s {
 	prev * vissprite_s
 	next * vissprite_s
 	x1 int
@@ -1959,20 +1959,20 @@ struct vissprite_s {
 	colormap *lighttable_t
 	mobjflags int
 }
- 
-type vissprite_t vissprite_s 
-struct spriteframe_t { 
+
+type vissprite_t vissprite_s
+struct spriteframe_t {
 	rotate bool
 	lump [8]i16
 	flip [8]byte
 }
- 
-struct spritedef_t { 
+
+struct spritedef_t {
 	numframes int
 	spriteframes *spriteframe_t
 }
- 
-struct visplane_t { 
+
+struct visplane_t {
 	height int
 	picnum int
 	lightlevel int
@@ -1985,8 +1985,8 @@ struct visplane_t {
 	bottom [320]byte
 	pad4 byte
 }
- 
-struct weaponinfo_t { 
+
+struct weaponinfo_t {
 	ammo ammotype_t
 	upstate int
 	downstate int
@@ -1994,8 +1994,8 @@ struct weaponinfo_t {
 	atkstate int
 	flashstate int
 }
- 
-__global weaponinfo [9]weaponinfo_t 
+
+__global weaponinfo [9]weaponinfo_t
 
 enum psprnum_t {
 	ps_weapon
@@ -2003,16 +2003,16 @@ enum psprnum_t {
 	NUMPSPRITES
 }
 
-struct pspdef_t { 
+struct pspdef_t {
 	state *state_t
 	tics int
 	sx int
 	sy int
 }
- 
-type sha1_context_t sha1_context_s 
-type sha1_digest_t [20]byte 
-struct sha1_context_s { 
+
+type sha1_context_t sha1_context_s
+type sha1_digest_t [20]byte
+struct sha1_context_s {
 	h0 u32
 	h1 u32
 	h2 u32
@@ -2022,29 +2022,29 @@ struct sha1_context_s {
 	buf [64]byte
 	count int
 }
- 
-fn SHA1_Init(context *sha1_context_t)  
 
-fn SHA1_Update(context *sha1_context_t, buf byteptr, len size_t)  
+fn SHA1_Init(context *sha1_context_t)
 
-fn SHA1_Final(digest byteptr, context *sha1_context_t)  
+fn SHA1_Update(context *sha1_context_t, buf byteptr, len size_t)
 
-fn SHA1_UpdateInt32(context *sha1_context_t, val u32)  
+fn SHA1_Final(digest byteptr, context *sha1_context_t)
 
-fn SHA1_UpdateString(context *sha1_context_t, str byteptr)  
+fn SHA1_UpdateInt32(context *sha1_context_t, val u32)
 
-type net_module_t _net_module_s 
-type net_packet_t _net_packet_s 
-type net_addr_t _net_addr_s 
-type net_context_t _net_context_s 
-struct _net_packet_s { 
+fn SHA1_UpdateString(context *sha1_context_t, str byteptr)
+
+type net_module_t _net_module_s
+type net_packet_t _net_packet_s
+type net_addr_t _net_addr_s
+type net_context_t _net_context_s
+struct _net_packet_s {
 	data byteptr
 	len size_t
 	alloced size_t
 	pos u32
 }
- 
-struct _net_module_s { 
+
+struct _net_module_s {
 	InitClient fn () bool
 	InitServer fn () bool
 	SendPacket fn (*net_addr_t, *net_packet_t)
@@ -2053,13 +2053,13 @@ struct _net_module_s {
 	FreeAddress fn (*net_addr_t)
 	ResolveAddress fn (byteptr) *net_addr_t
 }
- 
-struct _net_addr_s { 
+
+struct _net_addr_s {
 	_module *net_module_t
 	refcount int
 	handle voidptr
 }
- 
+
 enum net_protocol_t {
 	NET_PROTOCOL_CHOCOLATE_DOOM_0
 	NET_NUM_PROTOCOLS
@@ -2101,7 +2101,7 @@ enum net_master_packet_type_t {
 	NET_MASTER_PACKET_TYPE_NAT_HOLE_PUNCH_ALL
 }
 
-struct net_connect_data_t { 
+struct net_connect_data_t {
 	gamemode int
 	gamemission int
 	lowres_turn int
@@ -2112,8 +2112,8 @@ struct net_connect_data_t {
 	deh_sha1sum [20]sha1_digest_t
 	player_class int
 }
- 
-struct net_gamesettings_t { 
+
+struct net_gamesettings_t {
 	ticdup int
 	extratics int
 	deathmatch int
@@ -2133,20 +2133,20 @@ struct net_gamesettings_t {
 	consoleplayer int
 	player_classes [8]int
 }
- 
-struct net_ticdiff_t { 
+
+struct net_ticdiff_t {
 	diff u32
 	cmd ticcmd_t
 }
- 
-struct net_full_ticcmd_t { 
+
+struct net_full_ticcmd_t {
 	latency int
 	seq u32
 	playeringame [8]bool
 	cmds [8]net_ticdiff_t
 }
- 
-struct net_querydata_t { 
+
+struct net_querydata_t {
 	version byteptr
 	server_state int
 	num_players int
@@ -2156,8 +2156,8 @@ struct net_querydata_t {
 	description byteptr
 	protocol net_protocol_t
 }
- 
-struct net_waitdata_t { 
+
+struct net_waitdata_t {
 	num_players int
 	num_drones int
 	ready_players int
@@ -2170,7 +2170,7 @@ struct net_waitdata_t {
 	deh_sha1sum [20]sha1_digest_t
 	is_freedoom int
 }
- 
+
 enum playerstate_t {
 	PST_LIVE
 	PST_DEAD
@@ -2182,8 +2182,8 @@ enum cheat_t {
 	CF_GODMODE
 	CF_NOMOMENTUM
 }
- 
-struct player_s { 
+
+struct player_s {
 	mo *mobj_t
 	playerstate playerstate_t
 	cmd ticcmd_t
@@ -2220,9 +2220,9 @@ struct player_s {
 	psprites [2]pspdef_t
 	didsecret bool
 }
- 
-type player_t player_s 
-struct wbplayerstruct_t { 
+
+type player_t player_s
+struct wbplayerstruct_t {
 	_in bool
 	skills int
 	sitems int
@@ -2231,8 +2231,8 @@ struct wbplayerstruct_t {
 	frags [4]int
 	score int
 }
- 
-struct wbstartstruct_t { 
+
+struct wbstartstruct_t {
 	epsd int
 	didsecret bool
 	last int
@@ -2245,553 +2245,553 @@ struct wbstartstruct_t {
 	pnum int
 	plyr [4]wbplayerstruct_t
 }
- 
-__global textureheight *int 
 
-__global spritewidth *int 
+__global textureheight *int
 
-__global spriteoffset *int 
+__global spritewidth *int
 
-__global spritetopoffset *int 
+__global spriteoffset *int
 
-__global colormaps *lighttable_t 
+__global spritetopoffset *int
 
-__global viewwidth int 
+__global colormaps *lighttable_t
 
-__global scaledviewwidth int 
+__global viewwidth int
 
-__global viewheight int 
+__global scaledviewwidth int
 
-__global firstflat int 
+__global viewheight int
 
-__global flattranslation *int 
+__global firstflat int
 
-__global texturetranslation *int 
+__global flattranslation *int
 
-__global firstspritelump int 
+__global texturetranslation *int
 
-__global lastspritelump int 
+__global firstspritelump int
 
-__global numspritelumps int 
+__global lastspritelump int
 
-__global numsprites int 
+__global numspritelumps int
 
-__global sprites *spritedef_t 
+__global numsprites int
 
-__global numvertexes int 
+__global sprites *spritedef_t
 
-__global vertexes *vertex_t 
+__global numvertexes int
 
-__global numsegs int 
+__global vertexes *vertex_t
 
-__global segs *seg_t 
+__global numsegs int
 
-__global numsectors int 
+__global segs *seg_t
 
-__global sectors *sector_t 
+__global numsectors int
 
-__global numsubsectors int 
+__global sectors *sector_t
 
-__global subsectors *subsector_t 
+__global numsubsectors int
 
-__global numnodes int 
+__global subsectors *subsector_t
 
-__global nodes *node_t 
+__global numnodes int
 
-__global numlines int 
+__global nodes *node_t
 
-__global lines *line_t 
+__global numlines int
 
-__global numsides int 
+__global lines *line_t
 
-__global sides *side_t 
+__global numsides int
 
-__global viewx int 
+__global sides *side_t
 
-__global viewy int 
+__global viewx int
 
-__global viewz int 
+__global viewy int
 
-__global viewangle angle_t 
+__global viewz int
 
-__global viewplayer *player_t 
+__global viewangle angle_t
 
-__global clipangle angle_t 
+__global viewplayer *player_t
 
-__global viewangletox [4096]int 
+__global clipangle angle_t
 
-__global xtoviewangle [321]angle_t 
+__global viewangletox [4096]int
 
-__global rw_distance int 
+__global xtoviewangle [321]angle_t
 
-__global rw_normalangle angle_t 
+__global rw_distance int
 
-__global rw_angle1 int 
+__global rw_normalangle angle_t
 
-__global sscount int 
+__global rw_angle1 int
 
-__global floorplane *visplane_t 
+__global sscount int
 
-__global ceilingplane *visplane_t 
+__global floorplane *visplane_t
 
-fn R_GetColumn(tex int, col int) byteptr 
+__global ceilingplane *visplane_t
 
-fn R_InitData()  
+fn R_GetColumn(tex int, col int) byteptr
 
-fn R_PrecacheLevel()  
+fn R_InitData()
 
-fn R_FlatNumForName(name byteptr) int 
+fn R_PrecacheLevel()
 
-fn R_TextureNumForName(name byteptr) int 
+fn R_FlatNumForName(name byteptr) int
 
-fn R_CheckTextureNumForName(name byteptr) int 
+fn R_TextureNumForName(name byteptr) int
 
-__global viewcos int 
+fn R_CheckTextureNumForName(name byteptr) int
 
-__global viewsin int 
+__global viewcos int
 
-__global viewwindowx int 
+__global viewsin int
 
-__global viewwindowy int 
+__global viewwindowx int
 
-__global centerx int 
+__global viewwindowy int
 
-__global centery int 
+__global centerx int
 
-__global centerxfrac int 
+__global centery int
 
-__global centeryfrac int 
+__global centerxfrac int
 
-__global projection int 
+__global centeryfrac int
 
-__global validcount int 
+__global projection int
 
-__global linecount int 
+__global validcount int
 
-__global loopcount int 
+__global linecount int
 
-__global scalelight [16][48]*lighttable_t 
+__global loopcount int
 
-__global scalelightfixed [48]*lighttable_t 
+__global scalelight [16][48]*lighttable_t
 
-__global zlight [16][128]*lighttable_t 
+__global scalelightfixed [48]*lighttable_t
 
-__global extralight int 
+__global zlight [16][128]*lighttable_t
 
-__global fixedcolormap *lighttable_t 
+__global extralight int
 
-__global detailshift int 
+__global fixedcolormap *lighttable_t
 
-__global colfunc fn () 
+__global detailshift int
 
-__global transcolfunc fn () 
+__global colfunc fn ()
 
-__global basecolfunc fn () 
+__global transcolfunc fn ()
 
-__global fuzzcolfunc fn () 
+__global basecolfunc fn ()
 
-__global spanfunc fn () 
+__global fuzzcolfunc fn ()
 
-fn R_PointOnSide(x int, y int, node *node_t) int 
+__global spanfunc fn ()
 
-fn R_PointOnSegSide(x int, y int, line *seg_t) int 
+fn R_PointOnSide(x int, y int, node *node_t) int
 
-fn R_PointToAngle(x int, y int) angle_t 
+fn R_PointOnSegSide(x int, y int, line *seg_t) int
 
-fn R_PointToAngle2(x1 int, y1 int, x2 int, y2 int) angle_t 
+fn R_PointToAngle(x int, y int) angle_t
 
-fn R_PointToDist(x int, y int) int 
+fn R_PointToAngle2(x1 int, y1 int, x2 int, y2 int) angle_t
 
-fn R_ScaleFromGlobalAngle(visangle angle_t) int 
+fn R_PointToDist(x int, y int) int
 
-fn R_PointInSubsector(x int, y int) *subsector_t 
+fn R_ScaleFromGlobalAngle(visangle angle_t) int
 
-fn R_AddPointToBox(x int, y int, box *int)  
+fn R_PointInSubsector(x int, y int) *subsector_t
 
-fn R_RenderPlayerView(player *player_t)  
+fn R_AddPointToBox(x int, y int, box *int)
 
-fn R_Init()  
+fn R_RenderPlayerView(player *player_t)
 
-fn R_SetViewSize(blocks int, detail int)  
+fn R_Init()
 
-__global curline *seg_t 
+fn R_SetViewSize(blocks int, detail int)
 
-__global sidedef *side_t 
+__global curline *seg_t
 
-__global linedef *line_t 
+__global sidedef *side_t
 
-__global frontsector *sector_t 
+__global linedef *line_t
 
-__global backsector *sector_t 
+__global frontsector *sector_t
 
-__global rw_x int 
+__global backsector *sector_t
 
-__global rw_stopx int 
+__global rw_x int
 
-__global segtextured bool 
+__global rw_stopx int
 
-__global markfloor bool 
+__global segtextured bool
 
-__global markceiling bool 
+__global markfloor bool
 
-__global skymap bool 
+__global markceiling bool
 
-__global drawsegs [256]drawseg_t 
+__global skymap bool
 
-__global ds_p *drawseg_t 
+__global drawsegs [256]drawseg_t
 
-__global hscalelight **lighttable_t 
+__global ds_p *drawseg_t
 
-__global vscalelight **lighttable_t 
+__global hscalelight **lighttable_t
 
-__global dscalelight **lighttable_t 
+__global vscalelight **lighttable_t
 
-type drawfunc_t fn (int, int) 
-fn R_ClearClipSegs()  
+__global dscalelight **lighttable_t
 
-fn R_ClearDrawSegs()  
+type drawfunc_t fn (int, int)
+fn R_ClearClipSegs()
 
-fn R_RenderBSPNode(bspnum int)  
+fn R_ClearDrawSegs()
 
-fn R_RenderMaskedSegRange(ds *drawseg_t, x1 int, x2 int)  
+fn R_RenderBSPNode(bspnum int)
 
-__global lastopening *short 
+fn R_RenderMaskedSegRange(ds *drawseg_t, x1 int, x2 int)
 
-type planefunction_t fn (int, int) 
-__global floorfunc planefunction_t 
+__global lastopening *short
 
-__global ceilingfunc_t planefunction_t 
+type planefunction_t fn (int, int)
+__global floorfunc planefunction_t
 
-__global floorclip [320]i16 
+__global ceilingfunc_t planefunction_t
 
-__global ceilingclip [320]i16 
+__global floorclip [320]i16
 
-__global yslope [200]int 
+__global ceilingclip [320]i16
 
-__global distscale [320]int 
+__global yslope [200]int
 
-fn R_InitPlanes()  
+__global distscale [320]int
 
-fn R_ClearPlanes()  
+fn R_InitPlanes()
 
-fn R_MapPlane(y int, x1 int, x2 int)  
+fn R_ClearPlanes()
 
-fn R_MakeSpans(x int, t1 int, b1 int, t2 int, b2 int)  
+fn R_MapPlane(y int, x1 int, x2 int)
 
-fn R_DrawPlanes()  
+fn R_MakeSpans(x int, t1 int, b1 int, t2 int, b2 int)
 
-fn R_FindPlane(height int, picnum int, lightlevel int) *visplane_t 
+fn R_DrawPlanes()
 
-fn R_CheckPlane(pl *visplane_t, start int, stop int) *visplane_t 
+fn R_FindPlane(height int, picnum int, lightlevel int) *visplane_t
 
-__global vissprites [128]vissprite_t 
+fn R_CheckPlane(pl *visplane_t, start int, stop int) *visplane_t
 
-__global vissprite_p *vissprite_t 
+__global vissprites [128]vissprite_t
 
-__global vsprsortedhead vissprite_t 
+__global vissprite_p *vissprite_t
 
-__global negonearray [320]i16 
+__global vsprsortedhead vissprite_t
 
-__global screenheightarray [320]i16 
+__global negonearray [320]i16
 
-__global mfloorclip *short 
+__global screenheightarray [320]i16
 
-__global mceilingclip *short 
+__global mfloorclip *short
 
-__global spryscale int 
+__global mceilingclip *short
 
-__global sprtopscreen int 
+__global spryscale int
 
-__global pspritescale int 
+__global sprtopscreen int
 
-__global pspriteiscale int 
+__global pspritescale int
 
-fn R_DrawMaskedColumn(column *column_t)  
+__global pspriteiscale int
 
-fn R_SortVisSprites()  
+fn R_DrawMaskedColumn(column *column_t)
 
-fn R_AddSprites(sec *sector_t)  
+fn R_SortVisSprites()
 
-fn R_AddPSprites()  
+fn R_AddSprites(sec *sector_t)
 
-fn R_DrawSprites()  
+fn R_AddPSprites()
 
-fn R_InitSprites(namelist *byteptr)  
+fn R_DrawSprites()
 
-fn R_ClearSprites()  
+fn R_InitSprites(namelist *byteptr)
 
-fn R_DrawMasked()  
+fn R_ClearSprites()
 
-fn R_ClipVisSprite(vis *vissprite_t, xl int, xh int)  
+fn R_DrawMasked()
 
-__global dc_colormap *lighttable_t 
+fn R_ClipVisSprite(vis *vissprite_t, xl int, xh int)
 
-__global dc_x int 
+__global dc_colormap *lighttable_t
 
-__global dc_yl int 
+__global dc_x int
 
-__global dc_yh int 
+__global dc_yl int
 
-__global dc_iscale int 
+__global dc_yh int
 
-__global dc_texturemid int 
+__global dc_iscale int
 
-__global dc_source byteptr 
+__global dc_texturemid int
 
-fn R_DrawColumn()  
+__global dc_source byteptr
 
-fn R_DrawColumnLow()  
+fn R_DrawColumn()
 
-fn R_DrawFuzzColumn()  
+fn R_DrawColumnLow()
 
-fn R_DrawFuzzColumnLow()  
+fn R_DrawFuzzColumn()
 
-fn R_DrawTranslatedColumn()  
+fn R_DrawFuzzColumnLow()
 
-fn R_DrawTranslatedColumnLow()  
+fn R_DrawTranslatedColumn()
 
-fn R_VideoErase(ofs u32, count int)  
+fn R_DrawTranslatedColumnLow()
 
-__global ds_y int 
+fn R_VideoErase(ofs u32, count int)
 
-__global ds_x1 int 
+__global ds_y int
 
-__global ds_x2 int 
+__global ds_x1 int
 
-__global ds_colormap *lighttable_t 
+__global ds_x2 int
 
-__global ds_xfrac int 
+__global ds_colormap *lighttable_t
 
-__global ds_yfrac int 
+__global ds_xfrac int
 
-__global ds_xstep int 
+__global ds_yfrac int
 
-__global ds_ystep int 
+__global ds_xstep int
 
-__global ds_source byteptr 
+__global ds_ystep int
 
-__global translationtables byteptr 
+__global ds_source byteptr
 
-__global dc_translation byteptr 
+__global translationtables byteptr
 
-fn R_DrawSpan()  
+__global dc_translation byteptr
 
-fn R_DrawSpanLow()  
+fn R_DrawSpan()
 
-fn R_InitBuffer(width int, height int)  
+fn R_DrawSpanLow()
 
-fn R_InitTranslationTables()  
+fn R_InitBuffer(width int, height int)
 
-fn R_FillBackScreen()  
+fn R_InitTranslationTables()
 
-fn R_DrawViewBorder()  
+fn R_FillBackScreen()
 
-__global thinkercap thinker_t 
+fn R_DrawViewBorder()
 
-fn P_InitThinkers()  
+__global thinkercap thinker_t
 
-fn P_AddThinker(thinker *thinker_t)  
+fn P_InitThinkers()
 
-fn P_RemoveThinker(thinker *thinker_t)  
+fn P_AddThinker(thinker *thinker_t)
 
-fn P_SetupPsprites(curplayer *player_t)  
+fn P_RemoveThinker(thinker *thinker_t)
 
-fn P_MovePsprites(curplayer *player_t)  
+fn P_SetupPsprites(curplayer *player_t)
 
-fn P_DropWeapon(player *player_t)  
+fn P_MovePsprites(curplayer *player_t)
 
-fn P_PlayerThink(player *player_t)  
+fn P_DropWeapon(player *player_t)
 
-__global itemrespawnque [128]mapthing_t 
+fn P_PlayerThink(player *player_t)
 
-__global itemrespawntime [128]int 
+__global itemrespawnque [128]mapthing_t
 
-__global iquehead int 
+__global itemrespawntime [128]int
 
-__global iquetail int 
+__global iquehead int
 
-fn P_RespawnSpecials()  
+__global iquetail int
 
-fn P_SpawnMobj(x int, y int, z int, _type mobjtype_t) *mobj_t 
+fn P_RespawnSpecials()
 
-fn P_RemoveMobj(th *mobj_t)  
+fn P_SpawnMobj(x int, y int, z int, _type mobjtype_t) *mobj_t
 
-fn P_SubstNullMobj(th *mobj_t) *mobj_t 
+fn P_RemoveMobj(th *mobj_t)
 
-fn P_SetMobjState(mobj *mobj_t, state statenum_t) bool 
+fn P_SubstNullMobj(th *mobj_t) *mobj_t
 
-fn P_MobjThinker(mobj *mobj_t)  
+fn P_SetMobjState(mobj *mobj_t, state statenum_t) bool
 
-fn P_SpawnPuff(x int, y int, z int)  
+fn P_MobjThinker(mobj *mobj_t)
 
-fn P_SpawnBlood(x int, y int, z int, damage int)  
+fn P_SpawnPuff(x int, y int, z int)
 
-fn P_SpawnMissile(source *mobj_t, dest *mobj_t, _type mobjtype_t) *mobj_t 
+fn P_SpawnBlood(x int, y int, z int, damage int)
 
-fn P_SpawnPlayerMissile(source *mobj_t, _type mobjtype_t)  
+fn P_SpawnMissile(source *mobj_t, dest *mobj_t, _type mobjtype_t) *mobj_t
 
-fn P_NoiseAlert(target *mobj_t, emmiter *mobj_t)  
+fn P_SpawnPlayerMissile(source *mobj_t, _type mobjtype_t)
 
-struct divline_t { 
+fn P_NoiseAlert(target *mobj_t, emmiter *mobj_t)
+
+struct divline_t {
 	x int
 	y int
 	dx int
 	dy int
 }
- 
-struct intercept_t { 
+
+struct intercept_t {
 	frac int
 	isaline bool
 }
- 
-__global intercepts [189]intercept_t 
 
-__global intercept_p *intercept_t 
+__global intercepts [189]intercept_t
 
-type traverser_t fn (*intercept_t) bool 
-fn P_AproxDistance(dx int, dy int) int 
+__global intercept_p *intercept_t
 
-fn P_PointOnLineSide(x int, y int, line *line_t) int 
+type traverser_t fn (*intercept_t) bool
+fn P_AproxDistance(dx int, dy int) int
 
-fn P_PointOnDivlineSide(x int, y int, line *divline_t) int 
+fn P_PointOnLineSide(x int, y int, line *line_t) int
 
-fn P_MakeDivline(li *line_t, dl *divline_t)  
+fn P_PointOnDivlineSide(x int, y int, line *divline_t) int
 
-fn P_InterceptVector(v2 *divline_t, v1 *divline_t) int 
+fn P_MakeDivline(li *line_t, dl *divline_t)
 
-fn P_BoxOnLineSide(tmbox *int, ld *line_t) int 
+fn P_InterceptVector(v2 *divline_t, v1 *divline_t) int
 
-__global opentop int 
+fn P_BoxOnLineSide(tmbox *int, ld *line_t) int
 
-__global openbottom int 
+__global opentop int
 
-__global openrange int 
+__global openbottom int
 
-__global lowfloor int 
+__global openrange int
 
-fn P_LineOpening(linedef *line_t)  
+__global lowfloor int
 
-fn P_BlockLinesIterator(x int, y int, func fn (*line_t) bool) bool 
+fn P_LineOpening(linedef *line_t)
 
-fn P_BlockThingsIterator(x int, y int, func fn (*mobj_t) bool) bool 
+fn P_BlockLinesIterator(x int, y int, func fn (*line_t) bool) bool
 
-__global trace divline_t 
+fn P_BlockThingsIterator(x int, y int, func fn (*mobj_t) bool) bool
 
-fn P_PathTraverse(x1 int, y1 int, x2 int, y2 int, flags int, trav fn (*intercept_t) bool) bool 
+__global trace divline_t
 
-fn P_UnsetThingPosition(thing *mobj_t)  
+fn P_PathTraverse(x1 int, y1 int, x2 int, y2 int, flags int, trav fn (*intercept_t) bool) bool
 
-fn P_SetThingPosition(thing *mobj_t)  
+fn P_UnsetThingPosition(thing *mobj_t)
 
-__global floatok bool 
+fn P_SetThingPosition(thing *mobj_t)
 
-__global tmfloorz int 
+__global floatok bool
 
-__global tmceilingz int 
+__global tmfloorz int
 
-__global ceilingline *line_t 
+__global tmceilingz int
 
-__global spechit [20]*line_t 
+__global ceilingline *line_t
 
-__global numspechit int 
+__global spechit [20]*line_t
 
-fn P_CheckPosition(thing *mobj_t, x int, y int) bool 
+__global numspechit int
 
-fn P_TryMove(thing *mobj_t, x int, y int) bool 
+fn P_CheckPosition(thing *mobj_t, x int, y int) bool
 
-fn P_TeleportMove(thing *mobj_t, x int, y int) bool 
+fn P_TryMove(thing *mobj_t, x int, y int) bool
 
-fn P_SlideMove(mo *mobj_t)  
+fn P_TeleportMove(thing *mobj_t, x int, y int) bool
 
-fn P_CheckSight(t1 *mobj_t, t2 *mobj_t) bool 
+fn P_SlideMove(mo *mobj_t)
 
-fn P_UseLines(player *player_t)  
+fn P_CheckSight(t1 *mobj_t, t2 *mobj_t) bool
 
-fn P_ChangeSector(sector *sector_t, crunch bool) bool 
+fn P_UseLines(player *player_t)
 
-__global linetarget *mobj_t 
+fn P_ChangeSector(sector *sector_t, crunch bool) bool
 
-fn P_AimLineAttack(t1 *mobj_t, angle angle_t, distance int) int 
+__global linetarget *mobj_t
 
-fn P_LineAttack(t1 *mobj_t, angle angle_t, distance int, slope int, damage int)  
+fn P_AimLineAttack(t1 *mobj_t, angle angle_t, distance int) int
 
-fn P_RadiusAttack(spot *mobj_t, source *mobj_t, damage int)  
+fn P_LineAttack(t1 *mobj_t, angle angle_t, distance int, slope int, damage int)
 
-__global rejectmatrix byteptr 
+fn P_RadiusAttack(spot *mobj_t, source *mobj_t, damage int)
 
-__global blockmaplump *short 
+__global rejectmatrix byteptr
 
-__global blockmap *short 
+__global blockmaplump *short
 
-__global bmapwidth int 
+__global blockmap *short
 
-__global bmapheight int 
+__global bmapwidth int
 
-__global bmaporgx int 
+__global bmapheight int
 
-__global bmaporgy int 
+__global bmaporgx int
 
-__global blocklinks **mobj_t 
+__global bmaporgy int
 
-__global maxammo [4]int 
+__global blocklinks **mobj_t
 
-__global clipammo [4]int 
+__global maxammo [4]int
 
-fn P_TouchSpecialThing(special *mobj_t, toucher *mobj_t)  
+__global clipammo [4]int
 
-fn P_DamageMobj(target *mobj_t, inflictor *mobj_t, source *mobj_t, damage int)  
+fn P_TouchSpecialThing(special *mobj_t, toucher *mobj_t)
 
-__global levelTimer bool 
+fn P_DamageMobj(target *mobj_t, inflictor *mobj_t, source *mobj_t, damage int)
 
-__global levelTimeCount int 
+__global levelTimer bool
 
-fn P_InitPicAnims()  
+__global levelTimeCount int
 
-fn P_SpawnSpecials()  
+fn P_InitPicAnims()
 
-fn P_UpdateSpecials()  
+fn P_SpawnSpecials()
 
-fn P_UseSpecialLine(thing *mobj_t, line *line_t, side int) bool 
+fn P_UpdateSpecials()
 
-fn P_ShootSpecialLine(thing *mobj_t, line *line_t)  
+fn P_UseSpecialLine(thing *mobj_t, line *line_t, side int) bool
 
-fn P_CrossSpecialLine(linenum int, side int, thing *mobj_t)  
+fn P_ShootSpecialLine(thing *mobj_t, line *line_t)
 
-fn P_PlayerInSpecialSector(player *player_t)  
+fn P_CrossSpecialLine(linenum int, side int, thing *mobj_t)
 
-fn twoSided(sector int, line int) int 
+fn P_PlayerInSpecialSector(player *player_t)
 
-fn getSector(currentSector int, line int, side int) *sector_t 
+fn twoSided(sector int, line int) int
 
-fn getSide(currentSector int, line int, side int) *side_t 
+fn getSector(currentSector int, line int, side int) *sector_t
 
-fn P_FindLowestFloorSurrounding(sec *sector_t) int 
+fn getSide(currentSector int, line int, side int) *side_t
 
-fn P_FindHighestFloorSurrounding(sec *sector_t) int 
+fn P_FindLowestFloorSurrounding(sec *sector_t) int
 
-fn P_FindNextHighestFloor(sec *sector_t, currentheight int) int 
+fn P_FindHighestFloorSurrounding(sec *sector_t) int
 
-fn P_FindLowestCeilingSurrounding(sec *sector_t) int 
+fn P_FindNextHighestFloor(sec *sector_t, currentheight int) int
 
-fn P_FindHighestCeilingSurrounding(sec *sector_t) int 
+fn P_FindLowestCeilingSurrounding(sec *sector_t) int
 
-fn P_FindSectorFromLineTag(line *line_t, start int) int 
+fn P_FindHighestCeilingSurrounding(sec *sector_t) int
 
-fn P_FindMinSurroundingLight(sector *sector_t, max int) int 
+fn P_FindSectorFromLineTag(line *line_t, start int) int
 
-fn getNextSector(line *line_t, sec *sector_t) *sector_t 
+fn P_FindMinSurroundingLight(sector *sector_t, max int) int
 
-fn EV_DoDonut(line *line_t) int 
+fn getNextSector(line *line_t, sec *sector_t) *sector_t
 
-struct fireflicker_t { 
+fn EV_DoDonut(line *line_t) int
+
+struct fireflicker_t {
 	thinker thinker_t
 	sector *sector_t
 	count int
 	maxlight int
 	minlight int
 }
- 
-struct lightflash_t { 
+
+struct lightflash_t {
 	thinker thinker_t
 	sector *sector_t
 	count int
@@ -2800,8 +2800,8 @@ struct lightflash_t {
 	maxtime int
 	mintime int
 }
- 
-struct strobe_t { 
+
+struct strobe_t {
 	thinker thinker_t
 	sector *sector_t
 	count int
@@ -2810,60 +2810,60 @@ struct strobe_t {
 	darktime int
 	brighttime int
 }
- 
-struct glow_t { 
+
+struct glow_t {
 	thinker thinker_t
 	sector *sector_t
 	minlight int
 	maxlight int
 	direction int
 }
- 
-fn P_SpawnFireFlicker(sector *sector_t)  
 
-fn T_LightFlash(flash *lightflash_t)  
+fn P_SpawnFireFlicker(sector *sector_t)
 
-fn P_SpawnLightFlash(sector *sector_t)  
+fn T_LightFlash(flash *lightflash_t)
 
-fn T_StrobeFlash(flash *strobe_t)  
+fn P_SpawnLightFlash(sector *sector_t)
 
-fn P_SpawnStrobeFlash(sector *sector_t, fastOrSlow int, inSync int)  
+fn T_StrobeFlash(flash *strobe_t)
 
-fn EV_StartLightStrobing(line *line_t)  
+fn P_SpawnStrobeFlash(sector *sector_t, fastOrSlow int, inSync int)
 
-fn EV_TurnTagLightsOff(line *line_t)  
+fn EV_StartLightStrobing(line *line_t)
 
-fn EV_LightTurnOn(line *line_t, bright int)  
+fn EV_TurnTagLightsOff(line *line_t)
 
-fn T_Glow(g *glow_t)  
+fn EV_LightTurnOn(line *line_t, bright int)
 
-fn P_SpawnGlowingLight(sector *sector_t)  
+fn T_Glow(g *glow_t)
 
-struct switchlist_t { 
+fn P_SpawnGlowingLight(sector *sector_t)
+
+struct switchlist_t {
 	name1 [9]byte
 	name2 [9]byte
 	episode i16
 }
- 
+
 enum bwhere_e {
 	top
 	middle
 	bottom
 }
 
-struct button_t { 
+struct button_t {
 	line *line_t
 	where bwhere_e
 	btexture int
 	btimer int
 	soundorg *degenmobj_t
 }
- 
-__global buttonlist [16]button_t 
 
-fn P_ChangeSwitchTexture(line *line_t, useAgain int)  
+__global buttonlist [16]button_t
 
-fn P_InitSwitchList()  
+fn P_ChangeSwitchTexture(line *line_t, useAgain int)
+
+fn P_InitSwitchList()
 
 enum plat_e {
 	up
@@ -2880,7 +2880,7 @@ enum plattype_e {
 	blazeDWUS
 }
 
-struct plat_t { 
+struct plat_t {
 	thinker thinker_t
 	sector *sector_t
 	speed int
@@ -2894,20 +2894,20 @@ struct plat_t {
 	tag int
 	_type plattype_e
 }
- 
-__global activeplats [30]*plat_t 
 
-fn T_PlatRaise(plat *plat_t)  
+__global activeplats [30]*plat_t
 
-fn EV_DoPlat(line *line_t, _type plattype_e, amount int) int 
+fn T_PlatRaise(plat *plat_t)
 
-fn P_AddActivePlat(plat *plat_t)  
+fn EV_DoPlat(line *line_t, _type plattype_e, amount int) int
 
-fn P_RemoveActivePlat(plat *plat_t)  
+fn P_AddActivePlat(plat *plat_t)
 
-fn EV_StopPlat(line *line_t)  
+fn P_RemoveActivePlat(plat *plat_t)
 
-fn P_ActivateInStasis(tag int)  
+fn EV_StopPlat(line *line_t)
+
+fn P_ActivateInStasis(tag int)
 
 enum vldoor_e {
 	vld_normal
@@ -2920,7 +2920,7 @@ enum vldoor_e {
 	vld_blazeClose
 }
 
-struct vldoor_t { 
+struct vldoor_t {
 	thinker thinker_t
 	_type vldoor_e
 	sector *sector_t
@@ -2930,18 +2930,18 @@ struct vldoor_t {
 	topwait int
 	topcountdown int
 }
- 
-fn EV_VerticalDoor(line *line_t, thing *mobj_t)  
 
-fn EV_DoDoor(line *line_t, _type vldoor_e) int 
+fn EV_VerticalDoor(line *line_t, thing *mobj_t)
 
-fn EV_DoLockedDoor(line *line_t, _type vldoor_e, thing *mobj_t) int 
+fn EV_DoDoor(line *line_t, _type vldoor_e) int
 
-fn T_VerticalDoor(door *vldoor_t)  
+fn EV_DoLockedDoor(line *line_t, _type vldoor_e, thing *mobj_t) int
 
-fn P_SpawnDoorCloseIn30(sec *sector_t)  
+fn T_VerticalDoor(door *vldoor_t)
 
-fn P_SpawnDoorRaiseIn5Mins(sec *sector_t, secnum int)  
+fn P_SpawnDoorCloseIn30(sec *sector_t)
+
+fn P_SpawnDoorRaiseIn5Mins(sec *sector_t, secnum int)
 
 enum ceiling_e {
 	lowerToFloor
@@ -2952,7 +2952,7 @@ enum ceiling_e {
 	silentCrushAndRaise
 }
 
-struct ceiling_t { 
+struct ceiling_t {
 	thinker thinker_t
 	_type ceiling_e
 	sector *sector_t
@@ -2964,20 +2964,20 @@ struct ceiling_t {
 	tag int
 	olddirection int
 }
- 
-__global activeceilings [30]*ceiling_t 
 
-fn EV_DoCeiling(line *line_t, _type ceiling_e) int 
+__global activeceilings [30]*ceiling_t
 
-fn T_MoveCeiling(ceiling *ceiling_t)  
+fn EV_DoCeiling(line *line_t, _type ceiling_e) int
 
-fn P_AddActiveCeiling(c *ceiling_t)  
+fn T_MoveCeiling(ceiling *ceiling_t)
 
-fn P_RemoveActiveCeiling(c *ceiling_t)  
+fn P_AddActiveCeiling(c *ceiling_t)
 
-fn EV_CeilingCrushStop(line *line_t) int 
+fn P_RemoveActiveCeiling(c *ceiling_t)
 
-fn P_ActivateInStasisCeiling(line *line_t)  
+fn EV_CeilingCrushStop(line *line_t) int
+
+fn P_ActivateInStasisCeiling(line *line_t)
 
 enum floor_e {
 	lowerFloor
@@ -3000,7 +3000,7 @@ enum stair_e {
 	turbo16
 }
 
-struct floormove_t { 
+struct floormove_t {
 	thinker thinker_t
 	_type floor_e
 	crush bool
@@ -3011,25 +3011,25 @@ struct floormove_t {
 	floordestheight int
 	speed int
 }
- 
+
 enum result_e {
 	ok
 	crushed
 	pastdest
 }
 
-fn T_MovePlane(sector *sector_t, speed int, dest int, crush bool, floorOrCeiling int, direction int) result_e 
+fn T_MovePlane(sector *sector_t, speed int, dest int, crush bool, floorOrCeiling int, direction int) result_e
 
-fn EV_BuildStairs(line *line_t, _type stair_e) int 
+fn EV_BuildStairs(line *line_t, _type stair_e) int
 
-fn EV_DoFloor(line *line_t, floortype floor_e) int 
+fn EV_DoFloor(line *line_t, floortype floor_e) int
 
-fn T_MoveFloor(floor *floormove_t)  
+fn T_MoveFloor(floor *floormove_t)
 
-fn EV_Teleport(line *line_t, side int, thing *mobj_t) int 
+fn EV_Teleport(line *line_t, side int, thing *mobj_t) int
 
-type sfxinfo_t sfxinfo_struct 
-struct sfxinfo_struct { 
+type sfxinfo_t sfxinfo_struct
+struct sfxinfo_struct {
 	tagname byteptr
 	name [9]byte
 	priority int
@@ -3041,14 +3041,14 @@ struct sfxinfo_struct {
 	numchannels int
 	driver_data voidptr
 }
- 
-struct musicinfo_t { 
+
+struct musicinfo_t {
 	name byteptr
 	lumpnum int
 	data voidptr
 	handle voidptr
 }
- 
+
 enum snddevice_t {
 	SNDDEVICE_NONE
 	SNDDEVICE_PCSPEAKER
@@ -3063,7 +3063,7 @@ enum snddevice_t {
 	SNDDEVICE_CD
 }
 
-struct sound_module_t { 
+struct sound_module_t {
 	sound_devices *snddevice_t
 	num_sound_devices int
 	Init fn (bool) bool
@@ -3076,26 +3076,26 @@ struct sound_module_t {
 	SoundIsPlaying fn (int) bool
 	CacheSounds fn (*sfxinfo_t, int)
 }
- 
-fn I_InitSound(use_sfx_prefix bool)  
 
-fn I_ShutdownSound()  
+fn I_InitSound(use_sfx_prefix bool)
 
-fn I_GetSfxLumpNum(sfxinfo *sfxinfo_t) int 
+fn I_ShutdownSound()
 
-fn I_UpdateSound()  
+fn I_GetSfxLumpNum(sfxinfo *sfxinfo_t) int
 
-fn I_UpdateSoundParams(channel int, vol int, sep int)  
+fn I_UpdateSound()
 
-fn I_StartSound(sfxinfo *sfxinfo_t, channel int, vol int, sep int, pitch int) int 
+fn I_UpdateSoundParams(channel int, vol int, sep int)
 
-fn I_StopSound(channel int)  
+fn I_StartSound(sfxinfo *sfxinfo_t, channel int, vol int, sep int, pitch int) int
 
-fn I_SoundIsPlaying(channel int) bool 
+fn I_StopSound(channel int)
 
-fn I_PrecacheSounds(sounds *sfxinfo_t, num_sounds int)  
+fn I_SoundIsPlaying(channel int) bool
 
-struct music_module_t { 
+fn I_PrecacheSounds(sounds *sfxinfo_t, num_sounds int)
+
+struct music_module_t {
 	sound_devices *snddevice_t
 	num_sound_devices int
 	Init fn () bool
@@ -3110,42 +3110,42 @@ struct music_module_t {
 	MusicIsPlaying fn () bool
 	Poll fn ()
 }
- 
-fn I_InitMusic()  
 
-fn I_ShutdownMusic()  
+fn I_InitMusic()
 
-fn I_SetMusicVolume(volume int)  
+fn I_ShutdownMusic()
 
-fn I_PauseSong()  
+fn I_SetMusicVolume(volume int)
 
-fn I_ResumeSong()  
+fn I_PauseSong()
 
-fn I_RegisterSong(data voidptr, len int) voidptr 
+fn I_ResumeSong()
 
-fn I_UnRegisterSong(handle voidptr)  
+fn I_RegisterSong(data voidptr, len int) voidptr
 
-fn I_PlaySong(handle voidptr, looping bool)  
+fn I_UnRegisterSong(handle voidptr)
 
-fn I_StopSong()  
+fn I_PlaySong(handle voidptr, looping bool)
 
-fn I_MusicIsPlaying() bool 
+fn I_StopSong()
 
-__global snd_sfxdevice int 
+fn I_MusicIsPlaying() bool
 
-__global snd_musicdevice int 
+__global snd_sfxdevice int
 
-__global snd_samplerate int 
+__global snd_musicdevice int
 
-__global snd_cachesize int 
+__global snd_samplerate int
 
-__global snd_maxslicetime_ms int 
+__global snd_cachesize int
 
-__global snd_musiccmd byteptr 
+__global snd_maxslicetime_ms int
 
-__global snd_pitchshift int 
+__global snd_musiccmd byteptr
 
-fn I_BindSoundVariables()  
+__global snd_pitchshift int
+
+fn I_BindSoundVariables()
 
 enum opl_driver_ver_t {
 	opl_doom1_1_666
@@ -3153,11 +3153,11 @@ enum opl_driver_ver_t {
 	opl_doom_1_9
 }
 
-fn I_SetOPLDriverVer(ver opl_driver_ver_t)  
+fn I_SetOPLDriverVer(ver opl_driver_ver_t)
 
-__global S_sfx []sfxinfo_t 
+__global S_sfx []sfxinfo_t
 
-__global S_music []musicinfo_t 
+__global S_music []musicinfo_t
 
 enum musicenum_t {
 	mus_None
@@ -3344,243 +3344,243 @@ enum sfxenum_t {
 	NUMSFX
 }
 
-fn S_Init(sfxVolume int, musicVolume int)  
+fn S_Init(sfxVolume int, musicVolume int)
 
-fn S_Shutdown()  
+fn S_Shutdown()
 
-fn S_Start()  
+fn S_Start()
 
-fn S_StartSound(origin voidptr, sound_id int)  
+fn S_StartSound(origin voidptr, sound_id int)
 
-fn S_StopSound(origin *mobj_t)  
+fn S_StopSound(origin *mobj_t)
 
-fn S_StartMusic(music_id int)  
+fn S_StartMusic(music_id int)
 
-fn S_ChangeMusic(music_id int, looping int)  
+fn S_ChangeMusic(music_id int, looping int)
 
-fn S_MusicPlaying() bool 
+fn S_MusicPlaying() bool
 
-fn S_StopMusic()  
+fn S_StopMusic()
 
-fn S_PauseSound()  
+fn S_PauseSound()
 
-fn S_ResumeSound()  
+fn S_ResumeSound()
 
-fn S_UpdateSounds(listener *mobj_t)  
+fn S_UpdateSounds(listener *mobj_t)
 
-fn S_SetMusicVolume(volume int)  
+fn S_SetMusicVolume(volume int)
 
-fn S_SetSfxVolume(volume int)  
+fn S_SetSfxVolume(volume int)
 
-__global snd_channels int 
+__global snd_channels int
 
-fn G_DeathMatchSpawnPlayer(playernum int)  
+fn G_DeathMatchSpawnPlayer(playernum int)
 
-fn G_InitNew(skill skill_t, episode int, map int)  
+fn G_InitNew(skill skill_t, episode int, map int)
 
-fn G_DeferedInitNew(skill skill_t, episode int, map int)  
+fn G_DeferedInitNew(skill skill_t, episode int, map int)
 
-fn G_DeferedPlayDemo(demo byteptr)  
+fn G_DeferedPlayDemo(demo byteptr)
 
-fn G_LoadGame(name byteptr)  
+fn G_LoadGame(name byteptr)
 
-fn G_DoLoadGame()  
+fn G_DoLoadGame()
 
-fn G_SaveGame(slot int, description byteptr)  
+fn G_SaveGame(slot int, description byteptr)
 
-fn G_RecordDemo(name byteptr)  
+fn G_RecordDemo(name byteptr)
 
-fn G_BeginRecording()  
+fn G_BeginRecording()
 
-fn G_PlayDemo(name byteptr)  
+fn G_PlayDemo(name byteptr)
 
-fn G_TimeDemo(name byteptr)  
+fn G_TimeDemo(name byteptr)
 
-fn G_CheckDemoStatus() bool 
+fn G_CheckDemoStatus() bool
 
-fn G_ExitLevel()  
+fn G_ExitLevel()
 
-fn G_SecretExitLevel()  
+fn G_SecretExitLevel()
 
-fn G_WorldDone()  
+fn G_WorldDone()
 
-fn G_BuildTiccmd(cmd *ticcmd_t, maketic int)  
+fn G_BuildTiccmd(cmd *ticcmd_t, maketic int)
 
-fn G_Ticker()  
+fn G_Ticker()
 
-fn G_Responder(ev *event_t) bool 
+fn G_Responder(ev *event_t) bool
 
-fn G_ScreenShot()  
+fn G_ScreenShot()
 
-fn G_DrawMouseSpeedBox()  
+fn G_DrawMouseSpeedBox()
 
-fn G_VanillaVersionCode() int 
+fn G_VanillaVersionCode() int
 
-__global vanilla_savegame_limit int 
+__global vanilla_savegame_limit int
 
-__global vanilla_demo_limit int 
+__global vanilla_demo_limit int
 
-type netgame_startup_callback_t fn (int, int) bool 
-struct loop_interface_t { 
+type netgame_startup_callback_t fn (int, int) bool
+struct loop_interface_t {
 	ProcessEvents fn ()
 	BuildTiccmd fn (*ticcmd_t, int)
 	RunTic fn (*ticcmd_t, *bool)
 	RunMenu fn ()
 }
- 
-fn D_RegisterLoopCallbacks(i *loop_interface_t)  
 
-fn NetUpdate()  
+fn D_RegisterLoopCallbacks(i *loop_interface_t)
 
-fn D_QuitNetGame()  
+fn NetUpdate()
 
-fn TryRunTics()  
+fn D_QuitNetGame()
 
-fn D_StartGameLoop()  
+fn TryRunTics()
 
-fn D_InitNetGame(connect_data *net_connect_data_t) bool 
+fn D_StartGameLoop()
 
-fn D_StartNetGame(settings *net_gamesettings_t, callback netgame_startup_callback_t)  
+fn D_InitNetGame(connect_data *net_connect_data_t) bool
 
-__global singletics bool 
+fn D_StartNetGame(settings *net_gamesettings_t, callback netgame_startup_callback_t)
 
-__global gametic int 
+__global singletics bool
 
-__global ticdup int 
+__global gametic int
 
-fn D_NonVanillaRecord(conditional bool, feature byteptr) bool 
+__global ticdup int
 
-fn D_NonVanillaPlayback(conditional bool, lumpnum int, feature byteptr) bool 
+fn D_NonVanillaRecord(conditional bool, feature byteptr) bool
 
-__global nomonsters bool 
+fn D_NonVanillaPlayback(conditional bool, lumpnum int, feature byteptr) bool
 
-__global respawnparm bool 
+__global nomonsters bool
 
-__global fastparm bool 
+__global respawnparm bool
 
-__global devparm bool 
+__global fastparm bool
 
-__global gamemode GameMode_t 
+__global devparm bool
 
-__global gamemission GameMission_t 
+__global gamemode GameMode_t
 
-__global gameversion GameVersion_t 
+__global gamemission GameMission_t
 
-__global gamevariant GameVariant_t 
+__global gameversion GameVersion_t
 
-__global gamedescription byteptr 
+__global gamevariant GameVariant_t
 
-__global modifiedgame bool 
+__global gamedescription byteptr
 
-__global startskill skill_t 
+__global modifiedgame bool
 
-__global startepisode int 
+__global startskill skill_t
 
-__global startmap int 
+__global startepisode int
 
-__global startloadgame int 
+__global startmap int
 
-__global autostart bool 
+__global startloadgame int
 
-__global gameskill skill_t 
+__global autostart bool
 
-__global gameepisode int 
+__global gameskill skill_t
 
-__global gamemap int 
+__global gameepisode int
 
-__global timelimit int 
+__global gamemap int
 
-__global respawnmonsters bool 
+__global timelimit int
 
-__global netgame bool 
+__global respawnmonsters bool
 
-__global deathmatch int 
+__global netgame bool
 
-__global sfxVolume int 
+__global deathmatch int
 
-__global musicVolume int 
+__global sfxVolume int
 
-__global snd_MusicDevice int 
+__global musicVolume int
 
-__global snd_SfxDevice int 
+__global snd_MusicDevice int
 
-__global snd_DesiredMusicDevice int 
+__global snd_SfxDevice int
 
-__global snd_DesiredSfxDevice int 
+__global snd_DesiredMusicDevice int
 
-__global statusbaractive bool 
+__global snd_DesiredSfxDevice int
 
-__global automapactive bool 
+__global statusbaractive bool
 
-__global menuactive bool 
+__global automapactive bool
 
-__global paused bool 
+__global menuactive bool
 
-__global viewactive bool 
+__global paused bool
 
-__global nodrawers bool 
+__global viewactive bool
 
-__global testcontrols bool 
+__global nodrawers bool
 
-__global testcontrols_mousespeed int 
+__global testcontrols bool
 
-__global viewangleoffset int 
+__global testcontrols_mousespeed int
 
-__global consoleplayer int 
+__global viewangleoffset int
 
-__global displayplayer int 
+__global consoleplayer int
 
-__global totalkills int 
+__global displayplayer int
 
-__global totalitems int 
+__global totalkills int
 
-__global totalsecret int 
+__global totalitems int
 
-__global levelstarttic int 
+__global totalsecret int
 
-__global leveltime int 
+__global levelstarttic int
 
-__global usergame bool 
+__global leveltime int
 
-__global demoplayback bool 
+__global usergame bool
 
-__global demorecording bool 
+__global demoplayback bool
 
-__global lowres_turn bool 
+__global demorecording bool
 
-__global singledemo bool 
+__global lowres_turn bool
 
-__global gamestate gamestate_t 
+__global singledemo bool
 
-__global players [4]player_t 
+__global gamestate gamestate_t
 
-__global playeringame [4]bool 
+__global players [4]player_t
 
-__global deathmatchstarts [10]mapthing_t 
+__global playeringame [4]bool
 
-__global deathmatch_p *mapthing_t 
+__global deathmatchstarts [10]mapthing_t
 
-__global playerstarts [4]mapthing_t 
+__global deathmatch_p *mapthing_t
 
-__global playerstartsingame [4]bool 
+__global playerstarts [4]mapthing_t
 
-__global wminfo wbstartstruct_t 
+__global playerstartsingame [4]bool
 
-__global savegamedir byteptr 
+__global wminfo wbstartstruct_t
 
-__global precache bool 
+__global savegamedir byteptr
 
-__global wipegamestate gamestate_t 
+__global precache bool
 
-__global mouseSensitivity int 
+__global wipegamestate gamestate_t
 
-__global bodyqueslot int 
+__global mouseSensitivity int
 
-__global skyflatnum int 
+__global bodyqueslot int
 
-__global rndindex int 
+__global skyflatnum int
 
-__global netcmds *ticcmd_t 
+__global rndindex int
+
+__global netcmds *ticcmd_t
 
 enum dirtype_t {
 	DI_EAST
@@ -3596,31 +3596,31 @@ enum dirtype_t {
 }
 
 const (
-opposite   = [ DI_WEST, DI_SOUTHWEST, DI_SOUTH, DI_SOUTHEAST, DI_EAST, DI_NORTHEAST, DI_NORTH, DI_NORTHWEST, DI_NODIR, ]
+opposite = [ DI_WEST, DI_SOUTHWEST, DI_SOUTH, DI_SOUTHEAST, DI_EAST, DI_NORTHEAST, DI_NORTH, DI_NORTHWEST, DI_NODIR, ]
 !!
 )
 
 const (
-diags   = [ DI_NORTHWEST, DI_NORTHEAST, DI_SOUTHWEST, DI_SOUTHEAST, ]
+diags = [ DI_NORTHWEST, DI_NORTHEAST, DI_SOUTHWEST, DI_SOUTHEAST, ]
 !!
 )
 
-fn A_Fall(actor *mobj_t)  
+fn A_Fall(actor *mobj_t)
 
-__global soundtarget *mobj_t 
+__global soundtarget *mobj_t
 
 fn P_RecursiveSound(sec *sector_t, soundblocks int) {
 	i := 0
 	check := &line_t{!}
 	other := &sector_t{!}
 	if sec.validcount == validcount && sec.soundtraversed <= soundblocks + 1 {
-		return 
+		return
 	}
 	sec.validcount = validcount
 	sec.soundtraversed = soundblocks + 1
 	sec.soundtarget = soundtarget
 	for i = 0; i < sec.linecount; i ++ {
-		check = sec.lines [i] 
+		check = sec.lines [i]
 		if !(check.flags & 4) {
 			continue
 		}
@@ -3630,14 +3630,14 @@ fn P_RecursiveSound(sec *sector_t, soundblocks int) {
 		}
 		if sides [check.sidenum [0] ] .sector == sec {
 			other = sides [check.sidenum [1] ] .sector
-		} else { 
+		} else {
 			other = sides [check.sidenum [0] ] .sector
 		}
 		if check.flags & 64 {
 			if !soundblocks {
 				P_RecursiveSound(other, 1)
 			}
-		} else { 
+		} else {
 			P_RecursiveSound(other, soundblocks)
 		}
 	}
@@ -3710,12 +3710,12 @@ fn P_CheckMissileRange(actor *mobj_t) bool {
 }
 
 const (
-xspeed   = [ (1 << 16), 47000, 0, -47000, -(1 << 16), -47000, 0, 47000, ]
+xspeed = [ (1 << 16), 47000, 0, -47000, -(1 << 16), -47000, 0, 47000, ]
 !!
 )
 
 const (
-yspeed   = [ 0, 47000, (1 << 16), 47000, 0, -47000, -(1 << 16), -47000, ]
+yspeed = [ 0, 47000, (1 << 16), 47000, 0, -47000, -(1 << 16), -47000, ]
 !!
 )
 
@@ -3731,14 +3731,14 @@ fn P_Move(actor *mobj_t) bool {
 	if u32(actor.movedir) >= 8 {
 		I_Error('Weird actor->movedir!')
 	}
-	tryx = actor.x + actor.info.speed * xspeed [actor.movedir] 
-	tryy = actor.y + actor.info.speed * yspeed [actor.movedir] 
+	tryx = actor.x + actor.info.speed * xspeed [actor.movedir]
+	tryy = actor.y + actor.info.speed * yspeed [actor.movedir]
 	try_ok = P_TryMove(actor, tryx, tryy)
 	if !try_ok {
 		if actor.flags & MF_FLOAT && floatok {
 			if actor.z < tmfloorz {
 				actor.z += ((1 << 16) * 4)
-			} else { 
+			} else {
 				actor.z -= ((1 << 16) * 4)
 			}
 			actor.flags |= MF_INFLOAT
@@ -3750,7 +3750,7 @@ fn P_Move(actor *mobj_t) bool {
 		actor.movedir = DI_NODIR
 		good = _false
 		for numspechit-- {
-			ld = spechit [numspechit] 
+			ld = spechit [numspechit]
 			if P_UseSpecialLine(actor, ld, 0) {
 				good = _true
 			}
@@ -3785,56 +3785,56 @@ fn P_NewChaseDir(actor *mobj_t) {
 		I_Error('P_NewChaseDir: called with no target')
 	}
 	olddir = actor.movedir
-	turnaround = opposite [olddir] 
+	turnaround = opposite [olddir]
 	deltax = actor.target.x - actor.x
 	deltay = actor.target.y - actor.y
 	if deltax > 10 * (1 << 16) {
-		d [1]  = DI_EAST
+		d [1] = DI_EAST
 	} else if deltax < -10 * (1 << 16) {
-		d [1]  = DI_WEST
-	} else { 
-		d [1]  = DI_NODIR
+		d [1] = DI_WEST
+	} else {
+		d [1] = DI_NODIR
 	}
 	if deltay < -10 * (1 << 16) {
-		d [2]  = DI_SOUTH
+		d [2] = DI_SOUTH
 	} else if deltay > 10 * (1 << 16) {
-		d [2]  = DI_NORTH
-	} else { 
-		d [2]  = DI_NODIR
+		d [2] = DI_NORTH
+	} else {
+		d [2] = DI_NODIR
 	}
-	if d [1]  != DI_NODIR && d [2]  != DI_NODIR {
-		actor.movedir = diags [((deltay < 0) << 1) + (deltax > 0)] 
+	if d [1] != DI_NODIR && d [2] != DI_NODIR {
+		actor.movedir = diags [((deltay < 0) << 1) + (deltax > 0)]
 		if actor.movedir != int(turnaround) && P_TryWalk(actor) {
-			return 
+			return
 		}
 	}
 	if P_Random() > 200 || abs(deltay) > abs(deltax) {
-		tdir = d [1] 
-		d [1]  = d [2] 
-		d [2]  = tdir
+		tdir = d [1]
+		d [1] = d [2]
+		d [2] = tdir
 	}
-	if d [1]  == turnaround {
-		d [1]  = DI_NODIR
+	if d [1] == turnaround {
+		d [1] = DI_NODIR
 	}
-	if d [2]  == turnaround {
-		d [2]  = DI_NODIR
+	if d [2] == turnaround {
+		d [2] = DI_NODIR
 	}
-	if d [1]  != DI_NODIR {
-		actor.movedir = d [1] 
+	if d [1] != DI_NODIR {
+		actor.movedir = d [1]
 		if P_TryWalk(actor) {
-			return 
+			return
 		}
 	}
-	if d [2]  != DI_NODIR {
-		actor.movedir = d [2] 
+	if d [2] != DI_NODIR {
+		actor.movedir = d [2]
 		if P_TryWalk(actor) {
-			return 
+			return
 		}
 	}
 	if olddir != DI_NODIR {
 		actor.movedir = olddir
 		if P_TryWalk(actor) {
-			return 
+			return
 		}
 	}
 	if P_Random() & 1 {
@@ -3842,7 +3842,7 @@ fn P_NewChaseDir(actor *mobj_t) {
 		if tdir != int(turnaround) {
 			actor.movedir = tdir
 				if P_TryWalk(actor) {
-					return 
+					return
 				}
 			}
 		}
@@ -3851,7 +3851,7 @@ fn P_NewChaseDir(actor *mobj_t) {
 			if tdir != int(turnaround) {
 				actor.movedir = tdir
 				if P_TryWalk(actor) {
-					return 
+					return
 				}
 			}
 		}
@@ -3859,7 +3859,7 @@ fn P_NewChaseDir(actor *mobj_t) {
 	if turnaround != DI_NODIR {
 		actor.movedir = turnaround
 		if P_TryWalk(actor) {
-			return 
+			return
 		}
 	}
 	actor.movedir = DI_NODIR
@@ -3880,7 +3880,7 @@ fn P_LookForPlayers(actor *mobj_t, allaround bool) bool {
 		if c ++ == 2 || actor.lastlook == stop {
 			return _false
 		}
-		player = &players [actor.lastlook] 
+		player = &players [actor.lastlook]
 		if player.health <= 0 {
 			continue
 		}
@@ -3913,7 +3913,7 @@ fn A_KeenDie(mo *mobj_t) {
 		}
 		mo2 = (*mobj_t)(th)
 		if mo2 != mo && mo2._type == mo._type && mo2.health > 0 {
-			return 
+			return
 		}
 	}
 	junk.tag = 666
@@ -3931,15 +3931,15 @@ fn A_Look(actor *mobj_t) {
 				goto seeyou
 			}
 		}
-		else { 
+		else {
 			goto seeyou
 		}
 	}
 	if !P_LookForPlayers(actor, _false) {
-		return 
+		return
 	}
 
-seeyou: 
+seeyou:
 	if actor.info.seesound {
 		sound := 0
 		switch actor.info.seesound {
@@ -3954,7 +3954,7 @@ seeyou:
 		if actor._type == MT_SPIDER || actor._type == MT_CYBORG {
 			S_StartSound((voidptr(0)), sound)
 		}
-		else { 
+		else {
 			S_StartSound(actor, sound)
 		}
 	}
@@ -3969,7 +3969,7 @@ fn A_Chase(actor *mobj_t) {
 	if actor.threshold {
 		if !actor.target || actor.target.health <= 0 {
 			actor.threshold = 0
-		} else { 
+		} else {
 			actor.threshold--
 		}
 	}
@@ -3985,24 +3985,24 @@ fn A_Chase(actor *mobj_t) {
 	}
 	if !actor.target || !(actor.target.flags & MF_SHOOTABLE) {
 		if P_LookForPlayers(actor, _true) {
-			return 
+			return
 		}
 		P_SetMobjState(actor, actor.info.spawnstate)
-		return 
+		return
 	}
 	if actor.flags & MF_JUSTATTACKED {
 		actor.flags &= ~MF_JUSTATTACKED
 		if gameskill != sk_nightmare && !fastparm {
 			P_NewChaseDir(actor)
 		}
-		return 
+		return
 	}
 	if actor.info.meleestate && P_CheckMeleeRange(actor) {
 		if actor.info.attacksound {
 			S_StartSound(actor, actor.info.attacksound)
 		}
 		P_SetMobjState(actor, actor.info.meleestate)
-		return 
+		return
 	}
 	if actor.info.missilestate {
 		if gameskill < sk_nightmare && !fastparm && actor.movecount {
@@ -4013,13 +4013,13 @@ fn A_Chase(actor *mobj_t) {
 		}
 		P_SetMobjState(actor, actor.info.missilestate)
 		actor.flags |= MF_JUSTATTACKED
-		return 
+		return
 	}
 
-nomissile: 
+nomissile:
 	if netgame && !actor.threshold && !P_CheckSight(actor, actor.target) {
 		if P_LookForPlayers(actor, _true) {
-			return 
+			return
 		}
 	}
 	if actor.movecount-- < 0 || !P_Move(actor) {
@@ -4032,7 +4032,7 @@ nomissile:
 
 fn A_FaceTarget(actor *mobj_t) {
 	if !actor.target {
-		return 
+		return
 	}
 	actor.flags &= ~MF_AMBUSH
 	actor.angle = R_PointToAngle2(actor.x, actor.y, actor.target.x, actor.target.y)
@@ -4046,7 +4046,7 @@ fn A_PosAttack(actor *mobj_t) {
 	damage := 0
 	slope := 0
 	if !actor.target {
-		return 
+		return
 	}
 	A_FaceTarget(actor)
 	angle = actor.angle
@@ -4064,7 +4064,7 @@ fn A_SPosAttack(actor *mobj_t) {
 	damage := 0
 	slope := 0
 	if !actor.target {
-		return 
+		return
 	}
 	S_StartSound(actor, sfx_shotgn)
 	A_FaceTarget(actor)
@@ -4083,7 +4083,7 @@ fn A_CPosAttack(actor *mobj_t) {
 	damage := 0
 	slope := 0
 	if !actor.target {
-		return 
+		return
 	}
 	S_StartSound(actor, sfx_shotgn)
 	A_FaceTarget(actor)
@@ -4097,7 +4097,7 @@ fn A_CPosAttack(actor *mobj_t) {
 fn A_CPosRefire(actor *mobj_t) {
 	A_FaceTarget(actor)
 	if P_Random() < 40 {
-		return 
+		return
 	}
 	if !actor.target || actor.target.health <= 0 || !P_CheckSight(actor, actor.target) {
 		P_SetMobjState(actor, actor.info.seestate)
@@ -4107,7 +4107,7 @@ fn A_CPosRefire(actor *mobj_t) {
 fn A_SpidRefire(actor *mobj_t) {
 	A_FaceTarget(actor)
 	if P_Random() < 10 {
-		return 
+		return
 	}
 	if !actor.target || actor.target.health <= 0 || !P_CheckSight(actor, actor.target) {
 		P_SetMobjState(actor, actor.info.seestate)
@@ -4116,7 +4116,7 @@ fn A_SpidRefire(actor *mobj_t) {
 
 fn A_BspiAttack(actor *mobj_t) {
 	if !actor.target {
-		return 
+		return
 	}
 	A_FaceTarget(actor)
 	P_SpawnMissile(actor, actor.target, MT_ARACHPLAZ)
@@ -4125,14 +4125,14 @@ fn A_BspiAttack(actor *mobj_t) {
 fn A_TroopAttack(actor *mobj_t) {
 	damage := 0
 	if !actor.target {
-		return 
+		return
 	}
 	A_FaceTarget(actor)
 	if P_CheckMeleeRange(actor) {
 		S_StartSound(actor, sfx_claw)
 		damage = (P_Random() % 8 + 1) * 3
 		P_DamageMobj(actor.target, actor, actor, damage)
-		return 
+		return
 	}
 	P_SpawnMissile(actor, actor.target, MT_TROOPSHOT)
 }
@@ -4140,7 +4140,7 @@ fn A_TroopAttack(actor *mobj_t) {
 fn A_SargAttack(actor *mobj_t) {
 	damage := 0
 	if !actor.target {
-		return 
+		return
 	}
 	A_FaceTarget(actor)
 	if P_CheckMeleeRange(actor) {
@@ -4152,20 +4152,20 @@ fn A_SargAttack(actor *mobj_t) {
 fn A_HeadAttack(actor *mobj_t) {
 	damage := 0
 	if !actor.target {
-		return 
+		return
 	}
 	A_FaceTarget(actor)
 	if P_CheckMeleeRange(actor) {
 		damage = (P_Random() % 6 + 1) * 10
 		P_DamageMobj(actor.target, actor, actor, damage)
-		return 
+		return
 	}
 	P_SpawnMissile(actor, actor.target, MT_HEADSHOT)
 }
 
 fn A_CyberAttack(actor *mobj_t) {
 	if !actor.target {
-		return 
+		return
 	}
 	A_FaceTarget(actor)
 	P_SpawnMissile(actor, actor.target, MT_ROCKET)
@@ -4174,13 +4174,13 @@ fn A_CyberAttack(actor *mobj_t) {
 fn A_BruisAttack(actor *mobj_t) {
 	damage := 0
 	if !actor.target {
-		return 
+		return
 	}
 	if P_CheckMeleeRange(actor) {
 		S_StartSound(actor, sfx_claw)
 		damage = (P_Random() % 8 + 1) * 10
 		P_DamageMobj(actor.target, actor, actor, damage)
-		return 
+		return
 	}
 	P_SpawnMissile(actor, actor.target, MT_BRUISERSHOT)
 }
@@ -4188,7 +4188,7 @@ fn A_BruisAttack(actor *mobj_t) {
 fn A_SkelMissile(actor *mobj_t) {
 	mo := &mobj_t{!}
 	if !actor.target {
-		return 
+		return
 	}
 	A_FaceTarget(actor)
 	actor.z += 16 * (1 << 16)
@@ -4199,7 +4199,7 @@ fn A_SkelMissile(actor *mobj_t) {
 	mo.tracer = actor.target
 }
 
-__global TRACEANGLE int  = 201326592
+__global TRACEANGLE int = 201326592
 fn A_Tracer(actor *mobj_t) {
 	exact := 0
 	dist := 0
@@ -4207,7 +4207,7 @@ fn A_Tracer(actor *mobj_t) {
 	dest := &mobj_t{!}
 	th := &mobj_t{!}
 	if gametic & 3 {
-		return 
+		return
 	}
 	P_SpawnPuff(actor.x, actor.y, actor.z)
 	th = P_SpawnMobj(actor.x - actor.momx, actor.y - actor.momy, actor.z, MT_SMOKE)
@@ -4218,7 +4218,7 @@ fn A_Tracer(actor *mobj_t) {
 	}
 	dest = actor.tracer
 	if !dest || dest.health <= 0 {
-		return 
+		return
 	}
 	exact = R_PointToAngle2(actor.x, actor.y, dest.x, dest.y)
 	if exact != actor.angle {
@@ -4245,14 +4245,14 @@ fn A_Tracer(actor *mobj_t) {
 	slope = (dest.z + 40 * (1 << 16) - actor.z) / dist
 	if slope < actor.momz {
 		actor.momz -= (1 << 16) / 8
-	} else { 
+	} else {
 		actor.momz += (1 << 16) / 8
 	}
 }
 
 fn A_SkelWhoosh(actor *mobj_t) {
 	if !actor.target {
-		return 
+		return
 	}
 	A_FaceTarget(actor)
 	S_StartSound(actor, sfx_skeswg)
@@ -4261,7 +4261,7 @@ fn A_SkelWhoosh(actor *mobj_t) {
 fn A_SkelFist(actor *mobj_t) {
 	damage := 0
 	if !actor.target {
-		return 
+		return
 	}
 	A_FaceTarget(actor)
 	if P_CheckMeleeRange(actor) {
@@ -4271,13 +4271,13 @@ fn A_SkelFist(actor *mobj_t) {
 	}
 }
 
-__global corpsehit *mobj_t 
+__global corpsehit *mobj_t
 
-__global vileobj *mobj_t 
+__global vileobj *mobj_t
 
-__global viletryx int 
+__global viletryx int
 
-__global viletryy int 
+__global viletryy int
 
 fn PIT_VileCheck(thing *mobj_t) bool {
 	maxdist := 0
@@ -4316,8 +4316,8 @@ fn A_VileChase(actor *mobj_t) {
 	info := &mobjinfo_t{!}
 	temp := &mobj_t{!}
 	if actor.movedir != DI_NODIR {
-		viletryx = actor.x + actor.info.speed * xspeed [actor.movedir] 
-		viletryy = actor.y + actor.info.speed * yspeed [actor.movedir] 
+		viletryx = actor.x + actor.info.speed * xspeed [actor.movedir]
+		viletryy = actor.y + actor.info.speed * yspeed [actor.movedir]
 		xl = (viletryx - bmaporgx - 32 * (1 << 16) * 2) >> (16 + 7)
 		xh = (viletryx - bmaporgx + 32 * (1 << 16) * 2) >> (16 + 7)
 		yl = (viletryy - bmaporgy - 32 * (1 << 16) * 2) >> (16 + 7)
@@ -4338,7 +4338,7 @@ fn A_VileChase(actor *mobj_t) {
 					corpsehit.flags = info.flags
 					corpsehit.health = info.spawnhealth
 					corpsehit.target = (voidptr(0))
-					return 
+					return
 				}
 			}
 		}
@@ -4350,7 +4350,7 @@ fn A_VileStart(actor *mobj_t) {
 	S_StartSound(actor, sfx_vilatk)
 }
 
-fn A_Fire(actor *mobj_t)  
+fn A_Fire(actor *mobj_t)
 
 fn A_StartFire(actor *mobj_t) {
 	S_StartSound(actor, sfx_flamst)
@@ -4368,11 +4368,11 @@ fn A_Fire(actor *mobj_t) {
 	an := u32(0)
 	dest = actor.tracer
 	if !dest {
-		return 
+		return
 	}
 	target = P_SubstNullMobj(actor.target)
 	if !P_CheckSight(target, dest) {
-		return 
+		return
 	}
 	an = dest.angle >> 19
 	P_UnsetThingPosition(actor)
@@ -4385,7 +4385,7 @@ fn A_Fire(actor *mobj_t) {
 fn A_VileTarget(actor *mobj_t) {
 	fog := &mobj_t{!}
 	if !actor.target {
-		return 
+		return
 	}
 	A_FaceTarget(actor)
 	fog = P_SpawnMobj(actor.target.x, actor.target.x, actor.target.z, MT_FIRE)
@@ -4399,11 +4399,11 @@ fn A_VileAttack(actor *mobj_t) {
 	fire := &mobj_t{!}
 	an := 0
 	if !actor.target {
-		return 
+		return
 	}
 	A_FaceTarget(actor)
 	if !P_CheckSight(actor, actor.target) {
-		return 
+		return
 	}
 	S_StartSound(actor, sfx_barexp)
 	P_DamageMobj(actor.target, actor, actor, 20)
@@ -4411,7 +4411,7 @@ fn A_VileAttack(actor *mobj_t) {
 	an = actor.angle >> 19
 	fire = actor.tracer
 	if !fire {
-		return 
+		return
 	}
 	fire.x = actor.target.x - FixedMul(24 * (1 << 16), finecosine [an] )
 	fire.y = actor.target.y - FixedMul(24 * (1 << 16), finesine [an] )
@@ -4476,7 +4476,7 @@ fn A_SkullAttack(actor *mobj_t) {
 	an := 0
 	dist := 0
 	if !actor.target {
-		return 
+		return
 	}
 	dest = actor.target
 	actor.flags |= MF_SKULLFLY
@@ -4511,7 +4511,7 @@ fn A_PainShootSkull(actor *mobj_t, angle angle_t) {
 		currentthinker = currentthinker.next
 	}
 	if count > 20 {
-		return 
+		return
 	}
 	an = angle >> 19
 	prestep = 4 * (1 << 16) + 3 * (actor.info.radius + mobjinfo [MT_SKULL] .radius) / 2
@@ -4521,7 +4521,7 @@ fn A_PainShootSkull(actor *mobj_t, angle angle_t) {
 	newmobj = P_SpawnMobj(x, y, z, MT_SKULL)
 	if !P_TryMove(newmobj, newmobj.x, newmobj.y) {
 		P_DamageMobj(newmobj, actor, actor, 10000)
-		return 
+		return
 	}
 	newmobj.target = actor.target
 	A_SkullAttack(newmobj)
@@ -4529,7 +4529,7 @@ fn A_PainShootSkull(actor *mobj_t, angle angle_t) {
 
 fn A_PainAttack(actor *mobj_t) {
 	if !actor.target {
-		return 
+		return
 	}
 	A_FaceTarget(actor)
 	A_PainShootSkull(actor, actor.angle)
@@ -4546,7 +4546,7 @@ fn A_Scream(actor *mobj_t) {
 	sound := 0
 	switch actor.info.deathsound {
 		case 0: {
-			return 
+			return
 		}
 		case sfx_podth1, sfx_podth2, sfx_podth3:
 			sound = sfx_podth1 + P_Random() % 3
@@ -4558,7 +4558,7 @@ fn A_Scream(actor *mobj_t) {
 	}
 	if actor._type == MT_SPIDER || actor._type == MT_CYBORG {
 		S_StartSound((voidptr(0)), sound)
-	} else { 
+	} else {
 		S_StartSound(actor, sound)
 	}
 }
@@ -4619,24 +4619,24 @@ fn A_BossDeath(mo *mobj_t) {
 	i := 0
 	if gamemode == commercial {
 		if gamemap != 7 {
-			return 
+			return
 		}
 		if (mo._type != MT_FATSO) && (mo._type != MT_BABY) {
-			return 
+			return
 		}
 	}
 	else {
 		if !CheckBossEnd(mo._type) {
-			return 
+			return
 		}
 	}
 	for i = 0; i < 4; i ++ {
-		if playeringame [i]  && players [i] .health > 0 {
+		if playeringame [i] && players [i] .health > 0 {
 			break
 		}
 	}
 	if i == 4 {
-		return 
+		return
 	}
 	for th = thinkercap.next; th != &thinkercap; th = th.next {
 		if th.function.acp1 != actionf_p1(P_MobjThinker) {
@@ -4644,7 +4644,7 @@ fn A_BossDeath(mo *mobj_t) {
 		}
 		mo2 = (*mobj_t)(th)
 		if mo2 != mo && mo2._type == mo._type && mo2.health > 0 {
-			return 
+			return
 		}
 	}
 	if gamemode == commercial {
@@ -4652,12 +4652,12 @@ fn A_BossDeath(mo *mobj_t) {
 			if mo._type == MT_FATSO {
 				junk.tag = 666
 				EV_DoFloor(&junk, lowerFloorToLowest)
-				return 
+				return
 			}
 			if mo._type == MT_BABY {
 				junk.tag = 667
 				EV_DoFloor(&junk, raiseToTexture)
-				return 
+				return
 			}
 		}
 	}
@@ -4704,18 +4704,18 @@ fn A_LoadShotgun2(player *player_t, psp *pspdef_t) {
 	S_StartSound(player.mo, sfx_dbload)
 }
 
-fn A_ReFire(player *player_t, psp *pspdef_t)  
+fn A_ReFire(player *player_t, psp *pspdef_t)
 
 fn A_CloseShotgun2(player *player_t, psp *pspdef_t) {
 	S_StartSound(player.mo, sfx_dbcls)
 	A_ReFire(player, psp)
 }
 
-__global braintargets [32]*mobj_t 
+__global braintargets [32]*mobj_t
 
-__global numbraintargets int 
+__global numbraintargets int
 
-__global braintargeton int  = 0
+__global braintargeton int = 0
 fn A_BrainAwake(mo *mobj_t) {
 	thinker := &thinker_t{!}
 	m := &mobj_t{!}
@@ -4728,7 +4728,7 @@ fn A_BrainAwake(mo *mobj_t) {
 		}
 		m = (*mobj_t)(thinker)
 		if m._type == MT_BOSSTARGET {
-			braintargets [numbraintargets]  = m
+			braintargets [numbraintargets] = m
 			numbraintargets ++
 		}
 	}
@@ -4782,7 +4782,7 @@ fn A_BrainDie(mo *mobj_t) {
 fn A_BrainSpit(mo *mobj_t) {
 	targ := &mobj_t{!}
 	newmobj := &mobj_t{!}
-	targ = braintargets [braintargeton] 
+	targ = braintargets [braintargeton]
 	if numbraintargets == 0 {
 		I_Error('A_BrainSpit: numbraintargets was 0 (vanilla crashes here)')
 	}
@@ -4793,7 +4793,7 @@ fn A_BrainSpit(mo *mobj_t) {
 	S_StartSound((voidptr(0)), sfx_bospit)
 }
 
-fn A_SpawnFly(mo *mobj_t)  
+fn A_SpawnFly(mo *mobj_t)
 
 fn A_SpawnSound(mo *mobj_t) {
 	S_StartSound(mo, sfx_boscub)
@@ -4807,7 +4807,7 @@ fn A_SpawnFly(mo *mobj_t) {
 	r := 0
 	_type := 0
 	if mo.reactiontime-- {
-		return 
+		return
 	}
 	targ = P_SubstNullMobj(mo.target)
 	fog = P_SpawnMobj(targ.x, targ.y, targ.z, MT_SPAWNFIRE)
@@ -4833,7 +4833,7 @@ fn A_SpawnFly(mo *mobj_t) {
 		_type = MT_FATSO
 	} else if r < 246 {
 		_type = MT_KNIGHT
-	} else { 
+	} else {
 		_type = MT_BRUISER
 	}
 	newmobj = P_SpawnMobj(targ.x, targ.y, targ.z, _type)
