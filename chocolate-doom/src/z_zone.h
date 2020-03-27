@@ -30,24 +30,22 @@
 // ZONE MEMORY
 // PU - purge tags.
 
-enum
-{
-    PU_STATIC = 1,                  // static entire execution time
-    PU_SOUND,                       // static while playing
-    PU_MUSIC,                       // static while playing
-    PU_FREE,                        // a free block
-    PU_LEVEL,                       // static until level exited
-    PU_LEVSPEC,                     // a special thinker in a level
+
+   #define PU_STATIC  1                  // static entire execution time
+   #define PU_SOUND  2                       // static while playing
+   #define PU_MUSIC  3                       // static while playing
+   #define  PU_FREE  4                        // a free block
+   #define PU_LEVEL 5                       // static until level exited
+   #define PU_LEVSPEC 6                     // a special thinker in a level
     
     // Tags >= PU_PURGELEVEL are purgable whenever needed.
 
-    PU_PURGELEVEL,
-    PU_CACHE,
+    #define PU_PURGELEVEL 7
+    #define PU_CACHE 8
 
     // Total number of different tag types
 
-    PU_NUM_TAGS
-};
+    #define PU_NUM_TAGS 9
         
 
 void	Z_Init (void);

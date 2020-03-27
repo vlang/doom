@@ -175,11 +175,13 @@ static int next_weapon = 0;
 
 // Used for prev/next weapon keys.
 
-static const struct
+typedef struct
 {
     weapontype_t weapon;
     weapontype_t weapon_num;
-} weapon_order_table[] = {
+} Weapon;
+
+Weapon weapon_order_table[] = {
     { wp_fist,            wp_fist },
     { wp_chainsaw,        wp_fist },
     { wp_pistol,          wp_pistol },
@@ -1166,7 +1168,6 @@ G_CheckSpot
     //
     // This code is imported from PrBoom+.
 
-    {
         fixed_t xa, ya;
         signed int an;
 
@@ -1207,7 +1208,6 @@ G_CheckSpot
         }
         mo = P_SpawnMobj(x + 20 * xa, y + 20 * ya,
                          ss->sector->floorheight, MT_TFOG);
-    }
 
     if (players[consoleplayer].viewz != 1) 
 	S_StartSound (mo, sfx_telept);	// don't start sound on first frame 
@@ -1410,19 +1410,21 @@ void G_DoCompleted (void)
     // wminfo.next is 0 biased, unlike gamemap
     if ( gamemode == commercial)
     {
-	if (secretexit)
+	if (secretexit) {
 	    switch(gamemap)
 	    {
 	      case 15: wminfo.next = 30; break;
 	      case 31: wminfo.next = 31; break;
 	    }
-	else
+	}
+	else {
 	    switch(gamemap)
 	    {
 	      case 31:
 	      case 32: wminfo.next = 15; break;
 	      default: wminfo.next = gamemap;
 	    }
+	}
     }
     else
     {
@@ -1878,7 +1880,6 @@ G_InitNew
     {
         switch (gameepisode)
         {
-          default:
           case 1:
             skytexturename = "SKY1";
             break;
@@ -1891,6 +1892,7 @@ G_InitNew
           case 4:        // Special Edition sky
             skytexturename = "SKY4";
             break;
+          default: break;
         }
         skytexturename = DEH_String(skytexturename);
         skytexture = R_TextureNumForName(skytexturename);
@@ -2059,6 +2061,7 @@ int G_VanillaVersionCode(void)
         case exe_doom_1_8:
             return 108;
         case exe_doom_1_9:
+            return 109;
         default:  // All other versions are variants on v1.9:
             return 109;
     }
@@ -2307,7 +2310,9 @@ boolean G_CheckDemoStatus (void)
 	netdemo = false;
 	netgame = false;
 	deathmatch = false;
-	playeringame[1] = playeringame[2] = playeringame[3] = 0;
+	playeringame[1] = 0;
+	playeringame[2] = 0;
+	playeringame[3] = 0;
 	respawnparm = false;
 	fastparm = false;
 	nomonsters = false;

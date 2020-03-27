@@ -419,7 +419,7 @@ R_DrawVisSprite
     spryscale = vis->scale;
     sprtopscreen = centeryfrac - FixedMul(dc_texturemid,spryscale);
 	
-    for (dc_x=vis->x1 ; dc_x<=vis->x2 ; dc_x++, frac += vis->xiscale)
+    for (dc_x=vis->x1 ; dc_x<=vis->x2 ; dc_x++) 
     {
 	texturecolumn = frac>>FRACBITS;
 #ifdef RANGECHECK
@@ -429,6 +429,7 @@ R_DrawVisSprite
 	column = (column_t *) ((byte *)patch +
 			       LONG(patch->columnofs[texturecolumn]));
 	R_DrawMaskedColumn (column);
+	    frac += vis->xiscale;
     }
 
     colfunc = basecolfunc;
@@ -758,12 +759,14 @@ void R_DrawPlayerSprites (void)
     mceilingclip = negonearray;
     
     // add all active psprites
-    for (i=0, psp=viewplayer->psprites;
+    i = 0;
+    for (psp=viewplayer->psprites;
 	 i<NUMPSPRITES;
-	 i++,psp++)
+	 i++)
     {
 	if (psp->state)
 	    R_DrawPSprite (psp);
+	   psp++;
     }
 }
 
@@ -800,7 +803,9 @@ void R_SortVisSprites (void)
     
     vissprites[0].prev = &unsorted;
     unsorted.next = &vissprites[0];
-    (vissprite_p-1)->next = &unsorted;
+    vissprite_t* prevv = vissprite_p-1;
+    //(vissprite_p-1)->next = &unsorted;
+    prevv->next = &unsorted;
     unsorted.prev = vissprite_p-1;
     
     // pull the vissprites out by scale
