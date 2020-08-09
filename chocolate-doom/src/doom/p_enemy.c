@@ -1147,7 +1147,9 @@ boolean PIT_VileCheck (mobj_t*	thing)
 	return true;		// not actually touching
 		
     corpsehit = thing;
-    corpsehit->momx = corpsehit->momy = 0;
+    corpsehit->momx = 0;
+    corpsehit->momy = 0;
+
     corpsehit->height <<= 2;
     check = P_CheckPosition (corpsehit, corpsehit->x, corpsehit->y);
     corpsehit->height >>= 2;
