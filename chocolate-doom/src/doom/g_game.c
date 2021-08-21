@@ -235,10 +235,12 @@ int             vanilla_demo_limit = 1;
  
 int G_CmdChecksum (ticcmd_t* cmd) 
 { 
+	//printf("CHECKSUM %d\n", sizeof(*cmd));
+
     size_t		i;
     int		sum = 0; 
 	 
-    for (i=0 ; i< sizeof(*cmd)/4 - 1 ; i++) 
+    for (i=0 ; i< sizeof(ticcmd_t)/4 - 1 ; i++) 
 	sum += ((int *)cmd)[i]; 
 		 
     return sum; 
@@ -652,7 +654,10 @@ void G_DoLoadLevel (void)
 	turbodetected[i] = false;
 	if (playeringame[i] && players[i].playerstate == PST_DEAD) 
 	    players[i].playerstate = PST_REBORN; 
-	memset (players[i].frags,0,sizeof(players[i].frags)); 
+	int frags_size = 16;
+	memset (players[i].frags,0, frags_size);
+	// QTODO
+	//memset (players[i].frags,0,sizeof(players[i].frags)); 
     } 
 		 
     P_SetupLevel (gameepisode, gamemap, 0, gameskill);    
@@ -663,9 +668,11 @@ void G_DoLoadLevel (void)
     // clear cmd building stuff
 
     memset (gamekeydown, 0, sizeof(gamekeydown));
-    joyxmove = joyymove = joystrafemove = 0;
+    joyxmove = joyymove = 0;
+    joystrafemove = 0;
     mousex = mousey = 0;
-    sendpause = sendsave = paused = false;
+    sendpause = sendsave = false;
+    paused = false;
     memset(mousearray, 0, sizeof(mousearray));
     memset(joyarray, 0, sizeof(joyarray));
 
@@ -1089,7 +1096,7 @@ void G_PlayerReborn (int player)
     p = &players[player]; 
     memset (p, 0, sizeof(*p)); 
  
-    memcpy (players[player].frags, frags, sizeof(players[player].frags)); 
+    memcpy (players[player].frags, frags, 16); // QTODOsizeof(players[player].frags)); 
     players[player].killcount = killcount; 
     players[player].itemcount = itemcount; 
     players[player].secretcount = secretcount; 
@@ -1493,7 +1500,7 @@ void G_DoCompleted (void)
 	wminfo.plyr[i].ssecret = players[i].secretcount; 
 	wminfo.plyr[i].stime = leveltime; 
 	memcpy (wminfo.plyr[i].frags, players[i].frags 
-		, sizeof(wminfo.plyr[i].frags)); 
+		, 16); // QTODO sizeof(wminfo.plyr[i].frags)); 
     } 
  
     gamestate = GS_INTERMISSION; 
@@ -1728,7 +1735,8 @@ void G_DoNewGame (void)
     netdemo = false;
     netgame = false;
     deathmatch = false;
-    playeringame[1] = playeringame[2] = playeringame[3] = 0;
+    playeringame[1] = playeringame[2] = 0;
+    playeringame[3] = 0;
     respawnparm = false;
     fastparm = false;
     nomonsters = false;
@@ -1975,22 +1983,29 @@ void G_WriteDemoTiccmd (ticcmd_t* cmd)
 
     demo_start = demo_p;
 
-    *demo_p++ = cmd->forwardmove; 
-    *demo_p++ = cmd->sidemove; 
+    *demo_p = cmd->forwardmove; 
+    demo_p++;
+    *demo_p = cmd->sidemove; 
+    demo_p++;
+
 
     // If this is a longtics demo, record in higher resolution
  
     if (longtics)
     {
-        *demo_p++ = (cmd->angleturn & 0xff);
-        *demo_p++ = (cmd->angleturn >> 8) & 0xff;
+        *demo_p = (cmd->angleturn & 0xff);
+    demo_p++;
+        *demo_p = (cmd->angleturn >> 8) & 0xff;
+    demo_p++;
     }
     else
     {
-        *demo_p++ = cmd->angleturn >> 8; 
+        *demo_p = cmd->angleturn >> 8; 
+    demo_p++;
     }
 
-    *demo_p++ = cmd->buttons; 
+    *demo_p = cmd->buttons; 
+    demo_p++;
 
     // reset demo pointer back
     demo_p = demo_start;
@@ -2087,27 +2102,39 @@ void G_BeginRecording (void)
 
     if (longtics)
     {
-        *demo_p++ = DOOM_191_VERSION;
+        *demo_p = DOOM_191_VERSION;
+    demo_p++;
     }
     else if (gameversion > exe_doom_1_2)
     {
-        *demo_p++ = G_VanillaVersionCode();
+        *demo_p = G_VanillaVersionCode();
+    demo_p++;
     }
 
-    *demo_p++ = gameskill; 
-    *demo_p++ = gameepisode; 
-    *demo_p++ = gamemap; 
+    *demo_p = gameskill; 
+    demo_p++;
+    *demo_p = gameepisode; 
+    demo_p++;
+    *demo_p = gamemap; 
+    demo_p++;
     if (longtics || gameversion > exe_doom_1_2)
     {
-        *demo_p++ = deathmatch; 
-        *demo_p++ = respawnparm;
-        *demo_p++ = fastparm;
-        *demo_p++ = nomonsters;
-        *demo_p++ = consoleplayer;
+        *demo_p = deathmatch; 
+    demo_p++;
+        *demo_p = respawnparm;
+    demo_p++;
+        *demo_p = fastparm;
+    demo_p++;
+        *demo_p = nomonsters;
+    demo_p++;
+        *demo_p = consoleplayer;
+    demo_p++;
     }
 	 
-    for (i=0 ; i<MAXPLAYERS ; i++) 
-	*demo_p++ = playeringame[i]; 		 
+    for (i=0 ; i<MAXPLAYERS ; i++)  {
+	*demo_p = playeringame[i]; 		 
+    demo_p++;
+    }
 } 
  
 
