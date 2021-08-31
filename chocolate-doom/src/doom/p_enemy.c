@@ -1750,20 +1750,17 @@ void A_BossDeath (mobj_t* mo)
 	    break;
 	    
 	  case 4:
-	    switch(gamemap)
-	    {
-	      case 6:
+	    if (gamemap == 6) {
 		junk.tag = 666;
 		EV_DoDoor (&junk, vld_blazeOpen);
 		return;
-		break;
-		
-	      case 8:
+		}
+	    else if (gamemap == 8) {
 		junk.tag = 666;
 		EV_DoFloor (&junk, lowerFloorToLowest);
 		return;
-		break;
 	    }
+	    break;
 	}
     }
 	
