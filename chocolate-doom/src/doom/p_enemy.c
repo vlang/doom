@@ -624,17 +624,18 @@ void A_Look (mobj_t* actor)
     {
 	int		sound;
 		
+	    int x = (int)sfx_posit1;
 	switch (actor->info->seesound)
 	{
 	  case sfx_posit1:
 	  case sfx_posit2:
 	  case sfx_posit3:
-	    sound = sfx_posit1+P_Random()%3;
+	    sound = x+P_Random()%3;
 	    break;
 
 	  case sfx_bgsit1:
 	  case sfx_bgsit2:
-	    sound = sfx_bgsit1+P_Random()%2;
+	    sound = x+P_Random()%2;
 	    break;
 
 	  default:
@@ -1551,19 +1552,20 @@ void A_Scream (mobj_t* actor)
 
     if (actor->info->deathsound == 0) return;
 	
+	int x = sfx_podth1;
     switch (actor->info->deathsound)
     {
 		
       case sfx_podth1:
       case sfx_podth2:
       case sfx_podth3:
-	sound = sfx_podth1 + P_Random ()%3;
+	sound = x + P_Random ()%3;
 	break;
 
 		
       case sfx_bgdth1:
       case sfx_bgdth2:
-	sound = sfx_bgdth1 + P_Random ()%2;
+	sound = x + P_Random ()%2;
 	break;
 	
       default:
