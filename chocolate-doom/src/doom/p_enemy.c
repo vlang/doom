@@ -1548,17 +1548,18 @@ void A_PainDie (mobj_t* actor)
 void A_Scream (mobj_t* actor)
 {
     int		sound;
+
+    if (actor->info->deathsound == 0) return;
 	
     switch (actor->info->deathsound)
     {
-      case 0:
-	return;
 		
       case sfx_podth1:
       case sfx_podth2:
       case sfx_podth3:
 	sound = sfx_podth1 + P_Random ()%3;
 	break;
+
 		
       case sfx_bgdth1:
       case sfx_bgdth2:
