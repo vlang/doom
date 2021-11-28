@@ -2355,7 +2355,8 @@ boolean G_CheckDemoStatus (void)
  
     if (demorecording) 
     { 
-	*demo_p++ = DEMOMARKER; 
+	*demo_p = DEMOMARKER; 
+	demo_p++;
 	M_WriteFile (demoname, demobuffer, demo_p - demobuffer); 
 	Z_Free (demobuffer); 
 	demorecording = false; 
