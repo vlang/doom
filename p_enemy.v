@@ -362,22 +362,7 @@ __global (
 	finecosine &int
 )
 
-[weak]
-__global (
-	finetangent [4096]int
-)
-
-[weak]
-__global (
-	gammatable [5][256]u8
-)
-
 type Angle_t = int
-
-[weak]
-__global (
-	tantoangle [2049]Angle_t
-)
 
 [c: 'SlopeDiv']
 fn slopediv(num u32, den u32) int
@@ -1908,83 +1893,8 @@ fn i_starttic()
 [c: 'I_EnableLoadingDisk']
 fn i_enableloadingdisk(xoffs int, yoffs int)
 
-[weak]
-__global (
-	video_driver &i8
-)
-
-[weak]
-__global (
-	screenvisible bool
-)
-
-[weak]
-__global (
-	vanilla_keyboard_mapping int
-)
-
-[weak]
-__global (
-	screensaver_mode bool
-)
-
-[weak]
-__global (
-	usegamma int
-)
-
-[weak]
-__global (
-	I_VideoBuffer &Pixel_t
-)
-
-[weak]
-__global (
-	screen_width int
-)
-
-[weak]
-__global (
-	screen_height int
-)
-
-[weak]
-__global (
-	fullscreen int
-)
-
-[weak]
-__global (
-	aspect_ratio_correct int
-)
-
-[weak]
-__global (
-	integer_scaling int
-)
-
-[weak]
-__global (
-	vga_porch_flash int
-)
-
-[weak]
-__global (
-	force_software_renderer int
-)
-
-[weak]
-__global (
-	window_position &i8
-)
-
 [c: 'I_GetWindowPosition']
 fn i_getwindowposition(x &int, y &int, w int, h int)
-
-[weak]
-__global (
-	joywait u32
-)
 
 struct Patch_t {
 	width      i16
@@ -2159,11 +2069,6 @@ struct Weaponinfo_t {
 	atkstate   int
 	flashstate int
 }
-
-[weak]
-__global (
-	weaponinfo [9]Weaponinfo_t
-)
 
 enum Psprnum_t {
 	ps_weapon
@@ -2421,137 +2326,7 @@ struct Wbstartstruct_t {
 
 [weak]
 __global (
-	textureheight &int
-)
-
-[weak]
-__global (
-	spritewidth &int
-)
-
-[weak]
-__global (
-	spriteoffset &int
-)
-
-[weak]
-__global (
-	spritetopoffset &int
-)
-
-[weak]
-__global (
-	colormaps &Lighttable_t
-)
-
-[weak]
-__global (
-	viewwidth int
-)
-
-[weak]
-__global (
-	scaledviewwidth int
-)
-
-[weak]
-__global (
-	viewheight int
-)
-
-[weak]
-__global (
-	firstflat int
-)
-
-[weak]
-__global (
-	flattranslation &int
-)
-
-[weak]
-__global (
-	texturetranslation &int
-)
-
-[weak]
-__global (
-	firstspritelump int
-)
-
-[weak]
-__global (
-	lastspritelump int
-)
-
-[weak]
-__global (
-	numspritelumps int
-)
-
-[weak]
-__global (
-	numsprites int
-)
-
-[weak]
-__global (
-	sprites &Spritedef_t
-)
-
-[weak]
-__global (
-	numvertexes int
-)
-
-[weak]
-__global (
-	vertexes &Vertex_t
-)
-
-[weak]
-__global (
-	numsegs int
-)
-
-[weak]
-__global (
-	segs &Seg_t
-)
-
-[weak]
-__global (
-	numsectors int
-)
-
-[weak]
-__global (
 	sectors &Sector_t
-)
-
-[weak]
-__global (
-	numsubsectors int
-)
-
-[weak]
-__global (
-	subsectors &Subsector_t
-)
-
-[weak]
-__global (
-	numnodes int
-)
-
-[weak]
-__global (
-	nodes &Node_t
-)
-
-[weak]
-__global (
-	numlines int
 )
 
 [weak]
@@ -2561,82 +2336,7 @@ __global (
 
 [weak]
 __global (
-	numsides int
-)
-
-[weak]
-__global (
 	sides &Side_t
-)
-
-[weak]
-__global (
-	viewx int
-)
-
-[weak]
-__global (
-	viewy int
-)
-
-[weak]
-__global (
-	viewz int
-)
-
-[weak]
-__global (
-	viewangle Angle_t
-)
-
-[weak]
-__global (
-	viewplayer &Player_t
-)
-
-[weak]
-__global (
-	clipangle Angle_t
-)
-
-[weak]
-__global (
-	viewangletox [4096]int
-)
-
-[weak]
-__global (
-	xtoviewangle [321]Angle_t
-)
-
-[weak]
-__global (
-	rw_distance int
-)
-
-[weak]
-__global (
-	rw_normalangle Angle_t
-)
-
-[weak]
-__global (
-	rw_angle1 int
-)
-
-[weak]
-__global (
-	sscount int
-)
-
-[weak]
-__global (
-	floorplane &Visplane_t
-)
-
-[weak]
-__global (
-	ceilingplane &Visplane_t
 )
 
 [c: 'R_GetColumn']
@@ -2659,117 +2359,12 @@ fn r_checktexturenumforname(name &i8) int
 
 [weak]
 __global (
-	viewcos int
-)
-
-[weak]
-__global (
-	viewsin int
-)
-
-[weak]
-__global (
-	viewwindowx int
-)
-
-[weak]
-__global (
-	viewwindowy int
-)
-
-[weak]
-__global (
-	centerx int
-)
-
-[weak]
-__global (
-	centery int
-)
-
-[weak]
-__global (
-	centerxfrac int
-)
-
-[weak]
-__global (
-	centeryfrac int
-)
-
-[weak]
-__global (
-	projection int
-)
-
-[weak]
-__global (
 	validcount int
 )
 
 [weak]
 __global (
 	linecount int
-)
-
-[weak]
-__global (
-	loopcount int
-)
-
-[weak]
-__global (
-	scalelight [16][48]&Lighttable_t
-)
-
-[weak]
-__global (
-	scalelightfixed [48]&Lighttable_t
-)
-
-[weak]
-__global (
-	zlight [16][128]&Lighttable_t
-)
-
-[weak]
-__global (
-	extralight int
-)
-
-[weak]
-__global (
-	fixedcolormap &Lighttable_t
-)
-
-[weak]
-__global (
-	detailshift int
-)
-
-[weak]
-__global (
-	colfunc fn ()
-)
-
-[weak]
-__global (
-	transcolfunc fn ()
-)
-
-[weak]
-__global (
-	basecolfunc fn ()
-)
-
-[weak]
-__global (
-	fuzzcolfunc fn ()
-)
-
-[weak]
-__global (
-	spanfunc fn ()
 )
 
 [c: 'R_PointOnSide']
@@ -2805,86 +2400,6 @@ fn r_init()
 [c: 'R_SetViewSize']
 fn r_setviewsize(blocks int, detail int)
 
-[weak]
-__global (
-	curline &Seg_t
-)
-
-[weak]
-__global (
-	sidedef &Side_t
-)
-
-[weak]
-__global (
-	linedef &Line_t
-)
-
-[weak]
-__global (
-	frontsector &Sector_t
-)
-
-[weak]
-__global (
-	backsector &Sector_t
-)
-
-[weak]
-__global (
-	rw_x int
-)
-
-[weak]
-__global (
-	rw_stopx int
-)
-
-[weak]
-__global (
-	segtextured bool
-)
-
-[weak]
-__global (
-	markfloor bool
-)
-
-[weak]
-__global (
-	markceiling bool
-)
-
-[weak]
-__global (
-	skymap bool
-)
-
-[weak]
-__global (
-	drawsegs [256]Drawseg_t
-)
-
-[weak]
-__global (
-	ds_p &Drawseg_t
-)
-
-[weak]
-__global (
-	hscalelight &&Lighttable_t
-)
-
-[weak]
-__global (
-	vscalelight &&Lighttable_t
-)
-
-[weak]
-__global (
-	dscalelight &&Lighttable_t
-)
-
 type Drawfunc_t = fn (int, int)
 
 [c: 'R_ClearClipSegs']
@@ -2899,42 +2414,7 @@ fn r_renderbspnode(bspnum int)
 [c: 'R_RenderMaskedSegRange']
 fn r_rendermaskedsegrange(ds &Drawseg_t, x1 int, x2 int)
 
-[weak]
-__global (
-	lastopening &i16
-)
-
 type Planefunction_t = fn (int, int)
-
-[weak]
-__global (
-	floorfunc Planefunction_t
-)
-
-[weak]
-__global (
-	ceilingfunc_t Planefunction_t
-)
-
-[weak]
-__global (
-	floorclip [320]i16
-)
-
-[weak]
-__global (
-	ceilingclip [320]i16
-)
-
-[weak]
-__global (
-	yslope [200]int
-)
-
-[weak]
-__global (
-	distscale [320]int
-)
 
 [c: 'R_InitPlanes']
 fn r_initplanes()
@@ -2956,61 +2436,6 @@ fn r_findplane(height int, picnum int, lightlevel int) &Visplane_t
 
 [c: 'R_CheckPlane']
 fn r_checkplane(pl &Visplane_t, start int, stop int) &Visplane_t
-
-[weak]
-__global (
-	vissprites [128]Vissprite_t
-)
-
-[weak]
-__global (
-	vissprite_p &Vissprite_t
-)
-
-[weak]
-__global (
-	vsprsortedhead Vissprite_t
-)
-
-[weak]
-__global (
-	negonearray [320]i16
-)
-
-[weak]
-__global (
-	screenheightarray [320]i16
-)
-
-[weak]
-__global (
-	mfloorclip &i16
-)
-
-[weak]
-__global (
-	mceilingclip &i16
-)
-
-[weak]
-__global (
-	spryscale int
-)
-
-[weak]
-__global (
-	sprtopscreen int
-)
-
-[weak]
-__global (
-	pspritescale int
-)
-
-[weak]
-__global (
-	pspriteiscale int
-)
 
 [c: 'R_DrawMaskedColumn']
 fn r_drawmaskedcolumn(column &Column_t)
@@ -3039,41 +2464,6 @@ fn r_drawmasked()
 [c: 'R_ClipVisSprite']
 fn r_clipvissprite(vis &Vissprite_t, xl int, xh int)
 
-[weak]
-__global (
-	dc_colormap &Lighttable_t
-)
-
-[weak]
-__global (
-	dc_x int
-)
-
-[weak]
-__global (
-	dc_yl int
-)
-
-[weak]
-__global (
-	dc_yh int
-)
-
-[weak]
-__global (
-	dc_iscale int
-)
-
-[weak]
-__global (
-	dc_texturemid int
-)
-
-[weak]
-__global (
-	dc_source &u8
-)
-
 [c: 'R_DrawColumn']
 fn r_drawcolumn()
 
@@ -3094,61 +2484,6 @@ fn r_drawtranslatedcolumnlow()
 
 [c: 'R_VideoErase']
 fn r_videoerase(ofs u32, count int)
-
-[weak]
-__global (
-	ds_y int
-)
-
-[weak]
-__global (
-	ds_x1 int
-)
-
-[weak]
-__global (
-	ds_x2 int
-)
-
-[weak]
-__global (
-	ds_colormap &Lighttable_t
-)
-
-[weak]
-__global (
-	ds_xfrac int
-)
-
-[weak]
-__global (
-	ds_yfrac int
-)
-
-[weak]
-__global (
-	ds_xstep int
-)
-
-[weak]
-__global (
-	ds_ystep int
-)
-
-[weak]
-__global (
-	ds_source &u8
-)
-
-[weak]
-__global (
-	translationtables &u8
-)
-
-[weak]
-__global (
-	dc_translation &u8
-)
 
 [c: 'R_DrawSpan']
 fn r_drawspan()
@@ -3193,26 +2528,6 @@ fn p_dropweapon(player &Player_t)
 
 [c: 'P_PlayerThink']
 fn p_playerthink(player &Player_t)
-
-[weak]
-__global (
-	itemrespawnque [128]Mapthing_t
-)
-
-[weak]
-__global (
-	itemrespawntime [128]int
-)
-
-[weak]
-__global (
-	iquehead int
-)
-
-[weak]
-__global (
-	iquetail int
-)
 
 [c: 'P_RespawnSpecials']
 fn p_respawnspecials()
@@ -3259,16 +2574,6 @@ struct Intercept_t {
 	isaline bool
 }
 
-[weak]
-__global (
-	intercepts [189]Intercept_t
-)
-
-[weak]
-__global (
-	intercept_p &Intercept_t
-)
-
 type Traverser_t = fn (&Intercept_t) bool
 
 [c: 'P_AproxDistance']
@@ -3291,22 +2596,7 @@ fn p_boxonlineside(tmbox &int, ld &Line_t) int
 
 [weak]
 __global (
-	opentop int
-)
-
-[weak]
-__global (
-	openbottom int
-)
-
-[weak]
-__global (
 	openrange int
-)
-
-[weak]
-__global (
-	lowfloor int
 )
 
 [c: 'P_LineOpening']
@@ -3344,16 +2634,6 @@ __global (
 
 [weak]
 __global (
-	tmceilingz int
-)
-
-[weak]
-__global (
-	ceilingline &Line_t
-)
-
-[weak]
-__global (
 	spechit [20]&Line_t
 )
 
@@ -3383,11 +2663,6 @@ fn p_uselines(player &Player_t)
 [c: 'P_ChangeSector']
 fn p_changesector(sector &Sector_t, crunch bool) bool
 
-[weak]
-__global (
-	linetarget &Mobj_t
-)
-
 [c: 'P_AimLineAttack']
 fn p_aimlineattack(t1 &Mobj_t, angle Angle_t, distance int) int
 
@@ -3399,31 +2674,6 @@ fn p_radiusattack(spot &Mobj_t, source &Mobj_t, damage int)
 
 [weak]
 __global (
-	rejectmatrix &u8
-)
-
-[weak]
-__global (
-	blockmaplump &i16
-)
-
-[weak]
-__global (
-	blockmap &i16
-)
-
-[weak]
-__global (
-	bmapwidth int
-)
-
-[weak]
-__global (
-	bmapheight int
-)
-
-[weak]
-__global (
 	bmaporgx int
 )
 
@@ -3432,36 +2682,11 @@ __global (
 	bmaporgy int
 )
 
-[weak]
-__global (
-	blocklinks &&Mobj_t
-)
-
-[weak]
-__global (
-	maxammo [4]int
-)
-
-[weak]
-__global (
-	clipammo [4]int
-)
-
 [c: 'P_TouchSpecialThing']
 fn p_touchspecialthing(special &Mobj_t, toucher &Mobj_t)
 
 [c: 'P_DamageMobj']
 fn p_damagemobj(target &Mobj_t, inflictor &Mobj_t, source &Mobj_t, damage int)
-
-[weak]
-__global (
-	levelTimer bool
-)
-
-[weak]
-__global (
-	levelTimeCount int
-)
 
 [c: 'P_InitPicAnims']
 fn p_initpicanims()
@@ -3606,11 +2831,6 @@ struct Button_t {
 	soundorg &Degenmobj_t
 }
 
-[weak]
-__global (
-	buttonlist [16]Button_t
-)
-
 [c: 'P_ChangeSwitchTexture']
 fn p_changeswitchtexture(line &Line_t, useAgain int)
 
@@ -3646,11 +2866,6 @@ struct Plat_t {
 	tag       int
 	type_     Plattype_e
 }
-
-[weak]
-__global (
-	activeplats [30]&Plat_t
-)
 
 [c: 'T_PlatRaise']
 fn t_platraise(plat &Plat_t)
@@ -3731,11 +2946,6 @@ struct Ceiling_t {
 	tag          int
 	olddirection int
 }
-
-[weak]
-__global (
-	activeceilings [30]&Ceiling_t
-)
 
 [c: 'EV_DoCeiling']
 fn ev_doceiling(line &Line_t, type_ Ceiling_e) int
@@ -3931,41 +3141,6 @@ fn i_stopsong()
 
 [c: 'I_MusicIsPlaying']
 fn i_musicisplaying() bool
-
-[weak]
-__global (
-	snd_sfxdevice int
-)
-
-[weak]
-__global (
-	snd_musicdevice int
-)
-
-[weak]
-__global (
-	snd_samplerate int
-)
-
-[weak]
-__global (
-	snd_cachesize int
-)
-
-[weak]
-__global (
-	snd_maxslicetime_ms int
-)
-
-[weak]
-__global (
-	snd_musiccmd &i8
-)
-
-[weak]
-__global (
-	snd_pitchshift int
-)
 
 [c: 'I_BindSoundVariables']
 fn i_bindsoundvariables()
@@ -4206,11 +3381,6 @@ fn s_setmusicvolume(volume int)
 [c: 'S_SetSfxVolume']
 fn s_setsfxvolume(volume int)
 
-[weak]
-__global (
-	snd_channels int
-)
-
 [c: 'G_DeathMatchSpawnPlayer']
 fn g_deathmatchspawnplayer(playernum int)
 
@@ -4274,16 +3444,6 @@ fn g_drawmousespeedbox()
 [c: 'G_VanillaVersionCode']
 fn g_vanillaversioncode() int
 
-[weak]
-__global (
-	vanilla_savegame_limit int
-)
-
-[weak]
-__global (
-	vanilla_demo_limit int
-)
-
 type Netgame_startup_callback_t = fn (int, int) bool
 
 struct Loop_interface_t {
@@ -4316,17 +3476,7 @@ fn d_startnetgame(settings &Net_gamesettings_t, callback Netgame_startup_callbac
 
 [weak]
 __global (
-	singletics bool
-)
-
-[weak]
-__global (
 	gametic int
-)
-
-[weak]
-__global (
-	ticdup int
 )
 
 [c: 'D_NonVanillaRecord']
@@ -4337,22 +3487,7 @@ fn d_nonvanillaplayback(conditional bool, lumpnum int, feature &i8) bool
 
 [weak]
 __global (
-	nomonsters bool
-)
-
-[weak]
-__global (
-	respawnparm bool
-)
-
-[weak]
-__global (
 	fastparm bool
-)
-
-[weak]
-__global (
-	devparm bool
 )
 
 [weak]
@@ -4362,52 +3497,7 @@ __global (
 
 [weak]
 __global (
-	gamemission GameMission_t
-)
-
-[weak]
-__global (
 	gameversion GameVersion_t
-)
-
-[weak]
-__global (
-	gamevariant GameVariant_t
-)
-
-[weak]
-__global (
-	gamedescription &i8
-)
-
-[weak]
-__global (
-	modifiedgame bool
-)
-
-[weak]
-__global (
-	startskill Skill_t
-)
-
-[weak]
-__global (
-	startepisode int
-)
-
-[weak]
-__global (
-	startmap int
-)
-
-[weak]
-__global (
-	startloadgame int
-)
-
-[weak]
-__global (
-	autostart bool
 )
 
 [weak]
@@ -4427,162 +3517,7 @@ __global (
 
 [weak]
 __global (
-	timelimit int
-)
-
-[weak]
-__global (
-	respawnmonsters bool
-)
-
-[weak]
-__global (
 	netgame bool
-)
-
-[weak]
-__global (
-	deathmatch int
-)
-
-[weak]
-__global (
-	sfxVolume int
-)
-
-[weak]
-__global (
-	musicVolume int
-)
-
-[weak]
-__global (
-	snd_MusicDevice int
-)
-
-[weak]
-__global (
-	snd_SfxDevice int
-)
-
-[weak]
-__global (
-	snd_DesiredMusicDevice int
-)
-
-[weak]
-__global (
-	snd_DesiredSfxDevice int
-)
-
-[weak]
-__global (
-	statusbaractive bool
-)
-
-[weak]
-__global (
-	automapactive bool
-)
-
-[weak]
-__global (
-	menuactive bool
-)
-
-[weak]
-__global (
-	paused bool
-)
-
-[weak]
-__global (
-	viewactive bool
-)
-
-[weak]
-__global (
-	nodrawers bool
-)
-
-[weak]
-__global (
-	testcontrols bool
-)
-
-[weak]
-__global (
-	testcontrols_mousespeed int
-)
-
-[weak]
-__global (
-	viewangleoffset int
-)
-
-[weak]
-__global (
-	consoleplayer int
-)
-
-[weak]
-__global (
-	displayplayer int
-)
-
-[weak]
-__global (
-	totalkills int
-)
-
-[weak]
-__global (
-	totalitems int
-)
-
-[weak]
-__global (
-	totalsecret int
-)
-
-[weak]
-__global (
-	levelstarttic int
-)
-
-[weak]
-__global (
-	leveltime int
-)
-
-[weak]
-__global (
-	usergame bool
-)
-
-[weak]
-__global (
-	demoplayback bool
-)
-
-[weak]
-__global (
-	demorecording bool
-)
-
-[weak]
-__global (
-	lowres_turn bool
-)
-
-[weak]
-__global (
-	singledemo bool
-)
-
-[weak]
-__global (
-	gamestate Gamestate_t
 )
 
 [weak]
@@ -4593,71 +3528,6 @@ __global (
 [weak]
 __global (
 	playeringame [4]bool
-)
-
-[weak]
-__global (
-	deathmatchstarts [10]Mapthing_t
-)
-
-[weak]
-__global (
-	deathmatch_p &Mapthing_t
-)
-
-[weak]
-__global (
-	playerstarts [4]Mapthing_t
-)
-
-[weak]
-__global (
-	playerstartsingame [4]bool
-)
-
-[weak]
-__global (
-	wminfo Wbstartstruct_t
-)
-
-[weak]
-__global (
-	savegamedir &i8
-)
-
-[weak]
-__global (
-	precache bool
-)
-
-[weak]
-__global (
-	wipegamestate Gamestate_t
-)
-
-[weak]
-__global (
-	mouseSensitivity int
-)
-
-[weak]
-__global (
-	bodyqueslot int
-)
-
-[weak]
-__global (
-	skyflatnum int
-)
-
-[weak]
-__global (
-	rndindex int
-)
-
-[weak]
-__global (
-	netcmds &Ticcmd_t
 )
 
 fn kekw() {
