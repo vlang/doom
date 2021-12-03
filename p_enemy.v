@@ -67,14 +67,8 @@ type Byte_ = i8
 type Pixel_t = i8
 type Dpixel_t = i16
 
-[c: 'M_Random']
-fn m_random() int
-
 [c: 'P_Random']
 fn p_random() int
-
-[c: 'M_ClearRandom']
-fn m_clearrandom()
 
 [c: 'P_SubRandom']
 fn p_subrandom() int
@@ -133,71 +127,11 @@ enum Buttoncode2_t {
 	bt2_health
 }
 
-[c: 'D_PostEvent']
-fn d_postevent(ev &Event_t)
-
-[c: 'D_PopEvent']
-fn d_popevent() &Event_t
-
 type Atexit_func_t = fn ()
-
-[c: 'I_Init']
-fn i_init()
-
-[c: 'I_ZoneBase']
-fn i_zonebase(size &int) &u8
-
-[c: 'I_ConsoleStdout']
-fn i_consolestdout() bool
-
-[c: 'I_BaseTiccmd']
-fn i_baseticcmd() &Ticcmd_t
-
-[c: 'I_Quit']
-fn i_quit()
 
 [c: 'I_Error']
 [c2v_variadic]
 fn i_error(error ...&i8)
-
-[c: 'I_Tactile']
-fn i_tactile(on int, off int, total int)
-
-[c: 'I_Realloc']
-fn i_realloc(ptr voidptr, size u32) voidptr
-
-[c: 'I_GetMemoryValue']
-fn i_getmemoryvalue(offset u32, value voidptr, size int) bool
-
-[c: 'I_AtExit']
-fn i_atexit(func Atexit_func_t, run_if_error bool)
-
-[c: 'I_BindVariables']
-fn i_bindvariables()
-
-[c: 'I_PrintStartupBanner']
-fn i_printstartupbanner(gamedescription &i8)
-
-[c: 'I_PrintBanner']
-fn i_printbanner(text &i8)
-
-[c: 'I_PrintDivider']
-fn i_printdivider()
-
-[c: 'I_GetTime']
-fn i_gettime() int
-
-[c: 'I_GetTimeMS']
-fn i_gettimems() int
-
-[c: 'I_Sleep']
-fn i_sleep(ms int)
-
-[c: 'I_InitTimer']
-fn i_inittimer()
-
-[c: 'I_WaitVBL']
-fn i_waitvbl(count int)
 
 enum GameMission_t {
 	doom
@@ -252,27 +186,6 @@ enum Skill_t {
 	sk_hard
 	sk_nightmare
 }
-
-[c: 'D_ValidGameMode']
-fn d_validgamemode(mission GameMission_t, mode GameMode_t) bool
-
-[c: 'D_ValidGameVersion']
-fn d_validgameversion(mission GameMission_t, version GameVersion_t) bool
-
-[c: 'D_ValidEpisodeMap']
-fn d_validepisodemap(mission GameMission_t, mode GameMode_t, episode int, map_ int) bool
-
-[c: 'D_GetNumEpisodes']
-fn d_getnumepisodes(mission GameMission_t, mode GameMode_t) int
-
-[c: 'D_IsEpisodeMap']
-fn d_isepisodemap(mission GameMission_t) bool
-
-[c: 'D_GameMissionString']
-fn d_gamemissionstring(mission GameMission_t) &i8
-
-[c: 'D_GameModeString']
-fn d_gamemodestring(mode GameMode_t) &i8
 
 enum Gamestate_t {
 	gs_level
@@ -349,9 +262,6 @@ type Fixed_t = int
 [c: 'FixedMul']
 fn fixedmul(a int, b int) int
 
-[c: 'FixedDiv']
-fn fixeddiv(a int, b int) int
-
 [weak]
 __global (
 	finesine [10240]int
@@ -363,10 +273,6 @@ __global (
 )
 
 type Angle_t = int
-
-[c: 'SlopeDiv']
-fn slopediv(num u32, den u32) int
-
 type Actionf_v = fn ()
 
 type Actionf_p1 = fn (voidptr)
@@ -1836,66 +1742,6 @@ struct Mobj_t {
 
 type Grabmouse_callback_t = fn () bool
 
-[c: 'I_InitGraphics']
-fn i_initgraphics()
-
-[c: 'I_GraphicsCheckCommandLine']
-fn i_graphicscheckcommandline()
-
-[c: 'I_ShutdownGraphics']
-fn i_shutdowngraphics()
-
-[c: 'I_SetPalette']
-fn i_setpalette(palette &u8)
-
-[c: 'I_GetPaletteIndex']
-fn i_getpaletteindex(r int, g int, b int) int
-
-[c: 'I_UpdateNoBlit']
-fn i_updatenoblit()
-
-[c: 'I_FinishUpdate']
-fn i_finishupdate()
-
-[c: 'I_ReadScreen']
-fn i_readscreen(scr &Pixel_t)
-
-[c: 'I_BeginRead']
-fn i_beginread()
-
-[c: 'I_SetWindowTitle']
-fn i_setwindowtitle(title &i8)
-
-[c: 'I_CheckIsScreensaver']
-fn i_checkisscreensaver()
-
-[c: 'I_SetGrabMouseCallback']
-fn i_setgrabmousecallback(func Grabmouse_callback_t)
-
-[c: 'I_DisplayFPSDots']
-fn i_displayfpsdots(dots_on bool)
-
-[c: 'I_BindVideoVariables']
-fn i_bindvideovariables()
-
-[c: 'I_InitWindowTitle']
-fn i_initwindowtitle()
-
-[c: 'I_InitWindowIcon']
-fn i_initwindowicon()
-
-[c: 'I_StartFrame']
-fn i_startframe()
-
-[c: 'I_StartTic']
-fn i_starttic()
-
-[c: 'I_EnableLoadingDisk']
-fn i_enableloadingdisk(xoffs int, yoffs int)
-
-[c: 'I_GetWindowPosition']
-fn i_getwindowposition(x &int, y &int, w int, h int)
-
 struct Patch_t {
 	width      i16
 	height     i16
@@ -2096,21 +1942,6 @@ struct Sha1_context_s {
 	buf     [64]u8
 	count   int
 }
-
-[c: 'SHA1_Init']
-fn sha1_init(context &Sha1_context_t)
-
-[c: 'SHA1_Update']
-fn sha1_update(context &Sha1_context_t, buf &u8, len u32)
-
-[c: 'SHA1_Final']
-fn sha1_final(digest &u8, context &Sha1_context_t)
-
-[c: 'SHA1_UpdateInt32']
-fn sha1_updateint32(context &Sha1_context_t, val u32)
-
-[c: 'SHA1_UpdateString']
-fn sha1_updatestring(context &Sha1_context_t, str &i8)
 
 type Net_module_t = Net_module_s
 type Net_packet_t = Net_packet_s
@@ -2339,24 +2170,6 @@ __global (
 	sides &Side_t
 )
 
-[c: 'R_GetColumn']
-fn r_getcolumn(tex int, col int) &u8
-
-[c: 'R_InitData']
-fn r_initdata()
-
-[c: 'R_PrecacheLevel']
-fn r_precachelevel()
-
-[c: 'R_FlatNumForName']
-fn r_flatnumforname(name &i8) int
-
-[c: 'R_TextureNumForName']
-fn r_texturenumforname(name &i8) int
-
-[c: 'R_CheckTextureNumForName']
-fn r_checktexturenumforname(name &i8) int
-
 [weak]
 __global (
 	validcount int
@@ -2367,170 +2180,20 @@ __global (
 	linecount int
 )
 
-[c: 'R_PointOnSide']
-fn r_pointonside(x int, y int, node &Node_t) int
-
-[c: 'R_PointOnSegSide']
-fn r_pointonsegside(x int, y int, line &Seg_t) int
-
 [c: 'R_PointToAngle']
 fn r_pointtoangle(x int, y int) Angle_t
 
 [c: 'R_PointToAngle2']
 fn r_pointtoangle2(x1 int, y1 int, x2 int, y2 int) Angle_t
 
-[c: 'R_PointToDist']
-fn r_pointtodist(x int, y int) int
-
-[c: 'R_ScaleFromGlobalAngle']
-fn r_scalefromglobalangle(visangle Angle_t) int
-
-[c: 'R_PointInSubsector']
-fn r_pointinsubsector(x int, y int) &Subsector_t
-
-[c: 'R_AddPointToBox']
-fn r_addpointtobox(x int, y int, box &int)
-
-[c: 'R_RenderPlayerView']
-fn r_renderplayerview(player &Player_t)
-
-[c: 'R_Init']
-fn r_init()
-
-[c: 'R_SetViewSize']
-fn r_setviewsize(blocks int, detail int)
-
 type Drawfunc_t = fn (int, int)
 
-[c: 'R_ClearClipSegs']
-fn r_clearclipsegs()
-
-[c: 'R_ClearDrawSegs']
-fn r_cleardrawsegs()
-
-[c: 'R_RenderBSPNode']
-fn r_renderbspnode(bspnum int)
-
-[c: 'R_RenderMaskedSegRange']
-fn r_rendermaskedsegrange(ds &Drawseg_t, x1 int, x2 int)
-
 type Planefunction_t = fn (int, int)
-
-[c: 'R_InitPlanes']
-fn r_initplanes()
-
-[c: 'R_ClearPlanes']
-fn r_clearplanes()
-
-[c: 'R_MapPlane']
-fn r_mapplane(y int, x1 int, x2 int)
-
-[c: 'R_MakeSpans']
-fn r_makespans(x int, t1 int, b1 int, t2 int, b2 int)
-
-[c: 'R_DrawPlanes']
-fn r_drawplanes()
-
-[c: 'R_FindPlane']
-fn r_findplane(height int, picnum int, lightlevel int) &Visplane_t
-
-[c: 'R_CheckPlane']
-fn r_checkplane(pl &Visplane_t, start int, stop int) &Visplane_t
-
-[c: 'R_DrawMaskedColumn']
-fn r_drawmaskedcolumn(column &Column_t)
-
-[c: 'R_SortVisSprites']
-fn r_sortvissprites()
-
-[c: 'R_AddSprites']
-fn r_addsprites(sec &Sector_t)
-
-[c: 'R_AddPSprites']
-fn r_addpsprites()
-
-[c: 'R_DrawSprites']
-fn r_drawsprites()
-
-[c: 'R_InitSprites']
-fn r_initsprites(namelist &&u8)
-
-[c: 'R_ClearSprites']
-fn r_clearsprites()
-
-[c: 'R_DrawMasked']
-fn r_drawmasked()
-
-[c: 'R_ClipVisSprite']
-fn r_clipvissprite(vis &Vissprite_t, xl int, xh int)
-
-[c: 'R_DrawColumn']
-fn r_drawcolumn()
-
-[c: 'R_DrawColumnLow']
-fn r_drawcolumnlow()
-
-[c: 'R_DrawFuzzColumn']
-fn r_drawfuzzcolumn()
-
-[c: 'R_DrawFuzzColumnLow']
-fn r_drawfuzzcolumnlow()
-
-[c: 'R_DrawTranslatedColumn']
-fn r_drawtranslatedcolumn()
-
-[c: 'R_DrawTranslatedColumnLow']
-fn r_drawtranslatedcolumnlow()
-
-[c: 'R_VideoErase']
-fn r_videoerase(ofs u32, count int)
-
-[c: 'R_DrawSpan']
-fn r_drawspan()
-
-[c: 'R_DrawSpanLow']
-fn r_drawspanlow()
-
-[c: 'R_InitBuffer']
-fn r_initbuffer(width int, height int)
-
-[c: 'R_InitTranslationTables']
-fn r_inittranslationtables()
-
-[c: 'R_FillBackScreen']
-fn r_fillbackscreen()
-
-[c: 'R_DrawViewBorder']
-fn r_drawviewborder()
 
 [weak]
 __global (
 	thinkercap Thinker_t
 )
-
-[c: 'P_InitThinkers']
-fn p_initthinkers()
-
-[c: 'P_AddThinker']
-fn p_addthinker(thinker &Thinker_t)
-
-[c: 'P_RemoveThinker']
-fn p_removethinker(thinker &Thinker_t)
-
-[c: 'P_SetupPsprites']
-fn p_setuppsprites(curplayer &Player_t)
-
-[c: 'P_MovePsprites']
-fn p_movepsprites(curplayer &Player_t)
-
-[c: 'P_DropWeapon']
-fn p_dropweapon(player &Player_t)
-
-[c: 'P_PlayerThink']
-fn p_playerthink(player &Player_t)
-
-[c: 'P_RespawnSpecials']
-fn p_respawnspecials()
 
 [c: 'P_SpawnMobj']
 fn p_spawnmobj(x int, y int, z int, type_ Mobjtype_t) &Mobj_t
@@ -2550,14 +2213,8 @@ fn p_mobjthinker(mobj &Mobj_t)
 [c: 'P_SpawnPuff']
 fn p_spawnpuff(x int, y int, z int)
 
-[c: 'P_SpawnBlood']
-fn p_spawnblood(x int, y int, z int, damage int)
-
 [c: 'P_SpawnMissile']
 fn p_spawnmissile(source &Mobj_t, dest &Mobj_t, type_ Mobjtype_t) &Mobj_t
-
-[c: 'P_SpawnPlayerMissile']
-fn p_spawnplayermissile(source &Mobj_t, type_ Mobjtype_t)
 
 [c: 'P_NoiseAlert']
 fn p_noisealert(target &Mobj_t, emmiter &Mobj_t)
@@ -2579,21 +2236,6 @@ type Traverser_t = fn (&Intercept_t) bool
 [c: 'P_AproxDistance']
 fn p_aproxdistance(dx int, dy int) int
 
-[c: 'P_PointOnLineSide']
-fn p_pointonlineside(x int, y int, line &Line_t) int
-
-[c: 'P_PointOnDivlineSide']
-fn p_pointondivlineside(x int, y int, line &Divline_t) int
-
-[c: 'P_MakeDivline']
-fn p_makedivline(li &Line_t, dl &Divline_t)
-
-[c: 'P_InterceptVector']
-fn p_interceptvector(v2 &Divline_t, v1 &Divline_t) int
-
-[c: 'P_BoxOnLineSide']
-fn p_boxonlineside(tmbox &int, ld &Line_t) int
-
 [weak]
 __global (
 	openrange int
@@ -2602,9 +2244,6 @@ __global (
 [c: 'P_LineOpening']
 fn p_lineopening(linedef &Line_t)
 
-[c: 'P_BlockLinesIterator']
-fn p_blocklinesiterator(x int, y int, func fn (&Line_t) bool) bool
-
 [c: 'P_BlockThingsIterator']
 fn p_blockthingsiterator(x int, y int, func fn (&Mobj_t) bool) bool
 
@@ -2612,9 +2251,6 @@ fn p_blockthingsiterator(x int, y int, func fn (&Mobj_t) bool) bool
 __global (
 	trace Divline_t
 )
-
-[c: 'P_PathTraverse']
-fn p_pathtraverse(x1 int, y1 int, x2 int, y2 int, flags int, trav fn (&Intercept_t) bool) bool
 
 [c: 'P_UnsetThingPosition']
 fn p_unsetthingposition(thing &Mobj_t)
@@ -2651,17 +2287,8 @@ fn p_trymove(thing &Mobj_t, x int, y int) bool
 [c: 'P_TeleportMove']
 fn p_teleportmove(thing &Mobj_t, x int, y int) bool
 
-[c: 'P_SlideMove']
-fn p_slidemove(mo &Mobj_t)
-
 [c: 'P_CheckSight']
 fn p_checksight(t1 &Mobj_t, t2 &Mobj_t) bool
-
-[c: 'P_UseLines']
-fn p_uselines(player &Player_t)
-
-[c: 'P_ChangeSector']
-fn p_changesector(sector &Sector_t, crunch bool) bool
 
 [c: 'P_AimLineAttack']
 fn p_aimlineattack(t1 &Mobj_t, angle Angle_t, distance int) int
@@ -2682,68 +2309,11 @@ __global (
 	bmaporgy int
 )
 
-[c: 'P_TouchSpecialThing']
-fn p_touchspecialthing(special &Mobj_t, toucher &Mobj_t)
-
 [c: 'P_DamageMobj']
 fn p_damagemobj(target &Mobj_t, inflictor &Mobj_t, source &Mobj_t, damage int)
 
-[c: 'P_InitPicAnims']
-fn p_initpicanims()
-
-[c: 'P_SpawnSpecials']
-fn p_spawnspecials()
-
-[c: 'P_UpdateSpecials']
-fn p_updatespecials()
-
 [c: 'P_UseSpecialLine']
 fn p_usespecialline(thing &Mobj_t, line &Line_t, side int) bool
-
-[c: 'P_ShootSpecialLine']
-fn p_shootspecialline(thing &Mobj_t, line &Line_t)
-
-[c: 'P_CrossSpecialLine']
-fn p_crossspecialline(linenum int, side int, thing &Mobj_t)
-
-[c: 'P_PlayerInSpecialSector']
-fn p_playerinspecialsector(player &Player_t)
-
-[c: 'twoSided']
-fn twosided(sector int, line int) int
-
-[c: 'getSector']
-fn getsector(currentSector int, line int, side int) &Sector_t
-
-[c: 'getSide']
-fn getside(currentSector int, line int, side int) &Side_t
-
-[c: 'P_FindLowestFloorSurrounding']
-fn p_findlowestfloorsurrounding(sec &Sector_t) int
-
-[c: 'P_FindHighestFloorSurrounding']
-fn p_findhighestfloorsurrounding(sec &Sector_t) int
-
-[c: 'P_FindNextHighestFloor']
-fn p_findnexthighestfloor(sec &Sector_t, currentheight int) int
-
-[c: 'P_FindLowestCeilingSurrounding']
-fn p_findlowestceilingsurrounding(sec &Sector_t) int
-
-[c: 'P_FindHighestCeilingSurrounding']
-fn p_findhighestceilingsurrounding(sec &Sector_t) int
-
-[c: 'P_FindSectorFromLineTag']
-fn p_findsectorfromlinetag(line &Line_t, start int) int
-
-[c: 'P_FindMinSurroundingLight']
-fn p_findminsurroundinglight(sector &Sector_t, max int) int
-
-[c: 'getNextSector']
-fn getnextsector(line &Line_t, sec &Sector_t) &Sector_t
-
-[c: 'EV_DoDonut']
-fn ev_dodonut(line &Line_t) int
 
 struct Fireflicker_t {
 	thinker  Thinker_t
@@ -2781,36 +2351,6 @@ struct Glow_t {
 	direction int
 }
 
-[c: 'P_SpawnFireFlicker']
-fn p_spawnfireflicker(sector &Sector_t)
-
-[c: 'T_LightFlash']
-fn t_lightflash(flash &Lightflash_t)
-
-[c: 'P_SpawnLightFlash']
-fn p_spawnlightflash(sector &Sector_t)
-
-[c: 'T_StrobeFlash']
-fn t_strobeflash(flash &Strobe_t)
-
-[c: 'P_SpawnStrobeFlash']
-fn p_spawnstrobeflash(sector &Sector_t, fastOrSlow int, inSync int)
-
-[c: 'EV_StartLightStrobing']
-fn ev_startlightstrobing(line &Line_t)
-
-[c: 'EV_TurnTagLightsOff']
-fn ev_turntaglightsoff(line &Line_t)
-
-[c: 'EV_LightTurnOn']
-fn ev_lightturnon(line &Line_t, bright int)
-
-[c: 'T_Glow']
-fn t_glow(g &Glow_t)
-
-[c: 'P_SpawnGlowingLight']
-fn p_spawnglowinglight(sector &Sector_t)
-
 struct Switchlist_t {
 	name1   [9]i8
 	name2   [9]i8
@@ -2830,12 +2370,6 @@ struct Button_t {
 	btimer   int
 	soundorg &Degenmobj_t
 }
-
-[c: 'P_ChangeSwitchTexture']
-fn p_changeswitchtexture(line &Line_t, useAgain int)
-
-[c: 'P_InitSwitchList']
-fn p_initswitchlist()
 
 enum Plat_e {
 	up
@@ -2867,24 +2401,6 @@ struct Plat_t {
 	type_     Plattype_e
 }
 
-[c: 'T_PlatRaise']
-fn t_platraise(plat &Plat_t)
-
-[c: 'EV_DoPlat']
-fn ev_doplat(line &Line_t, type_ Plattype_e, amount int) int
-
-[c: 'P_AddActivePlat']
-fn p_addactiveplat(plat &Plat_t)
-
-[c: 'P_RemoveActivePlat']
-fn p_removeactiveplat(plat &Plat_t)
-
-[c: 'EV_StopPlat']
-fn ev_stopplat(line &Line_t)
-
-[c: 'P_ActivateInStasis']
-fn p_activateinstasis(tag int)
-
 enum Vldoor_e {
 	vld_normal
 	vld_close30thenopen
@@ -2907,23 +2423,8 @@ struct Vldoor_t {
 	topcountdown int
 }
 
-[c: 'EV_VerticalDoor']
-fn ev_verticaldoor(line &Line_t, thing &Mobj_t)
-
 [c: 'EV_DoDoor']
 fn ev_dodoor(line &Line_t, type_ Vldoor_e) int
-
-[c: 'EV_DoLockedDoor']
-fn ev_dolockeddoor(line &Line_t, type_ Vldoor_e, thing &Mobj_t) int
-
-[c: 'T_VerticalDoor']
-fn t_verticaldoor(door &Vldoor_t)
-
-[c: 'P_SpawnDoorCloseIn30']
-fn p_spawndoorclosein30(sec &Sector_t)
-
-[c: 'P_SpawnDoorRaiseIn5Mins']
-fn p_spawndoorraisein5mins(sec &Sector_t, secnum int)
 
 enum Ceiling_e {
 	lowertofloor
@@ -2946,24 +2447,6 @@ struct Ceiling_t {
 	tag          int
 	olddirection int
 }
-
-[c: 'EV_DoCeiling']
-fn ev_doceiling(line &Line_t, type_ Ceiling_e) int
-
-[c: 'T_MoveCeiling']
-fn t_moveceiling(ceiling &Ceiling_t)
-
-[c: 'P_AddActiveCeiling']
-fn p_addactiveceiling(c &Ceiling_t)
-
-[c: 'P_RemoveActiveCeiling']
-fn p_removeactiveceiling(c &Ceiling_t)
-
-[c: 'EV_CeilingCrushStop']
-fn ev_ceilingcrushstop(line &Line_t) int
-
-[c: 'P_ActivateInStasisCeiling']
-fn p_activateinstasisceiling(line &Line_t)
 
 enum Floor_e {
 	lowerfloor
@@ -3004,20 +2487,8 @@ enum Result_e {
 	pastdest
 }
 
-[c: 'T_MovePlane']
-fn t_moveplane(sector &Sector_t, speed int, dest int, crush bool, floorOrCeiling int, direction int) Result_e
-
-[c: 'EV_BuildStairs']
-fn ev_buildstairs(line &Line_t, type_ Stair_e) int
-
 [c: 'EV_DoFloor']
 fn ev_dofloor(line &Line_t, floortype Floor_e) int
-
-[c: 'T_MoveFloor']
-fn t_movefloor(floor &Floormove_t)
-
-[c: 'EV_Teleport']
-fn ev_teleport(line &Line_t, side int, thing &Mobj_t) int
 
 type Sfxinfo_t = Sfxinfo_struct
 
@@ -3069,33 +2540,6 @@ struct Sound_module_t {
 	CacheSounds       fn (&Sfxinfo_t, int)
 }
 
-[c: 'I_InitSound']
-fn i_initsound(use_sfx_prefix bool)
-
-[c: 'I_ShutdownSound']
-fn i_shutdownsound()
-
-[c: 'I_GetSfxLumpNum']
-fn i_getsfxlumpnum(sfxinfo &Sfxinfo_t) int
-
-[c: 'I_UpdateSound']
-fn i_updatesound()
-
-[c: 'I_UpdateSoundParams']
-fn i_updatesoundparams(channel int, vol int, sep int)
-
-[c: 'I_StartSound']
-fn i_startsound(sfxinfo &Sfxinfo_t, channel int, vol int, sep int, pitch int) int
-
-[c: 'I_StopSound']
-fn i_stopsound(channel int)
-
-[c: 'I_SoundIsPlaying']
-fn i_soundisplaying(channel int) bool
-
-[c: 'I_PrecacheSounds']
-fn i_precachesounds(sounds &Sfxinfo_t, num_sounds int)
-
 struct Music_module_t {
 	sound_devices     &Snddevice_t
 	num_sound_devices int
@@ -3112,47 +2556,11 @@ struct Music_module_t {
 	Poll              fn ()
 }
 
-[c: 'I_InitMusic']
-fn i_initmusic()
-
-[c: 'I_ShutdownMusic']
-fn i_shutdownmusic()
-
-[c: 'I_SetMusicVolume']
-fn i_setmusicvolume(volume int)
-
-[c: 'I_PauseSong']
-fn i_pausesong()
-
-[c: 'I_ResumeSong']
-fn i_resumesong()
-
-[c: 'I_RegisterSong']
-fn i_registersong(data voidptr, len int) voidptr
-
-[c: 'I_UnRegisterSong']
-fn i_unregistersong(handle voidptr)
-
-[c: 'I_PlaySong']
-fn i_playsong(handle voidptr, looping bool)
-
-[c: 'I_StopSong']
-fn i_stopsong()
-
-[c: 'I_MusicIsPlaying']
-fn i_musicisplaying() bool
-
-[c: 'I_BindSoundVariables']
-fn i_bindsoundvariables()
-
 enum Opl_driver_ver_t {
 	opl_doom1_1_666
 	opl_doom2_1_666
 	opl_doom_1_9
 }
-
-[c: 'I_SetOPLDriverVer']
-fn i_setopldriverver(ver Opl_driver_ver_t)
 
 enum Musicenum_t {
 	mus_none
@@ -3339,110 +2747,14 @@ enum Sfxenum_t {
 	numsfx
 }
 
-[c: 'S_Init']
-fn s_init(sfxVolume int, musicVolume int)
-
-[c: 'S_Shutdown']
-fn s_shutdown()
-
 [c: 'S_Start']
 fn s_start()
 
 [c: 'S_StartSound']
 fn s_startsound(origin voidptr, sound_id int)
 
-[c: 'S_StopSound']
-fn s_stopsound(origin &Mobj_t)
-
-[c: 'S_StartMusic']
-fn s_startmusic(music_id int)
-
-[c: 'S_ChangeMusic']
-fn s_changemusic(music_id int, looping int)
-
-[c: 'S_MusicPlaying']
-fn s_musicplaying() bool
-
-[c: 'S_StopMusic']
-fn s_stopmusic()
-
-[c: 'S_PauseSound']
-fn s_pausesound()
-
-[c: 'S_ResumeSound']
-fn s_resumesound()
-
-[c: 'S_UpdateSounds']
-fn s_updatesounds(listener &Mobj_t)
-
-[c: 'S_SetMusicVolume']
-fn s_setmusicvolume(volume int)
-
-[c: 'S_SetSfxVolume']
-fn s_setsfxvolume(volume int)
-
-[c: 'G_DeathMatchSpawnPlayer']
-fn g_deathmatchspawnplayer(playernum int)
-
-[c: 'G_InitNew']
-fn g_initnew(skill Skill_t, episode int, map_ int)
-
-[c: 'G_DeferedInitNew']
-fn g_deferedinitnew(skill Skill_t, episode int, map_ int)
-
-[c: 'G_DeferedPlayDemo']
-fn g_deferedplaydemo(demo &i8)
-
-[c: 'G_LoadGame']
-fn g_loadgame(name &i8)
-
-[c: 'G_DoLoadGame']
-fn g_doloadgame()
-
-[c: 'G_SaveGame']
-fn g_savegame(slot int, description &i8)
-
-[c: 'G_RecordDemo']
-fn g_recorddemo(name &i8)
-
-[c: 'G_BeginRecording']
-fn g_beginrecording()
-
-[c: 'G_PlayDemo']
-fn g_playdemo(name &i8)
-
-[c: 'G_TimeDemo']
-fn g_timedemo(name &i8)
-
-[c: 'G_CheckDemoStatus']
-fn g_checkdemostatus() bool
-
 [c: 'G_ExitLevel']
 fn g_exitlevel()
-
-[c: 'G_SecretExitLevel']
-fn g_secretexitlevel()
-
-[c: 'G_WorldDone']
-fn g_worlddone()
-
-[c: 'G_BuildTiccmd']
-fn g_buildticcmd(cmd &Ticcmd_t, maketic int)
-
-[c: 'G_Ticker']
-fn g_ticker()
-
-[c: 'G_Responder']
-fn g_responder(ev &Event_t) bool
-
-[c: 'G_ScreenShot']
-fn g_screenshot()
-
-[c: 'G_DrawMouseSpeedBox']
-fn g_drawmousespeedbox()
-
-[c: 'G_VanillaVersionCode']
-fn g_vanillaversioncode() int
 
 type Netgame_startup_callback_t = fn (int, int) bool
 
@@ -3453,37 +2765,10 @@ struct Loop_interface_t {
 	RunMenu       fn ()
 }
 
-[c: 'D_RegisterLoopCallbacks']
-fn d_registerloopcallbacks(i &Loop_interface_t)
-
-[c: 'NetUpdate']
-fn netupdate()
-
-[c: 'D_QuitNetGame']
-fn d_quitnetgame()
-
-[c: 'TryRunTics']
-fn tryruntics()
-
-[c: 'D_StartGameLoop']
-fn d_startgameloop()
-
-[c: 'D_InitNetGame']
-fn d_initnetgame(connect_data &Net_connect_data_t) bool
-
-[c: 'D_StartNetGame']
-fn d_startnetgame(settings &Net_gamesettings_t, callback Netgame_startup_callback_t)
-
 [weak]
 __global (
 	gametic int
 )
-
-[c: 'D_NonVanillaRecord']
-fn d_nonvanillarecord(conditional bool, feature &i8) bool
-
-[c: 'D_NonVanillaPlayback']
-fn d_nonvanillaplayback(conditional bool, lumpnum int, feature &i8) bool
 
 [weak]
 __global (
@@ -3529,10 +2814,6 @@ __global (
 __global (
 	playeringame [4]bool
 )
-
-fn kekw() {
-	puts(c'KEKW')
-}
 
 enum Dirtype_t {
 	di_east
