@@ -29,38 +29,6 @@ fn abs(x f64) f64 {
 	return x
 }
 
-fn fopen(p &i8, a &i8) &C.FILE {
-	return C.fopen(p, a)
-}
-
-fn fclose(x &C.FILE) {
-	C.fclose(x)
-}
-
-fn puts(x voidptr) {
-	C.puts(x)
-}
-
-fn rename(a voidptr, b voidptr) {
-	C.rename(a, b)
-}
-
-fn memset(a voidptr, b int, c u32) {
-	C.memset(a, b, c)
-}
-
-fn remove(x voidptr) {
-	C.remove(x)
-}
-
-fn strlen(s voidptr) int {
-	return C.strlen(s)
-}
-
-fn ftell(s voidptr) int {
-	return C.ftell(s)
-}
-
 // vstart
 
 type Byte_ = i8
@@ -104,27 +72,27 @@ struct Event_t {
 }
 
 enum Buttoncode_t {
-	bt_attack
-	bt_use
-	bt_special
-	bt_specialmask
-	bt_change
-	bt_weaponmask
-	bt_weaponshift
-	bts_pause
-	bts_savegame
-	bts_savemask
-	bts_saveshift
+	bt_attack = 1
+	bt_use = 2
+	bt_special = 128
+	bt_specialmask = 3
+	bt_change = 4
+	bt_weaponmask = 8 + 16 + 32
+	bt_weaponshift = 3
+	bts_pause = 1
+	bts_savegame = 2
+	bts_savemask = 4 + 8 + 16
+	bts_saveshift = 2
 }
 
 enum Buttoncode2_t {
-	bt2_lookup
-	bt2_lookdown
-	bt2_centerview
-	bt2_invuse
-	bt2_invdrop
-	bt2_jump
-	bt2_health
+	bt2_lookup = 1
+	bt2_lookdown = 2
+	bt2_centerview = 4
+	bt2_invuse = 8
+	bt2_invdrop = 16
+	bt2_jump = 32
+	bt2_health = 128
 }
 
 type Atexit_func_t = fn ()
@@ -179,8 +147,8 @@ enum GameVariant_t {
 }
 
 enum Skill_t {
-	sk_noitems
-	sk_baby
+	sk_noitems = -1
+	sk_baby = 0
 	sk_easy
 	sk_medium
 	sk_hard
@@ -251,10 +219,10 @@ enum Powertype_t {
 }
 
 enum Powerduration_t {
-	invulntics
-	invistics
-	infratics
-	irontics
+	invulntics = 30 * 35
+	invistics = 60 * 35
+	infratics = 120 * 35
+	irontics = 60 * 35
 }
 
 type Fixed_t = int
@@ -279,7 +247,7 @@ type Actionf_p1 = fn (voidptr)
 
 type Actionf_p2 = fn (voidptr, voidptr)
 
-struct Actionf_t {
+union Actionf_t {
 	acv  Actionf_v
 	acp1 Actionf_p1
 	acp2 Actionf_p2
@@ -1672,34 +1640,34 @@ __global (
 )
 
 enum Mobjflag_t {
-	mf_special
-	mf_solid
-	mf_shootable
-	mf_nosector
-	mf_noblockmap
-	mf_ambush
-	mf_justhit
-	mf_justattacked
-	mf_spawnceiling
-	mf_nogravity
-	mf_dropoff
-	mf_pickup
-	mf_noclip
-	mf_slide
-	mf_float
-	mf_teleport
-	mf_missile
-	mf_dropped
-	mf_shadow
-	mf_noblood
-	mf_corpse
-	mf_infloat
-	mf_countkill
-	mf_countitem
-	mf_skullfly
-	mf_notdmatch
-	mf_translation
-	mf_transshift
+	mf_special = 1
+	mf_solid = 2
+	mf_shootable = 4
+	mf_nosector = 8
+	mf_noblockmap = 16
+	mf_ambush = 32
+	mf_justhit = 64
+	mf_justattacked = 128
+	mf_spawnceiling = 256
+	mf_nogravity = 512
+	mf_dropoff = 1024
+	mf_pickup = 2048
+	mf_noclip = 4096
+	mf_slide = 8192
+	mf_float = 16384
+	mf_teleport = 32768
+	mf_missile = 65536
+	mf_dropped = 131072
+	mf_shadow = 262144
+	mf_noblood = 524288
+	mf_corpse = 1048576
+	mf_infloat = 2097152
+	mf_countkill = 4194304
+	mf_countitem = 8388608
+	mf_skullfly = 16777216
+	mf_notdmatch = 33554432
+	mf_translation = 201326592
+	mf_transshift = 26
 }
 
 struct Mobj_t {
@@ -2088,9 +2056,9 @@ enum Playerstate_t {
 }
 
 enum Cheat_t {
-	cf_noclip
-	cf_godmode
-	cf_nomomentum
+	cf_noclip = 1
+	cf_godmode = 2
+	cf_nomomentum = 4
 }
 
 struct Player_t {
@@ -2513,17 +2481,17 @@ struct Musicinfo_t {
 }
 
 enum Snddevice_t {
-	snddevice_none
-	snddevice_pcspeaker
-	snddevice_adlib
-	snddevice_sb
-	snddevice_pas
-	snddevice_gus
-	snddevice_waveblaster
-	snddevice_soundcanvas
-	snddevice_genmidi
-	snddevice_awe32
-	snddevice_cd
+	snddevice_none = 0
+	snddevice_pcspeaker = 1
+	snddevice_adlib = 2
+	snddevice_sb = 3
+	snddevice_pas = 4
+	snddevice_gus = 5
+	snddevice_waveblaster = 6
+	snddevice_soundcanvas = 7
+	snddevice_genmidi = 8
+	snddevice_awe32 = 9
+	snddevice_cd = 10
 }
 
 struct Sound_module_t {
@@ -2847,11 +2815,14 @@ __global (
 	soundtarget &Mobj_t
 )
 
-[export: 'P_RecursiveSound']
+[c: 'P_RecursiveSound']
 fn p_recursivesound(sec &Sector_t, soundblocks int) {
 	i := 0
 	check := &Line_t(0)
 	other := &Sector_t(0)
+	if true {
+		return
+	}
 	if sec.validcount == validcount && sec.soundtraversed <= soundblocks + 1 {
 		return
 	}
@@ -2882,14 +2853,14 @@ fn p_recursivesound(sec &Sector_t, soundblocks int) {
 	}
 }
 
-[export: 'P_NoiseAlert']
+[c: 'P_NoiseAlert']
 fn p_noisealert(target &Mobj_t, emmiter &Mobj_t) {
 	soundtarget = target
 	validcount++
 	p_recursivesound(emmiter.subsector.sector, 0)
 }
 
-[export: 'P_CheckMeleeRange']
+[c: 'P_CheckMeleeRange']
 fn p_checkmeleerange(actor &Mobj_t) bool {
 	pl := &Mobj_t(0)
 	dist := 0
@@ -2913,7 +2884,7 @@ fn p_checkmeleerange(actor &Mobj_t) bool {
 	return true
 }
 
-[export: 'P_CheckMissileRange']
+[c: 'P_CheckMissileRange']
 fn p_checkmissilerange(actor &Mobj_t) bool {
 	dist := 0
 	if !p_checksight(actor, actor.target) {
@@ -2966,7 +2937,7 @@ const (
 	yspeed = [0, 47000, (1 << 16), 47000, 0, -47000, -(1 << 16), -47000]!
 )
 
-[export: 'P_Move']
+[c: 'P_Move']
 fn p_move(actor &Mobj_t) bool {
 	tryx := 0
 	tryy := 0
@@ -3013,7 +2984,7 @@ fn p_move(actor &Mobj_t) bool {
 	return true
 }
 
-[export: 'P_TryWalk']
+[c: 'P_TryWalk']
 fn p_trywalk(actor &Mobj_t) bool {
 	if !p_move(actor) {
 		return false
@@ -3022,7 +2993,7 @@ fn p_trywalk(actor &Mobj_t) bool {
 	return true
 }
 
-[export: 'P_NewChaseDir']
+[c: 'P_NewChaseDir']
 fn p_newchasedir(actor &Mobj_t) {
 	deltax := 0
 	deltay := 0
@@ -3114,7 +3085,7 @@ fn p_newchasedir(actor &Mobj_t) {
 	actor.movedir = Dirtype_t.di_nodir
 }
 
-[export: 'P_LookForPlayers']
+[c: 'P_LookForPlayers']
 fn p_lookforplayers(actor &Mobj_t, allaround bool) bool {
 	c := 0
 	stop := 0
@@ -3152,7 +3123,7 @@ fn p_lookforplayers(actor &Mobj_t, allaround bool) bool {
 	return false
 }
 
-[export: 'A_KeenDie']
+[c: 'A_KeenDie']
 fn a_keendie(mo &Mobj_t) {
 	th := &Thinker_t(0)
 	mo2 := &Mobj_t(0)
@@ -3171,8 +3142,11 @@ fn a_keendie(mo &Mobj_t) {
 	ev_dodoor(&junk, Vldoor_e.vld_open)
 }
 
-[export: 'A_Look']
+[c: 'A_Look']
 fn a_look(actor &Mobj_t) {
+	C.printf(c'A_Look size=%d => %d \n', sizeof(actor), sizeof(Mobj_t))
+	C.printf(c'sizeof thinker: %d \n', sizeof(actor.thinker))
+	C.printf(c'sizeof floorz: %d \n', sizeof(actor.floorz))
 	targ := &Mobj_t(0)
 	actor.threshold = 0
 	targ = actor.subsector.sector.soundtarget
@@ -3213,7 +3187,7 @@ fn a_look(actor &Mobj_t) {
 	p_setmobjstate(actor, actor.info.seestate)
 }
 
-[export: 'A_Chase']
+[c: 'A_Chase']
 fn a_chase(actor &Mobj_t) {
 	delta := 0
 	if actor.reactiontime {
@@ -3281,7 +3255,7 @@ fn a_chase(actor &Mobj_t) {
 	}
 }
 
-[export: 'A_FaceTarget']
+[c: 'A_FaceTarget']
 fn a_facetarget(actor &Mobj_t) {
 	if !actor.target {
 		return
@@ -3293,7 +3267,7 @@ fn a_facetarget(actor &Mobj_t) {
 	}
 }
 
-[export: 'A_PosAttack']
+[c: 'A_PosAttack']
 fn a_posattack(actor &Mobj_t) {
 	angle := 0
 	damage := 0
@@ -3310,7 +3284,7 @@ fn a_posattack(actor &Mobj_t) {
 	p_lineattack(actor, angle, (32 * 64 * (1 << 16)), slope, damage)
 }
 
-[export: 'A_SPosAttack']
+[c: 'A_SPosAttack']
 fn a_sposattack(actor &Mobj_t) {
 	i := 0
 	angle := 0
@@ -3331,7 +3305,7 @@ fn a_sposattack(actor &Mobj_t) {
 	}
 }
 
-[export: 'A_CPosAttack']
+[c: 'A_CPosAttack']
 fn a_cposattack(actor &Mobj_t) {
 	angle := 0
 	bangle := 0
@@ -3349,7 +3323,7 @@ fn a_cposattack(actor &Mobj_t) {
 	p_lineattack(actor, angle, (32 * 64 * (1 << 16)), slope, damage)
 }
 
-[export: 'A_CPosRefire']
+[c: 'A_CPosRefire']
 fn a_cposrefire(actor &Mobj_t) {
 	a_facetarget(actor)
 	if p_random() < 40 {
@@ -3360,7 +3334,7 @@ fn a_cposrefire(actor &Mobj_t) {
 	}
 }
 
-[export: 'A_SpidRefire']
+[c: 'A_SpidRefire']
 fn a_spidrefire(actor &Mobj_t) {
 	a_facetarget(actor)
 	if p_random() < 10 {
@@ -3371,7 +3345,7 @@ fn a_spidrefire(actor &Mobj_t) {
 	}
 }
 
-[export: 'A_BspiAttack']
+[c: 'A_BspiAttack']
 fn a_bspiattack(actor &Mobj_t) {
 	if !actor.target {
 		return
@@ -3380,7 +3354,7 @@ fn a_bspiattack(actor &Mobj_t) {
 	p_spawnmissile(actor, actor.target, Mobjtype_t.mt_arachplaz)
 }
 
-[export: 'A_TroopAttack']
+[c: 'A_TroopAttack']
 fn a_troopattack(actor &Mobj_t) {
 	damage := 0
 	if !actor.target {
@@ -3396,7 +3370,7 @@ fn a_troopattack(actor &Mobj_t) {
 	p_spawnmissile(actor, actor.target, Mobjtype_t.mt_troopshot)
 }
 
-[export: 'A_SargAttack']
+[c: 'A_SargAttack']
 fn a_sargattack(actor &Mobj_t) {
 	damage := 0
 	if !actor.target {
@@ -3416,7 +3390,7 @@ fn a_sargattack(actor &Mobj_t) {
 	}
 }
 
-[export: 'A_HeadAttack']
+[c: 'A_HeadAttack']
 fn a_headattack(actor &Mobj_t) {
 	damage := 0
 	if !actor.target {
@@ -3431,7 +3405,7 @@ fn a_headattack(actor &Mobj_t) {
 	p_spawnmissile(actor, actor.target, Mobjtype_t.mt_headshot)
 }
 
-[export: 'A_CyberAttack']
+[c: 'A_CyberAttack']
 fn a_cyberattack(actor &Mobj_t) {
 	if !actor.target {
 		return
@@ -3440,7 +3414,7 @@ fn a_cyberattack(actor &Mobj_t) {
 	p_spawnmissile(actor, actor.target, Mobjtype_t.mt_rocket)
 }
 
-[export: 'A_BruisAttack']
+[c: 'A_BruisAttack']
 fn a_bruisattack(actor &Mobj_t) {
 	damage := 0
 	if !actor.target {
@@ -3455,7 +3429,7 @@ fn a_bruisattack(actor &Mobj_t) {
 	p_spawnmissile(actor, actor.target, Mobjtype_t.mt_bruisershot)
 }
 
-[export: 'A_SkelMissile']
+[c: 'A_SkelMissile']
 fn a_skelmissile(actor &Mobj_t) {
 	mo := &Mobj_t(0)
 	if !actor.target {
@@ -3475,7 +3449,7 @@ __global (
 	TRACEANGLE = int(201326592)
 )
 
-[export: 'A_Tracer']
+[c: 'A_Tracer']
 fn a_tracer(actor &Mobj_t) {
 	exact := 0
 	dist := 0
@@ -3526,7 +3500,7 @@ fn a_tracer(actor &Mobj_t) {
 	}
 }
 
-[export: 'A_SkelWhoosh']
+[c: 'A_SkelWhoosh']
 fn a_skelwhoosh(actor &Mobj_t) {
 	if !actor.target {
 		return
@@ -3535,7 +3509,7 @@ fn a_skelwhoosh(actor &Mobj_t) {
 	s_startsound(actor, Sfxenum_t.sfx_skeswg)
 }
 
-[export: 'A_SkelFist']
+[c: 'A_SkelFist']
 fn a_skelfist(actor &Mobj_t) {
 	damage := 0
 	if !actor.target {
@@ -3569,7 +3543,7 @@ __global (
 	viletryy int
 )
 
-[export: 'PIT_VileCheck']
+[c: 'PIT_VileCheck']
 fn pit_vilecheck(thing &Mobj_t) bool {
 	maxdist := 0
 	check := false
@@ -3598,7 +3572,7 @@ fn pit_vilecheck(thing &Mobj_t) bool {
 	return false
 }
 
-[export: 'A_VileChase']
+[c: 'A_VileChase']
 fn a_vilechase(actor &Mobj_t) {
 	xl := 0
 	xh := 0
@@ -3639,7 +3613,7 @@ fn a_vilechase(actor &Mobj_t) {
 	a_chase(actor)
 }
 
-[export: 'A_VileStart']
+[c: 'A_VileStart']
 fn a_vilestart(actor &Mobj_t) {
 	s_startsound(actor, Sfxenum_t.sfx_vilatk)
 }
@@ -3647,19 +3621,19 @@ fn a_vilestart(actor &Mobj_t) {
 [c: 'A_Fire']
 fn a_fire(actor &Mobj_t)
 
-[export: 'A_StartFire']
+[c: 'A_StartFire']
 fn a_startfire(actor &Mobj_t) {
 	s_startsound(actor, Sfxenum_t.sfx_flamst)
 	a_fire(actor)
 }
 
-[export: 'A_FireCrackle']
+[c: 'A_FireCrackle']
 fn a_firecrackle(actor &Mobj_t) {
 	s_startsound(actor, Sfxenum_t.sfx_flame)
 	a_fire(actor)
 }
 
-[export: 'A_Fire']
+[c: 'A_Fire']
 fn a_fire(actor &Mobj_t) {
 	dest := &Mobj_t(0)
 	target := &Mobj_t(0)
@@ -3680,7 +3654,7 @@ fn a_fire(actor &Mobj_t) {
 	p_setthingposition(actor)
 }
 
-[export: 'A_VileTarget']
+[c: 'A_VileTarget']
 fn a_viletarget(actor &Mobj_t) {
 	fog := &Mobj_t(0)
 	if !actor.target {
@@ -3694,7 +3668,7 @@ fn a_viletarget(actor &Mobj_t) {
 	a_fire(fog)
 }
 
-[export: 'A_VileAttack']
+[c: 'A_VileAttack']
 fn a_vileattack(actor &Mobj_t) {
 	fire := &Mobj_t(0)
 	an := 0
@@ -3718,13 +3692,13 @@ fn a_vileattack(actor &Mobj_t) {
 	p_radiusattack(fire, actor, 70)
 }
 
-[export: 'A_FatRaise']
+[c: 'A_FatRaise']
 fn a_fatraise(actor &Mobj_t) {
 	a_facetarget(actor)
 	s_startsound(actor, Sfxenum_t.sfx_manatk)
 }
 
-[export: 'A_FatAttack1']
+[c: 'A_FatAttack1']
 fn a_fatattack1(actor &Mobj_t) {
 	mo := &Mobj_t(0)
 	target := &Mobj_t(0)
@@ -3740,7 +3714,7 @@ fn a_fatattack1(actor &Mobj_t) {
 	mo.momy = fixedmul(mo.info.speed, finesine[an])
 }
 
-[export: 'A_FatAttack2']
+[c: 'A_FatAttack2']
 fn a_fatattack2(actor &Mobj_t) {
 	mo := &Mobj_t(0)
 	target := &Mobj_t(0)
@@ -3756,7 +3730,7 @@ fn a_fatattack2(actor &Mobj_t) {
 	mo.momy = fixedmul(mo.info.speed, finesine[an])
 }
 
-[export: 'A_FatAttack3']
+[c: 'A_FatAttack3']
 fn a_fatattack3(actor &Mobj_t) {
 	mo := &Mobj_t(0)
 	target := &Mobj_t(0)
@@ -3775,7 +3749,7 @@ fn a_fatattack3(actor &Mobj_t) {
 	mo.momy = fixedmul(mo.info.speed, finesine[an])
 }
 
-[export: 'A_SkullAttack']
+[c: 'A_SkullAttack']
 fn a_skullattack(actor &Mobj_t) {
 	dest := &Mobj_t(0)
 	an := 0
@@ -3798,7 +3772,7 @@ fn a_skullattack(actor &Mobj_t) {
 	actor.momz = (dest.z + (dest.height >> 1) - actor.z) / dist
 }
 
-[export: 'A_PainShootSkull']
+[c: 'A_PainShootSkull']
 fn a_painshootskull(actor &Mobj_t, angle Angle_t) {
 	x := 0
 	y := 0
@@ -3834,7 +3808,7 @@ fn a_painshootskull(actor &Mobj_t, angle Angle_t) {
 	a_skullattack(newmobj)
 }
 
-[export: 'A_PainAttack']
+[c: 'A_PainAttack']
 fn a_painattack(actor &Mobj_t) {
 	if !actor.target {
 		return
@@ -3843,7 +3817,7 @@ fn a_painattack(actor &Mobj_t) {
 	a_painshootskull(actor, actor.angle)
 }
 
-[export: 'A_PainDie']
+[c: 'A_PainDie']
 fn a_paindie(actor &Mobj_t) {
 	a_fall(actor)
 	a_painshootskull(actor, actor.angle + 1073741824)
@@ -3851,7 +3825,7 @@ fn a_paindie(actor &Mobj_t) {
 	a_painshootskull(actor, actor.angle + 3221225472)
 }
 
-[export: 'A_Scream']
+[c: 'A_Scream']
 fn a_scream(actor &Mobj_t) {
 	sound := 0
 	if actor.info.deathsound == 0 {
@@ -3876,29 +3850,29 @@ fn a_scream(actor &Mobj_t) {
 	}
 }
 
-[export: 'A_XScream']
+[c: 'A_XScream']
 fn a_xscream(actor &Mobj_t) {
 	s_startsound(actor, Sfxenum_t.sfx_slop)
 }
 
-[export: 'A_Pain']
+[c: 'A_Pain']
 fn a_pain(actor &Mobj_t) {
 	if actor.info.painsound {
 		s_startsound(actor, actor.info.painsound)
 	}
 }
 
-[export: 'A_Fall']
+[c: 'A_Fall']
 fn a_fall(actor &Mobj_t) {
 	actor.flags &= ~Mobjflag_t.mf_solid
 }
 
-[export: 'A_Explode']
+[c: 'A_Explode']
 fn a_explode(thingy &Mobj_t) {
 	p_radiusattack(thingy, thingy.target, 128)
 }
 
-[export: 'CheckBossEnd']
+[c: 'CheckBossEnd']
 fn checkbossend(motype Mobjtype_t) bool {
 	if gameversion < GameVersion_t.exe_ultimate {
 		if gamemap != 8 {
@@ -3930,7 +3904,7 @@ fn checkbossend(motype Mobjtype_t) bool {
 	}
 }
 
-[export: 'A_BossDeath']
+[c: 'A_BossDeath']
 fn a_bossdeath(mo &Mobj_t) {
 	th := &Thinker_t(0)
 	mo2 := &Mobj_t(0)
@@ -4002,30 +3976,30 @@ fn a_bossdeath(mo &Mobj_t) {
 	g_exitlevel()
 }
 
-[export: 'A_Hoof']
+[c: 'A_Hoof']
 fn a_hoof(mo &Mobj_t) {
 	s_startsound(mo, Sfxenum_t.sfx_hoof)
 	a_chase(mo)
 }
 
-[export: 'A_Metal']
+[c: 'A_Metal']
 fn a_metal(mo &Mobj_t) {
 	s_startsound(mo, Sfxenum_t.sfx_metal)
 	a_chase(mo)
 }
 
-[export: 'A_BabyMetal']
+[c: 'A_BabyMetal']
 fn a_babymetal(mo &Mobj_t) {
 	s_startsound(mo, Sfxenum_t.sfx_bspwlk)
 	a_chase(mo)
 }
 
-[export: 'A_OpenShotgun2']
+[c: 'A_OpenShotgun2']
 fn a_openshotgun2(player &Player_t, psp &Pspdef_t) {
 	s_startsound(player.mo, Sfxenum_t.sfx_dbopn)
 }
 
-[export: 'A_LoadShotgun2']
+[c: 'A_LoadShotgun2']
 fn a_loadshotgun2(player &Player_t, psp &Pspdef_t) {
 	s_startsound(player.mo, Sfxenum_t.sfx_dbload)
 }
@@ -4033,7 +4007,7 @@ fn a_loadshotgun2(player &Player_t, psp &Pspdef_t) {
 [c: 'A_ReFire']
 fn a_refire(player &Player_t, psp &Pspdef_t)
 
-[export: 'A_CloseShotgun2']
+[c: 'A_CloseShotgun2']
 fn a_closeshotgun2(player &Player_t, psp &Pspdef_t) {
 	s_startsound(player.mo, Sfxenum_t.sfx_dbcls)
 	a_refire(player, psp)
@@ -4054,7 +4028,7 @@ __global (
 	braintargeton = int(0)
 )
 
-[export: 'A_BrainAwake']
+[c: 'A_BrainAwake']
 fn a_brainawake(mo &Mobj_t) {
 	thinker := &Thinker_t(0)
 	m := &Mobj_t(0)
@@ -4074,12 +4048,12 @@ fn a_brainawake(mo &Mobj_t) {
 	s_startsound((voidptr(0)), Sfxenum_t.sfx_bossit)
 }
 
-[export: 'A_BrainPain']
+[c: 'A_BrainPain']
 fn a_brainpain(mo &Mobj_t) {
 	s_startsound((voidptr(0)), Sfxenum_t.sfx_bospn)
 }
 
-[export: 'A_BrainScream']
+[c: 'A_BrainScream']
 fn a_brainscream(mo &Mobj_t) {
 	x := 0
 	y := 0
@@ -4099,7 +4073,7 @@ fn a_brainscream(mo &Mobj_t) {
 	s_startsound((voidptr(0)), Sfxenum_t.sfx_bosdth)
 }
 
-[export: 'A_BrainExplode']
+[c: 'A_BrainExplode']
 fn a_brainexplode(mo &Mobj_t) {
 	x := 0
 	y := 0
@@ -4117,12 +4091,12 @@ fn a_brainexplode(mo &Mobj_t) {
 	}
 }
 
-[export: 'A_BrainDie']
+[c: 'A_BrainDie']
 fn a_braindie(mo &Mobj_t) {
 	g_exitlevel()
 }
 
-[export: 'A_BrainSpit']
+[c: 'A_BrainSpit']
 fn a_brainspit(mo &Mobj_t) {
 	targ := &Mobj_t(0)
 	newmobj := &Mobj_t(0)
@@ -4145,13 +4119,13 @@ fn a_brainspit(mo &Mobj_t) {
 [c: 'A_SpawnFly']
 fn a_spawnfly(mo &Mobj_t)
 
-[export: 'A_SpawnSound']
+[c: 'A_SpawnSound']
 fn a_spawnsound(mo &Mobj_t) {
 	s_startsound(mo, Sfxenum_t.sfx_boscub)
 	a_spawnfly(mo)
 }
 
-[export: 'A_SpawnFly']
+[c: 'A_SpawnFly']
 fn a_spawnfly(mo &Mobj_t) {
 	newmobj := &Mobj_t(0)
 	fog := &Mobj_t(0)
@@ -4196,7 +4170,7 @@ fn a_spawnfly(mo &Mobj_t) {
 	p_removemobj(mo)
 }
 
-[export: 'A_PlayerScream']
+[c: 'A_PlayerScream']
 fn a_playerscream(mo &Mobj_t) {
 	sound := Sfxenum_t.sfx_pldeth
 	if (gamemode == GameMode_t.commercial) && (mo.health < -50) {

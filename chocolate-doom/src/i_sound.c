@@ -339,7 +339,9 @@ void I_UpdateSoundParams(int channel, int vol, int sep)
 }
 
 int I_StartSound(sfxinfo_t *sfxinfo, int channel, int vol, int sep, int pitch)
+
 {
+	return 0;
     if (sound_module != NULL)
     {
         CheckVolumeSeparation(&vol, &sep);
@@ -452,6 +454,7 @@ void I_UnRegisterSong(void *handle)
 
 void I_PlaySong(void *handle, boolean looping)
 {
+	return;
     if (active_music_module != NULL)
     {
         active_music_module->PlaySong(handle, looping);

@@ -103,6 +103,9 @@ P_RecursiveSound
     int		i;
     line_t*	check;
     sector_t*	other;
+
+if (true)
+    return;
 	
     // wake up all monsters in this sector
     if (sec->validcount == validcount
@@ -595,6 +598,9 @@ void A_KeenDie (mobj_t* mo)
 //
 void A_Look (mobj_t* actor)
 {
+	printf("A_Look size=%d => %d \n", sizeof(actor), sizeof(mobj_t));
+	printf("sizeof thinker: %d \n", sizeof(actor->thinker));
+	printf("sizeof floorz: %d \n", sizeof(actor->floorz));
     mobj_t*	targ;
 	
     actor->threshold = 0;	// any shot will wake up
