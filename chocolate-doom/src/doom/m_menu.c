@@ -227,7 +227,7 @@ static void M_ClearMenus (void);
 //
 // DOOM MENU
 //
-enum
+typedef enum
 {
     newgame = 0,
     options,
@@ -236,7 +236,9 @@ enum
     readthis,
     quitdoom,
     main_end
-} main_e;
+} MenuEnum;
+
+MenuEnum main_e;
 
 menuitem_t MainMenu[]=
 {
@@ -1897,9 +1899,9 @@ void M_StartControlPanel (void)
 
 // Display OPL debug messages - hack for GENMIDI development.
 
+    extern void I_OPL_DevMessages(char *, size_t);
 static void M_DrawOPLDev(void)
 {
-    extern void I_OPL_DevMessages(char *, size_t);
     char debug[1024];
     char *curr, *p;
     int line;

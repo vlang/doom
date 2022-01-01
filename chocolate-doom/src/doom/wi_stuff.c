@@ -417,7 +417,7 @@ void WI_drawLF(void)
 {
     int y = WI_TITLEY;
 
-    if (gamemode != commercial || wbs->last < NUMCMAPS)
+    if (gamemode != commercial || wbs->last < (NUMCMAPS))
     {
         // draw <LevelName> 
         V_DrawPatch((SCREENWIDTH - SHORT(lnames[wbs->last]->width))/2,
@@ -428,12 +428,12 @@ void WI_drawLF(void)
 
         V_DrawPatch((SCREENWIDTH - SHORT(finished->width)) / 2, y, finished);
     }
-    else if (wbs->last == NUMCMAPS)
+    else if (wbs->last == (NUMCMAPS))
     {
         // MAP33 - draw "Finished!" only
         V_DrawPatch((SCREENWIDTH - SHORT(finished->width)) / 2, y, finished);
     }
-    else if (wbs->last > NUMCMAPS)
+    else if (wbs->last > (NUMCMAPS))
     {
         // > MAP33.  Doom bombs out here with a Bad V_DrawPatch error.
         // I'm pretty sure that doom2.exe is just reading into random
@@ -608,7 +608,7 @@ void WI_drawAnimatedBack(void)
     if (wbs->epsd > 2)
 	return;
 
-    for (i=0 ; i<NUMANIMS[wbs->epsd] ; i++)
+    for (i=0 ; i<(NUMANIMS[wbs->epsd]) ; i++)
     {
 	a = &anims[wbs->epsd][i];
 
@@ -675,8 +675,11 @@ WI_drawNum
     }
 
     // draw a minus sign if necessary
-    if (neg && wiminus)
-	V_DrawPatch(x-=8, y, wiminus);
+    if (neg && wiminus) {
+	//V_DrawPatch(x-=8, y, wiminus);
+	V_DrawPatch(x, y, wiminus);
+	x -= 8; // QTODO
+    }
 
     return x;
 
@@ -1103,7 +1106,10 @@ void WI_initNetgameStats(void)
 	if (!playeringame[i])
 	    continue;
 
-	cnt_kills[i] = cnt_items[i] = cnt_secret[i] = cnt_frags[i] = 0;
+	cnt_kills[i] = 0;
+	cnt_items[i] = 0;
+	cnt_secret[i] = 0;
+	cnt_frags[i] = 0;
 
 	dofrags += WI_fragSum(i);
     }
@@ -1235,7 +1241,10 @@ void WI_updateNetgameStats(void)
 
 	    cnt_frags[i] += 1;
 
-	    if (cnt_frags[i] >= (fsum = WI_fragSum(i)))
+// QTODO
+	    //if (cnt_frags[i] >= (fsum = WI_fragSum(i)))
+	    fsum = WI_fragSum(i);
+	    if (cnt_frags[i] >= fsum)
 		cnt_frags[i] = fsum;
 	    else
 		stillticking = true;
@@ -1332,7 +1341,8 @@ void WI_initStats(void)
     state = StatCount;
     acceleratestage = 0;
     sp_state = 1;
-    cnt_kills[0] = cnt_items[0] = cnt_secret[0] = -1;
+    cnt_kills[0] = -1;
+    cnt_items[0] = cnt_secret[0] = -1;
     cnt_time = cnt_par = -1;
     cnt_pause = TICRATE;
 
@@ -1476,7 +1486,7 @@ void WI_drawStats(void)
         V_DrawPatch(SCREENWIDTH/2 + SP_TIMEX, SP_TIMEY, par);
 
         // Emulation: don't draw partime value if map33
-        if (gamemode != commercial || wbs->last != NUMCMAPS)
+        if (gamemode != commercial || wbs->last != (NUMCMAPS))
         {
             WI_drawTime(SCREENWIDTH - SP_TIMEX, SP_TIMEY, cnt_par);
         }
@@ -1490,7 +1500,8 @@ void WI_checkForAccelerate(void)
     player_t  *player;
 
     // check for button presses to skip delays
-    for (i=0, player = players ; i<MAXPLAYERS ; i++, player++)
+    player = players;
+    for (i=0; i<MAXPLAYERS ; i++, player++)
     {
 	if (playeringame[i])
 	{

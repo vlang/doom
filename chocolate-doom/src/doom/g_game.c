@@ -235,7 +235,7 @@ int             vanilla_demo_limit = 1;
  
 int G_CmdChecksum (ticcmd_t* cmd) 
 { 
-	//printf("CHECKSUM %d\n", sizeof(*cmd));
+	//printf("CHECKSUM %d", sizeof(*cmd));
 
     size_t		i;
     int		sum = 0; 
@@ -1209,7 +1209,7 @@ G_CheckSpot
                 ya = finesine[an];
                 break;
             default:
-                I_Error("G_CheckSpot: unexpected angle %d\n", an);
+                I_Error("G_CheckSpot: unexpected angle %d", an);
                 xa = ya = 0;
                 break;
         }
@@ -1686,7 +1686,7 @@ void G_DoSaveGame (void)
         // We failed to save to the normal location, but we wrote a
         // recovery file to the temp directory. Now we can bomb out
         // with an error.
-        I_Error("Failed to open savegame file '%s' for writing.\n"
+        I_Error("Failed to open savegame file '%s' for writing. "
                 "But your game has been saved to '%s' for recovery.",
                 temp_savegame_file, recovery_savegame_file);
     }
@@ -2223,13 +2223,13 @@ void G_DoPlayDemo (void)
     else if (demoversion != G_VanillaVersionCode() &&
              !(gameversion <= exe_doom_1_2 && olddemo))
     {
-        const char *message = "Demo is from a different game version!\n"
-                              "(read %i, should be %i)\n"
-                              "\n"
+        const char *message = "Demo is from a different game version!"
+                              "(read %d, should be %d)"
+                              ""
                               "*** You may need to upgrade your version "
-                                  "of Doom to v1.9. ***\n"
+                                  "of Doom to v1 ***"
                               "    See: https://www.doomworld.com/classicdoom"
-                                        "/info/patches.php\n"
+                                        "/info/patches.php"
                               "    This appears to be %s.";
 
         I_Error(message, demoversion, G_VanillaVersionCode(),

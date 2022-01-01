@@ -144,8 +144,11 @@ void D_ProcessEvents (void)
     if (storedemo)
         return;
 	
-    while ((ev = D_PopEvent()) != NULL)
+    //while ((ev = D_PopEvent()) != NULL)
+	   for (;;)
     {
+    ev = D_PopEvent();
+    if (ev == NULL) break;
 	if (M_Responder (ev))
 	    continue;               // menu ate the event
 	G_Responder (ev);
@@ -427,7 +430,9 @@ void D_RunFrame()
     // Update display, next frame, with current state if no profiling is on
     if (screenvisible && !nodrawers)
     {
-        if ((wipe = D_Display ()))
+        //if ((wipe = D_Display ()))
+        wipe = D_Display ();
+        if (wipe)
         {
             // start wipe on this frame
             wipe_EndScreen(0, 0, SCREENWIDTH, SCREENHEIGHT);
@@ -953,12 +958,14 @@ void PrintDehackedBanners(void)
     }
 }
 
-static struct 
+typedef struct
 {
     const char *description;
     const char *cmdline;
     GameVersion_t version;
-} gameversions[] = {
+} GameVersionStruct;
+
+static GameVersionStruct gameversions[] = {
     {"Doom 1.2",             "1.2",        exe_doom_1_2},
     {"Doom 1.666",           "1.666",      exe_doom_1_666},
     {"Doom 1.7/1.7a",        "1.7",        exe_doom_1_7},
@@ -1393,7 +1400,9 @@ void D_DoomMain (void)
     // x defaults to 200.  Values are rounded up to 10 and down to 400.
     //
 
-    if ( (p=M_CheckParm ("-turbo")) )
+    //if ( (p=M_CheckParm ("-turbo")) )
+    p=M_CheckParm ("-turbo");
+    if (p)
     {
 	int     scale = 200;
 	extern int forwardmove[2];

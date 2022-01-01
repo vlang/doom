@@ -39,29 +39,39 @@
 // to provide a complete scene geometry description.
 enum
 {
-  ML_LABEL,		// A separator, name, ExMx or MAPxx
-  ML_THINGS,		// Monsters, items..
-  ML_LINEDEFS,		// LineDefs, from editing
-  ML_SIDEDEFS,		// SideDefs, from editing
-  ML_VERTEXES,		// Vertices, edited and BSP splits generated
-  ML_SEGS,		// LineSegs, from LineDefs split by BSP
-  ML_SSECTORS,		// SubSectors, list of LineSegs
-  ML_NODES,		// BSP nodes
-  ML_SECTORS,		// Sectors, from editing
-  ML_REJECT,		// LUT, sector-sector visibility	
-  ML_BLOCKMAP		// LUT, motion clipping, walls/grid element
+  ML_LABEL,		
+  ML_THINGS,		
+  ML_LINEDEFS,		
+  ML_SIDEDEFS,		
+  ML_VERTEXES,		
+  ML_SEGS,		
+  ML_SSECTORS,		
+  ML_NODES,		
+  ML_SECTORS,		
+  ML_REJECT,		
+  ML_BLOCKMAP		
 };
-
 
 // A single Vertex.
 typedef PACKED_STRUCT (
 {
-  short		x;
-  short		y;
+  short                x;
+  short                y;
 }) mapvertex_t;
 
 
-// A SideDef, defining the visual appearance of a wall,
+
+// A separator, name, ExMx or MAPxx
+// Monsters, items..
+// LineDefs, from editing                   // A single Vertex.
+// SideDefs, from editing                   typedef PACKED_STRUCT (
+// Vertices, edited and BSP splits generated{
+// LineSegs, from LineDefs split by BSP       short		x;
+// SubSectors, list of LineSegs               short		y;
+// BSP nodes                                }) mapvertex_t;
+// Sectors, from editing
+// LUT, sector-sector visibility	
+// LUT, motion clipping, walls/grid element // A SideDef, defining the visual appearance of a wall,
 // by setting textures and offsets.
 typedef PACKED_STRUCT (
 {
