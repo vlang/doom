@@ -1,4 +1,4 @@
-foreach(SUBDIR doom heretic hexen strife setup)
+foreach(SUBDIR doom setup)
     add_subdirectory("${SUBDIR}")
 endforeach()
 
