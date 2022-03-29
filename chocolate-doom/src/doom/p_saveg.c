@@ -1480,14 +1480,14 @@ void P_UnArchivePlayers (void)
 //
 void P_ArchiveWorld (void)
 {
-    int			i;
+    int			i = 0;
     int			j;
     sector_t*		sec;
     line_t*		li;
     side_t*		si;
     
     // do sectors
-    for (i=0, sec = sectors ; i<numsectors ; i++,sec++)
+    for (sec = sectors ; i<numsectors ; i++)
     {
 	saveg_write16(sec->floorheight >> FRACBITS);
 	saveg_write16(sec->ceilingheight >> FRACBITS);
@@ -1496,11 +1496,13 @@ void P_ArchiveWorld (void)
 	saveg_write16(sec->lightlevel);
 	saveg_write16(sec->special);		// needed?
 	saveg_write16(sec->tag);		// needed?
+	sec++;
     }
 
     
     // do lines
-    for (i=0, li = lines ; i<numlines ; i++,li++)
+    i = 0;
+    for (li = lines ; i<numlines ; i++)
     {
 	saveg_write16(li->flags);
 	saveg_write16(li->special);
@@ -1518,6 +1520,7 @@ void P_ArchiveWorld (void)
 	    saveg_write16(si->bottomtexture);
 	    saveg_write16(si->midtexture);	
 	}
+	li++;
     }
 }
 
@@ -1528,14 +1531,14 @@ void P_ArchiveWorld (void)
 //
 void P_UnArchiveWorld (void)
 {
-    int			i;
+    int			i = 0;
     int			j;
     sector_t*		sec;
     line_t*		li;
     side_t*		si;
     
     // do sectors
-    for (i=0, sec = sectors ; i<numsectors ; i++,sec++)
+    for (sec = sectors ; i<numsectors ; i++,sec++)
     {
 	sec->floorheight = saveg_read16() << FRACBITS;
 	sec->ceilingheight = saveg_read16() << FRACBITS;
@@ -1549,7 +1552,8 @@ void P_UnArchiveWorld (void)
     }
     
     // do lines
-    for (i=0, li = lines ; i<numlines ; i++,li++)
+    i = 0;
+    for (li = lines ; i<numlines ; i++,li++)
     {
 	li->flags = saveg_read16();
 	li->special = saveg_read16();

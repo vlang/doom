@@ -331,15 +331,15 @@ P_FindNextHighestFloor
 ( sector_t* sec,
   int       currentheight )
 {
-    int         i;
-    int         h;
+    int         i = 0;
+    int         h = 0;
     int         min;
     line_t*     check;
     sector_t*   other;
     fixed_t     height = currentheight;
     fixed_t     heightlist[MAX_ADJOINING_SECTORS + 2];
 
-    for (i=0, h=0; i < sec->linecount; i++)
+    for (i=0; i < sec->linecount; i++)
     {
         check = sec->lines[i];
         other = getNextSector(check,sec);
@@ -1280,7 +1280,8 @@ int EV_DoDonut(line_t*	line)
 
     secnum = -1;
     rtn = 0;
-    while ((secnum = P_FindSectorFromLineTag(line,secnum)) >= 0)
+    secnum = P_FindSectorFromLineTag(line,secnum);
+    while (secnum >= 0)
     {
 	s1 = &sectors[secnum];
 
@@ -1363,6 +1364,8 @@ int EV_DoDonut(line_t*	line)
 	    floor->floordestheight = s3_floorheight;
 	    break;
 	}
+
+    secnum = P_FindSectorFromLineTag(line,secnum);
     }
     return rtn;
 }

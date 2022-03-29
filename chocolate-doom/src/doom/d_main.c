@@ -412,7 +412,7 @@ void D_RunFrame()
         } while (tics <= 0);
 
         wipestart = nowtime;
-        wipe = !wipe_ScreenWipe(wipe_Melt
+        wipe = !wipe_ScreenWipe(1 // wipe_Melt QTODO
                                , 0, 0, SCREENWIDTH, SCREENHEIGHT, tics);
         I_UpdateNoBlit ();
         M_Drawer ();                            // menu is drawn even on top of wipes
@@ -721,33 +721,36 @@ static char *GetGameName(char *gamename)
     return gamename;
 }
 
-static void SetMissionForPackName(const char *pack_name)
-{
-    int i;
-    static const struct
+    typedef struct
     {
         const char *name;
         int mission;
-    } packs[] = {
+    } Pack_;
+
+    static const Pack_
+    packs_[] = {
         { "doom2",    doom2 },
         { "tnt",      pack_tnt },
         { "plutonia", pack_plut },
     };
 
-    for (i = 0; i < arrlen(packs); ++i)
+static void SetMissionForPackName(const char *pack_name)
+{
+    int i;
+    for (i = 0; i < arrlen(packs_); ++i)
     {
-        if (!strcasecmp(pack_name, packs[i].name))
+        if (!strcasecmp(pack_name, packs_[i].name))
         {
-            gamemission = packs[i].mission;
+            gamemission = packs_[i].mission;
             return;
         }
     }
 
     printf("Valid mission packs are:\n");
 
-    for (i = 0; i < arrlen(packs); ++i)
+    for (i = 0; i < arrlen(packs_); ++i)
     {
-        printf("\t%s\n", packs[i].name);
+        printf("\t%s\n", packs_[i].name);
     }
 
     I_Error("Unknown mission pack name: %s", pack_name);
@@ -900,10 +903,9 @@ char            title[128];
 
 static boolean D_AddFile(char *filename)
 {
-    wad_file_t *handle;
 
     printf(" adding %s\n", filename);
-    handle = W_AddFile(filename);
+    wad_file_t *handle = W_AddFile(filename);
 
     return handle != NULL;
 }

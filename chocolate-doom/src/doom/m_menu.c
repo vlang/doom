@@ -1493,13 +1493,15 @@ boolean M_Responder (event_t* ev)
 	    {
 		key = key_menu_down;
 		mousewait = I_GetTime() + 5;
-		mousey = lasty -= 30;
+		mousey = lasty;
+		lasty -= 30;
 	    }
 	    else if (mousey > lasty+30)
 	    {
 		key = key_menu_up;
 		mousewait = I_GetTime() + 5;
-		mousey = lasty += 30;
+		mousey = lasty;
+		lasty += 30;
 	    }
 		
 	    mousex += ev->data2;
@@ -1507,13 +1509,15 @@ boolean M_Responder (event_t* ev)
 	    {
 		key = key_menu_left;
 		mousewait = I_GetTime() + 5;
-		mousex = lastx -= 30;
+		mousex = lastx;
+		lastx -= 30;
 	    }
 	    else if (mousex > lastx+30)
 	    {
 		key = key_menu_right;
 		mousewait = I_GetTime() + 5;
-		mousex = lastx += 30;
+		mousex = lastx;
+		lastx += 30;
 	    }
 		
 	    if (ev->data1&1)

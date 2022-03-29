@@ -546,8 +546,9 @@ void R_InitTranslationTables (void)
 	else
 	{
 	    // Keep all other colors as is.
-	    translationtables[i] = translationtables[i+256] 
-		= translationtables[i+512] = i;
+	    translationtables[i] = i;
+	    translationtables[i+256] = i;
+	    translationtables[i+512] = i;
 	}
     }
 }
@@ -631,7 +632,8 @@ void R_DrawSpan (void)
 
 	// Lookup pixel from flat texture tile,
 	//  re-index using light/colormap.
-	*dest++ = ds_colormap[ds_source[spot]];
+	*dest = ds_colormap[ds_source[spot]];
+	dest++;
 
         position += step;
 
@@ -758,8 +760,10 @@ void R_DrawSpanLow (void)
 
 	// Lowres/blocky mode does it twice,
 	//  while scale is adjusted appropriately.
+	*dest = ds_colormap[ds_source[spot]];
+	dest++;
 	*dest++ = ds_colormap[ds_source[spot]];
-	*dest++ = ds_colormap[ds_source[spot]];
+	dest++;
 
 	position += step;
 

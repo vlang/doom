@@ -334,6 +334,10 @@ void G_BuildTiccmd (ticcmd_t* cmd, int maketic)
     int		forward;
     int		side;
 
+	printf("\n\nTAAAA SIZEOF=%d\n", sizeof(ticcmd_t));
+	printf("TAAAA len mousebuttons=%d\n", sizeof(mousebuttons));
+	printf("mousebstrafe=%d\n", mousebstrafe);
+
     memset(cmd, 0, sizeof(ticcmd_t));
 
     cmd->consistancy = 
@@ -976,9 +980,17 @@ void G_Ticker (void)
 	{ 
 	    if (players[i].cmd.buttons & BT_SPECIAL) 
 	    { 
-		switch (players[i].cmd.buttons & BT_SPECIALMASK) 
+				int valera=0;
+				buttoncode_t qqq = BTS_PAUSE;
+				switch (qqq) {
+						case BTS_PAUSE:
+						break;
+				}
+		int x = (players[i].cmd.buttons & BT_SPECIALMASK) ;
+		//switch (players[i].cmd.buttons & BT_SPECIALMASK) 
+		switch (x)
 		{ 
-		  case BTS_PAUSE: 
+		  case (byte)BTS_PAUSE: 
 		    paused ^= 1; 
 		    if (paused) 
 			S_PauseSound (); 
@@ -986,7 +998,7 @@ void G_Ticker (void)
 			S_ResumeSound (); 
 		    break; 
 					 
-		  case BTS_SAVEGAME: 
+		  case (byte)BTS_SAVEGAME: 
 		    if (!savedescription[0]) 
                     {
                         M_StringCopy(savedescription, "NET GAME",
