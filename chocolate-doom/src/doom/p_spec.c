@@ -1418,7 +1418,7 @@ void P_SpawnSpecials (void)
 
     //	Init special SECTORs.
     sector = sectors;
-    for (i=0 ; i<numsectors ; i++, sector++)
+    for (i=0 ; i<numsectors ; i++)
     {
 	if (!sector->special)
 	    continue;
@@ -1479,6 +1479,7 @@ void P_SpawnSpecials (void)
 	    P_SpawnFireFlicker(sector);
 	    break;
 	}
+	sector++;
     }
 
     
