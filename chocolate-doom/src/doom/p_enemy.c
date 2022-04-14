@@ -104,8 +104,10 @@ P_RecursiveSound
     line_t*	check;
     sector_t*	other;
 
-if (true)
+if (1)
     return;
+	//if (false)
+		//return;
 	
     // wake up all monsters in this sector
     if (sec->validcount == validcount
@@ -2031,3 +2033,4 @@ void A_PlayerScream (mobj_t* mo)
     
     S_StartSound (mo, sound);
 }
+

@@ -295,7 +295,9 @@ typedef struct
 //  precalculating 24bpp lightmap/colormap LUT.
 //  from darkening PLAYPAL to all black.
 // Could even us emore than 32 levels.
-typedef pixel_t		lighttable_t;
+//typedef pixel_t		lighttable_t;
+// XTODO  alias to alias
+typedef uint8_t		lighttable_t;
 
 
 

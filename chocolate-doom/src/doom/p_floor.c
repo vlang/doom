@@ -260,9 +260,9 @@ EV_DoFloor
     sector_t*		sec;
     floormove_t*	floor;
 
-    secnum = -1;
+    secnum = P_FindSectorFromLineTag(line,secnum);
     rtn = 0;
-    while ((secnum = P_FindSectorFromLineTag(line,secnum)) >= 0)
+    while (secnum >= 0)
     {
 	sec = &sectors[secnum];
 		
@@ -363,6 +363,8 @@ EV_DoFloor
 	    sec->special = line->frontsector->special;
 	    break;
 
+// QTODO
+/*
 	  case raiseToTexture:
 	  {
 	      int	minsize = INT_MAX;
@@ -393,6 +395,7 @@ EV_DoFloor
 		  floor->sector->floorheight + minsize;
 	  }
 	  break;
+	  */
 	  
 	  case lowerAndChange:
 	    floor->direction = -1;
@@ -433,6 +436,8 @@ EV_DoFloor
 	  default:
 	    break;
 	}
+
+    secnum = P_FindSectorFromLineTag(line,secnum);
     }
     return rtn;
 }
