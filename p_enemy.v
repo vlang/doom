@@ -1,16 +1,21 @@
-// hhello
+[translated]
+module main
+
 struct C.FILE {}
 
 // fn C.memcpy(voidptr, voidptr, int)
 // fn C.memmove(voidptr, voidptr, int)
 // fn C.memset(voidptr, voidptr, int) int
-fn C.puts(voidptr)
+// fn C.puts(voidptr) int
+fn C.perror(voidptr)
 fn C.sscanf(voidptr, voidptr) voidptr
 fn C.strcasecmp(voidptr, voidptr) int
 fn C.strncasecmp(voidptr, voidptr, int) int
 fn C.strcmp(voidptr, voidptr) int
 fn C.strncmp(voidptr, voidptr, int) int
-fn C.fopen(byteptr, byteptr) &C.FILE
+
+// fn C.fopen(byteptr, byteptr) &C.FILE
+fn C.fprintf(&C.FILE, byteptr) &C.FILE
 fn C.fclose(&C.FILE)
 fn C.ftell(&C.FILE) int
 
@@ -22,17 +27,36 @@ fn C.atoi(byteptr) int
 // fn C.abs(int) int
 // fn C.strlen(byteptr) int
 
+/*
 fn abs(x f64) f64 {
 	if x < 0 {
 		return -x
 	}
 	return x
 }
+*/
 
 // vstart
 
-type Byte_ = i8
-type Pixel_t = i8
+struct Lldiv_t {
+	quot i64
+	rem  i64
+}
+
+fn rand() int
+
+fn system(&i8) int
+
+[c: '_Exit']
+fn _exit(int)
+
+[c: '_Exit']
+fn _exit(int)
+
+fn random() int
+
+type Byte = u8
+type Pixel_t = u8
 type Dpixel_t = i16
 
 [c: 'P_Random']
@@ -60,15 +84,6 @@ enum Evtype_t {
 	ev_mouse
 	ev_joystick
 	ev_quit
-}
-
-struct Event_t {
-	type_ Evtype_t
-	data1 int
-	data2 int
-	data3 int
-	data4 int
-	data5 int
 }
 
 enum Buttoncode_t {
@@ -1815,7 +1830,7 @@ struct Node_t {
 	children [2]u16
 }
 
-type Lighttable_t = i8
+type Lighttable_t = u8
 
 struct Drawseg_t {
 	curline          &Seg_t
@@ -1986,8 +2001,8 @@ struct Net_connect_data_t {
 	drone        int
 	max_players  int
 	is_freedoom  int
-	wad_sha1sum  [20]Sha1_digest_t
-	deh_sha1sum  [20]Sha1_digest_t
+	wad_sha1sum  Sha1_digest_t
+	deh_sha1sum  Sha1_digest_t
 	player_class int
 }
 
@@ -2044,8 +2059,8 @@ struct Net_waitdata_t {
 	consoleplayer int
 	player_names  [8][30]i8
 	player_addrs  [8][30]i8
-	wad_sha1sum   [20]Sha1_digest_t
-	deh_sha1sum   [20]Sha1_digest_t
+	wad_sha1sum   Sha1_digest_t
+	deh_sha1sum   Sha1_digest_t
 	is_freedoom   int
 }
 
@@ -2796,12 +2811,14 @@ enum Dirtype_t {
 	numdirs
 }
 
+[export: 'opposite']
 const (
 	opposite = [Dirtype_t.di_west, Dirtype_t.di_southwest, Dirtype_t.di_south, Dirtype_t.di_southeast,
 		Dirtype_t.di_east, Dirtype_t.di_northeast, Dirtype_t.di_north, Dirtype_t.di_northwest,
 		Dirtype_t.di_nodir]!
 )
 
+[export: 'diags']
 const (
 	diags = [Dirtype_t.di_northwest, Dirtype_t.di_northeast, Dirtype_t.di_southwest,
 		Dirtype_t.di_southeast]!
@@ -2820,7 +2837,7 @@ fn p_recursivesound(sec &Sector_t, soundblocks int) {
 	i := 0
 	check := &Line_t(0)
 	other := &Sector_t(0)
-	if true {
+	if 1 {
 		return
 	}
 	if sec.validcount == validcount && sec.soundtraversed <= soundblocks + 1 {
@@ -2929,10 +2946,12 @@ fn p_checkmissilerange(actor &Mobj_t) bool {
 	return true
 }
 
+[export: 'xspeed']
 const (
 	xspeed = [(1 << 16), 47000, 0, -47000, -(1 << 16), -47000, 0, 47000]!
 )
 
+[export: 'yspeed']
 const (
 	yspeed = [0, 47000, (1 << 16), 47000, 0, -47000, -(1 << 16), -47000]!
 )
@@ -3028,7 +3047,7 @@ fn p_newchasedir(actor &Mobj_t) {
 			return
 		}
 	}
-	if p_random() > 200 || abs(deltay) > abs(deltax) {
+	if p_random() > 200 || C.abs(deltay) > C.abs(deltax) {
 		tdir = d[1]
 		d[1] = d[2]
 		d[2] = tdir
@@ -3144,9 +3163,7 @@ fn a_keendie(mo &Mobj_t) {
 
 [c: 'A_Look']
 fn a_look(actor &Mobj_t) {
-	C.printf(c'A_Look size=%d => %d \n', sizeof(actor), sizeof(Mobj_t))
-	C.printf(c'sizeof thinker: %d \n', sizeof(actor.thinker))
-	C.printf(c'sizeof floorz: %d \n', sizeof(actor.floorz))
+	C.printf(c'A_Look size=%d => %d \n', sizeof(actor), sizeof(u32))
 	targ := &Mobj_t(0)
 	actor.threshold = 0
 	targ = actor.subsector.sector.soundtarget
@@ -3155,14 +3172,17 @@ fn a_look(actor &Mobj_t) {
 		if actor.flags & Mobjflag_t.mf_ambush {
 			if p_checksight(actor, actor.target) {
 				goto seeyou
+				// id: 0x11c855440
 			}
 		} else { // 3
 			goto seeyou
+			// id: 0x11c855440
 		}
 	}
 	if !p_lookforplayers(actor, false) {
 		return
 	}
+	// RRRREG seeyou id=0x11c855440
 	seeyou:
 	if actor.info.seesound {
 		sound := 0
@@ -3233,14 +3253,17 @@ fn a_chase(actor &Mobj_t) {
 	if actor.info.missilestate {
 		if gameskill < Skill_t.sk_nightmare && !fastparm && actor.movecount {
 			goto nomissile
+			// id: 0x11c858ed8
 		}
 		if !p_checkmissilerange(actor) {
 			goto nomissile
+			// id: 0x11c858ed8
 		}
 		p_setmobjstate(actor, actor.info.missilestate)
 		actor.flags |= Mobjflag_t.mf_justattacked
 		return
 	}
+	// RRRREG nomissile id=0x11c858ed8
 	nomissile:
 	if netgame && !actor.threshold && !p_checksight(actor, actor.target) {
 		if p_lookforplayers(actor, true) {
@@ -3444,6 +3467,7 @@ fn a_skelmissile(actor &Mobj_t) {
 	mo.tracer = actor.target
 }
 
+//!
 [weak]
 __global (
 	TRACEANGLE = int(201326592)
@@ -3557,7 +3581,7 @@ fn pit_vilecheck(thing &Mobj_t) bool {
 		return true
 	}
 	maxdist = thing.info.radius + mobjinfo[Mobjtype_t.mt_vile].radius
-	if abs(thing.x - viletryx) > maxdist || abs(thing.y - viletryy) > maxdist {
+	if C.abs(thing.x - viletryx) > maxdist || C.abs(thing.y - viletryy) > maxdist {
 		return true
 	}
 	corpsehit = thing
@@ -3884,18 +3908,18 @@ fn checkbossend(motype Mobjtype_t) bool {
 		return true
 	} else {
 		match gameepisode {
-			1 /* case comp body RecordType */ {
-				return gamemap == 8 && motype == .mt_bruiser
+			1 /* case comp body ReturnStmt */ {
+				return gamemap == 8 && motype == Mobjtype_t.mt_bruiser
 			}
-			2 /* case comp body RecordType */ {
-				return gamemap == 8 && motype == .mt_cyborg
+			2 /* case comp body ReturnStmt */ {
+				return gamemap == 8 && motype == Mobjtype_t.mt_cyborg
 			}
-			3 /* case comp body RecordType */ {
-				return gamemap == 8 && motype == .mt_spider
+			3 /* case comp body ReturnStmt */ {
+				return gamemap == 8 && motype == Mobjtype_t.mt_spider
 			}
-			4 /* case comp body RecordType */ {
-				return (gamemap == 6 && motype == .mt_cyborg)
-					|| (gamemap == 8 && motype == .mt_spider)
+			4 /* case comp body ReturnStmt */ {
+				return (gamemap == 6 && motype == Mobjtype_t.mt_cyborg)
+					|| (gamemap == 8 && motype == Mobjtype_t.mt_spider)
 			}
 			else {
 				return gamemap == 8
@@ -3954,19 +3978,19 @@ fn a_bossdeath(mo &Mobj_t) {
 		}
 	} else {
 		match gameepisode {
-			1 /* case comp body AvailabilityAttr */ {
+			1 /* case comp body BinaryOperator */ {
 				junk.tag = 666
-				ev_dofloor(&junk, .lowerfloortolowest)
+				ev_dofloor(&junk, Floor_e.lowerfloortolowest)
 				return
 			}
-			4 /* case comp body GotoStmt */ {
+			4 /* case comp body IfStmt */ {
 				if gamemap == 6 {
 					junk.tag = 666
-					ev_dodoor(&junk, .vld_blazeopen)
+					ev_dodoor(&junk, Vldoor_e.vld_blazeopen)
 					return
 				} else if gamemap == 8 {
 					junk.tag = 666
-					ev_dofloor(&junk, .lowerfloortolowest)
+					ev_dofloor(&junk, Floor_e.lowerfloortolowest)
 					return
 				}
 			}
@@ -4023,6 +4047,7 @@ __global (
 	numbraintargets int
 )
 
+//!
 [weak]
 __global (
 	braintargeton = int(0)
@@ -4100,7 +4125,7 @@ fn a_braindie(mo &Mobj_t) {
 fn a_brainspit(mo &Mobj_t) {
 	targ := &Mobj_t(0)
 	newmobj := &Mobj_t(0)
-	static easy := 0
+	easy := 0
 	easy ^= 1
 	if gameskill <= Skill_t.sk_easy && (!easy) {
 		return
