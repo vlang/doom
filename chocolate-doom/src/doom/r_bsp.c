@@ -361,16 +361,17 @@ void R_AddLine (seg_t*	line)
 // Returns true
 //  if some part of the bbox might be visible.
 //
+// XTODO {0,0,0,0} first ?
 int	checkcoord[12][4] =
 {
     {3,0,2,1},
     {3,0,2,0},
     {3,1,2,0},
-    {0},
+    {0,0,0,0},
     {2,0,2,1},
     {0,0,0,0},
     {3,1,3,0},
-    {0},
+    {0,0,0,0},
     {2,0,3,1},
     {2,1,3,1},
     {2,1,3,0}
