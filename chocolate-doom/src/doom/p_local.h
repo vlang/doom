@@ -139,14 +139,23 @@ typedef struct
     
 } divline_t;
 
+typedef union {
+	mobj_t*	thing;
+	line_t*	line;
+	int a;
+}		ddunion;
+
 typedef struct
 {
     fixed_t	frac;		// along trace line
     boolean	isaline;
+	/* XTODO
     union {
 	mobj_t*	thing;
 	line_t*	line;
     }			d;
+	*/
+	ddunion d;
 } intercept_t;
 
 // Extended MAXINTERCEPTS, to allow for intercepts overrun emulation.
