@@ -181,8 +181,12 @@ EV_DoCeiling
 	break;
     }
 	
-    while ((secnum = P_FindSectorFromLineTag(line,secnum)) >= 0)
+	// XTODO
+    //while ((secnum = P_FindSectorFromLineTag(line,secnum)) >= 0)
+    secnum = P_FindSectorFromLineTag(line,secnum);
+    while (secnum >= 0)
     {
+    secnum = P_FindSectorFromLineTag(line,secnum);
 	sec = &sectors[secnum];
 	if (sec->specialdata)
 	    continue;
