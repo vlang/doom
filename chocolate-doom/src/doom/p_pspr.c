@@ -864,10 +864,11 @@ void P_MovePsprites (player_t* player)
     state_t*	state;
 	
     psp = &player->psprites[0];
-    for (i=0 ; i<NUMPSPRITES ; i++, psp++)
+    for (i=0 ; i<NUMPSPRITES ; i++)
     {
 	// a null state means not active
-	if ( (state = psp->state) )	
+	state = psp->state;
+	if ( (state ) )
 	{
 	    // drop tic count and possibly change state
 
@@ -879,6 +880,7 @@ void P_MovePsprites (player_t* player)
 		    P_SetPsprite (player, i, psp->state->nextstate);
 	    }				
 	}
+	psp++
     }
     
     player->psprites[ps_flash].sx = player->psprites[ps_weapon].sx;
