@@ -335,7 +335,7 @@ P_TouchSpecialThing
     player_t*	player;
     int		i;
     fixed_t	delta;
-    int		sound;
+    int		sound = sfx_itemup;
 		
     delta = special->z - toucher->z;
 
@@ -347,7 +347,7 @@ P_TouchSpecialThing
     }
     
 	
-    sound = sfx_itemup;	
+    //sound = sfx_itemup;	
     player = toucher->player;
 
     // Dead thing touching.
@@ -535,7 +535,7 @@ P_TouchSpecialThing
 	
 	// ammo
       case SPR_CLIP:
-	if (special->flags & MF_DROPPED)
+	if (special->flags & (int)MF_DROPPED)
 	{
 	    if (!P_GiveAmmo (player,am_clip,0))
 		return;
@@ -612,7 +612,7 @@ P_TouchSpecialThing
 	
       case SPR_MGUN:
         if (!P_GiveWeapon(player, wp_chaingun,
-                          (special->flags & MF_DROPPED) != 0))
+                          (special->flags & (int)MF_DROPPED) != 0))
             return;
 	player->message = DEH_String(GOTCHAINGUN);
 	sound = sfx_wpnup;	
@@ -641,7 +641,7 @@ P_TouchSpecialThing
 	
       case SPR_SHOT:
         if (!P_GiveWeapon(player, wp_shotgun,
-                          (special->flags & MF_DROPPED) != 0))
+                          (special->flags & (int)MF_DROPPED) != 0))
             return;
 	player->message = DEH_String(GOTSHOTGUN);
 	sound = sfx_wpnup;	
@@ -649,7 +649,7 @@ P_TouchSpecialThing
 		
       case SPR_SGN2:
         if (!P_GiveWeapon(player, wp_supershotgun,
-                          (special->flags & MF_DROPPED) != 0))
+                          (special->flags & (int)MF_DROPPED) != 0))
             return;
 	player->message = DEH_String(GOTSHOTGUN2);
 	sound = sfx_wpnup;	
@@ -684,7 +684,7 @@ P_KillMobj
     if (target->type != MT_SKULL)
 	target->flags &= ~MF_NOGRAVITY;
 
-    target->flags |= MF_CORPSE|MF_DROPOFF;
+    target->flags |= (int)MF_CORPSE|(int)MF_DROPOFF;
     target->height >>= 2;
 
     if (source && source->player)
@@ -767,7 +767,7 @@ P_KillMobj
     }
 
     mo = P_SpawnMobj (target->x,target->y,ONFLOORZ, item);
-    mo->flags |= MF_DROPPED;	// special versions of items
+    mo->flags |= (int)MF_DROPPED;	// special versions of items
 }
 
 
