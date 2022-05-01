@@ -380,8 +380,8 @@ R_StoreWallRange
     int			lightnum;
 
     // don't overflow and crash
-    if (ds_p == &drawsegs[MAXDRAWSEGS])
-	return;		
+    //if (ds_p == &drawsegs[MAXDRAWSEGS])
+	//return;		
 		
 #ifdef RANGECHECK
     if (start >=viewwidth || start > stop)
@@ -447,7 +447,9 @@ R_StoreWallRange
     worldtop = frontsector->ceilingheight - viewz;
     worldbottom = frontsector->floorheight - viewz;
 	
-    midtexture = toptexture = bottomtexture = maskedtexture = 0;
+    midtexture = toptexture  = 0;
+	bottomtexture = 0;
+	maskedtexture = 0;
     ds_p->maskedtexturecol = NULL;
 	
     if (!backsector)
