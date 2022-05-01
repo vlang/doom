@@ -880,7 +880,7 @@ void P_MovePsprites (player_t* player)
 		    P_SetPsprite (player, i, psp->state->nextstate);
 	    }				
 	}
-	psp++
+	psp++;
     }
     
     player->psprites[ps_flash].sx = player->psprites[ps_weapon].sx;
