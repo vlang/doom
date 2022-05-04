@@ -249,9 +249,10 @@ void R_GenerateComposite (int texnum)
     // Composite the columns together.
     patch = texture->patches;
 		
-    for (i=0 , patch = texture->patches;
+    for (i=0;
 	 i<texture->patchcount;
-	 i++, patch++)
+	 //i++, patch++) XTODO
+	 i++)
     {
 	realpatch = W_CacheLumpNum (patch->patch, PU_CACHE);
 	x1 = patch->originx;
@@ -279,6 +280,7 @@ void R_GenerateComposite (int texnum)
 				 texture->height);
 	}
 						
+		patch++;
     }
 
     // Now that the texture has been built in column cache,
@@ -321,9 +323,9 @@ void R_GenerateLookup (int texnum)
     memset (patchcount, 0, texture->width);
     patch = texture->patches;
 
-    for (i=0 , patch = texture->patches;
+    for (i=0;
 	 i<texture->patchcount;
-	 i++, patch++)
+	 i++)
     {
 	realpatch = W_CacheLumpNum (patch->patch, PU_CACHE);
 	x1 = patch->originx;
@@ -342,6 +344,7 @@ void R_GenerateLookup (int texnum)
 	    collump[x] = patch->patch;
 	    colofs[x] = LONG(realpatch->columnofs[x-x1])+3;
 	}
+	patch++;
     }
 	
     for (x=0 ; x<texture->width ; x++)
