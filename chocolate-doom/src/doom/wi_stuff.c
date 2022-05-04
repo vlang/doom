@@ -261,11 +261,14 @@ static anim_t epsd2animinfo[] =
     ANIM(ANIM_ALWAYS, TICRATE/4, 3, 40, 0, 0),
 };
 
+
+
+// XTODO
 static int NUMANIMS[NUMEPISODES] =
 {
-    arrlen(epsd0animinfo),
-    arrlen(epsd1animinfo),
-    arrlen(epsd2animinfo),
+    10, //arrlen(epsd0animinfo),
+    9, //arrlen(epsd1animinfo),
+    6,//arrlen(epsd2animinfo),
 };
 
 static anim_t *anims[NUMEPISODES] =
