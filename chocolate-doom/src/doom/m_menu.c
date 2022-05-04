@@ -255,7 +255,7 @@ menu_t  MainDef =
 {
     main_end,
     NULL,
-    MainMenu,
+    &MainMenu,
     M_DrawMainMenu,
     97,64,
     0
@@ -286,7 +286,7 @@ menu_t  EpiDef =
 {
     ep_end,		// # of menu items
     &MainDef,		// previous menu
-    EpisodeMenu,	// menuitem_t ->
+    &EpisodeMenu,	// menuitem_t ->
     M_DrawEpisode,	// drawing routine ->
     48,63,              // x,y
     ep1			// lastOn
@@ -318,7 +318,7 @@ menu_t  NewDef =
 {
     newg_end,		// # of menu items
     &EpiDef,		// previous menu
-    NewGameMenu,	// menuitem_t ->
+    &NewGameMenu,	// menuitem_t ->
     M_DrawNewGame,	// drawing routine ->
     48,63,              // x,y
     hurtme		// lastOn
@@ -358,7 +358,7 @@ menu_t  OptionsDef =
 {
     opt_end,
     &MainDef,
-    OptionsMenu,
+    &OptionsMenu,
     M_DrawOptions,
     60,37,
     0
@@ -382,7 +382,7 @@ menu_t  ReadDef1 =
 {
     read1_end,
     &MainDef,
-    ReadMenu1,
+    &ReadMenu1,
     M_DrawReadThis1,
     280,185,
     0
@@ -403,7 +403,7 @@ menu_t  ReadDef2 =
 {
     read2_end,
     &ReadDef1,
-    ReadMenu2,
+    &ReadMenu2,
     M_DrawReadThis2,
     330,175,
     0
@@ -433,7 +433,7 @@ menu_t  SoundDef =
 {
     sound_end,
     &OptionsDef,
-    SoundMenu,
+    &SoundMenu,
     M_DrawSound,
     80,64,
     0
@@ -467,7 +467,7 @@ menu_t  LoadDef =
 {
     load_end,
     &MainDef,
-    LoadMenu,
+    &LoadMenu,
     M_DrawLoad,
     80,54,
     0
@@ -490,7 +490,7 @@ menu_t  SaveDef =
 {
     load_end,
     &MainDef,
-    SaveMenu,
+    &SaveMenu,
     M_DrawSave,
     80,54,
     0
