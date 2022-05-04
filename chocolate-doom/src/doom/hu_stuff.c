@@ -393,6 +393,8 @@ void HU_Start(void)
 		       hu_font,
 		       HU_FONTSTART);
     
+	// XTODO
+	/*
     switch ( logical_gamemission )
     {
       case doom:
@@ -416,6 +418,8 @@ void HU_Start(void)
          s = "Unknown level";
          break;
     }
+	*/
+	s = HU_TITLE;
 
     if (logical_gamemission == doom && gameversion == exe_chex)
     {
