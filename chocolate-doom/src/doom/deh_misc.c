@@ -130,11 +130,13 @@ int deh_bfg_cells_per_shot = DEH_DEFAULT_BFG_CELLS_PER_SHOT;
 
 int deh_species_infighting = DEH_DEFAULT_SPECIES_INFIGHTING;
 
-static struct
+static struct MiscSetting
 {
     const char *deh_name;
     int *value;
-} misc_settings[] = {
+} ;
+
+struct MiscSetting misc_settings[] = {
     {"Initial Health",      &deh_initial_health},
     {"Initial Bullets",     &deh_initial_bullets},
     {"Max Health",          &deh_max_health},
