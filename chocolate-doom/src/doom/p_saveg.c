@@ -1639,7 +1639,7 @@ void P_UnArchiveThinkers (void)
 	currentthinker = next;
     }
     P_InitThinkers ();
-    
+
     // read in saved thinkers
     while (1)
     {

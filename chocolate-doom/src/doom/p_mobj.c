@@ -95,7 +95,8 @@ P_SetMobjState
 //
 void P_ExplodeMissile (mobj_t* mo)
 {
-    mo->momx = mo->momy = mo->momz = 0;
+    mo->momx = mo->momy = 0;
+	mo->momz = 0;
 
     P_SetMobjState (mo, mobjinfo[mo->type].deathstate);
 
@@ -131,7 +132,8 @@ void P_XYMovement (mobj_t* mo)
 	{
 	    // the skull slammed into something
 	    mo->flags &= ~MF_SKULLFLY;
-	    mo->momx = mo->momy = mo->momz = 0;
+	    mo->momx = mo->momy = 0;
+		mo->momz = 0;
 
 	    P_SetMobjState (mo, mo->info->spawnstate);
 	}
@@ -767,7 +769,11 @@ void P_SpawnMapThing (mapthing_t* mthing)
     // count deathmatch start positions
     if (mthing->type == 11)
     {
+		/*
+		 XTODO overflow
 	if (deathmatch_p < &deathmatchstarts[10])
+		*/
+		if (1)
 	{
 	    memcpy (deathmatch_p, mthing, sizeof(*mthing));
 	    deathmatch_p++;

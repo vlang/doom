@@ -777,12 +777,13 @@ P_SetupLevel
     char	lumpname[9];
     int		lumpnum;
 	
-    totalkills = totalitems = totalsecret = wminfo.maxfrags = 0;
+    totalkills = totalitems = 0;
+	totalsecret = wminfo.maxfrags = 0;
     wminfo.partime = 180;
     for (i=0 ; i<MAXPLAYERS ; i++)
     {
-	players[i].killcount = players[i].secretcount 
-	    = players[i].itemcount = 0;
+	players[i].killcount = players[i].secretcount  = 0;
+	    players[i].itemcount = 0;
     }
 
     // Initial height of PointOfView
