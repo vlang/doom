@@ -32,7 +32,7 @@
 //
 
 // when zero, stop the wipe
-static boolean	go = 0;
+static boolean	go_ = 0;
 
 static pixel_t*	wipe_scr_start;
 static pixel_t*	wipe_scr_end;
@@ -269,26 +269,26 @@ wipe_ScreenWipe
     };
 
     // initial stuff
-    if (!go)
+    if (!go_)
     {
-	go = 1;
+	go_ = 1;
 	// wipe_scr = (pixel_t *) Z_Malloc(width*height, PU_STATIC, 0); // DEBUG
 	wipe_scr = I_VideoBuffer;
-	(*wipes[wipeno*3])(width, height, ticks);
+	wipes[wipeno*3](width, height, ticks);
     }
 
     // do a piece of wipe-in
     V_MarkRect(0, 0, width, height);
-    rc = (*wipes[wipeno*3+1])(width, height, ticks);
+    rc = wipes[wipeno*3+1](width, height, ticks);
     //  V_DrawBlock(x, y, 0, width, height, wipe_scr); // DEBUG
 
     // final stuff
     if (rc)
     {
-	go = 0;
-	(*wipes[wipeno*3+2])(width, height, ticks);
+	go_ = 0;
+	wipes[wipeno*3+2](width, height, ticks);
     }
 
-    return !go;
+    return !go_;
 }
 
