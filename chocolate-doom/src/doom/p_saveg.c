@@ -1676,7 +1676,7 @@ void P_UnArchiveThinkers (void)
 //
 // P_ArchiveSpecials
 //
-enum
+typedef enum
 {
     tc_ceiling,
     tc_door,
@@ -1687,7 +1687,8 @@ enum
     tc_glow,
     tc_endspecials
 
-} specials_e;	
+} Specials; 
+Specials specials_e;	
 
 
 
