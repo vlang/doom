@@ -276,16 +276,16 @@ static boolean stopped = true;
 void
 AM_getIslope
 ( mline_t*	ml,
-  islope_t*	is )
+  islope_t*	is_ )
 {
     int dx, dy;
 
     dy = ml->a.y - ml->b.y;
     dx = ml->b.x - ml->a.x;
-    if (!dy) is->islp = (dx<0?-INT_MAX:INT_MAX);
-    else is->islp = FixedDiv(dx, dy);
-    if (!dx) is->slp = (dy<0?-INT_MAX:INT_MAX);
-    else is->slp = FixedDiv(dy, dx);
+    if (!dy) is_->islp = (dx<0?-INT_MAX:INT_MAX);
+    else is_->islp = FixedDiv(dx, dy);
+    if (!dx) is_->slp = (dy<0?-INT_MAX:INT_MAX);
+    else is_->slp = FixedDiv(dy, dx);
 
 }
 
@@ -555,7 +555,8 @@ void AM_Stop (void)
 //
 void AM_Start (void)
 {
-    static int lastlevel = -1, lastepisode = -1;
+    static int lastlevel = -1;
+	static int lastepisode = -1;
 
     if (!stopped) AM_Stop();
     stopped = false;
