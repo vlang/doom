@@ -1116,6 +1116,8 @@ void M_QuitResponse(int key)
 
 static const char *M_SelectEndMessage(void)
 {
+	/*
+	 * XTODO
     const char **endmsg;
 
     if (logical_gamemission == doom)
@@ -1130,8 +1132,9 @@ static const char *M_SelectEndMessage(void)
         
         endmsg = doom2_endmsg;
     }
+	*/
 
-    return endmsg[gametic % NUM_QUITMESSAGES];
+    return doom1_endmsg[gametic % NUM_QUITMESSAGES];
 }
 
 
