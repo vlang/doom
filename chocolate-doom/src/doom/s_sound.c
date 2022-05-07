@@ -653,7 +653,7 @@ void S_StartMusic(int m_id)
 
 void S_ChangeMusic(int musicnum, int looping)
 {
-    musicinfo_t *music = NULL;
+    musicinfo_t *music;
     char namebuf[9];
     void *handle;
 
