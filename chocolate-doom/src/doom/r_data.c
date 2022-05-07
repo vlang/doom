@@ -285,7 +285,9 @@ void R_GenerateComposite (int texnum)
 
     // Now that the texture has been built in column cache,
     //  it is purgable from zone memory.
-    Z_ChangeTag (block, PU_CACHE);
+    // Z_ChangeTag (block, PU_CACHE);
+	// XTODO
+    Z_ChangeTag2 (block, PU_CACHE, __FILE__, __LINE__);
 }
 
 
@@ -551,7 +553,7 @@ void R_InitTextures (void)
             printf("\b");
     }
 	
-    for (i=0 ; i<numtextures ; i++, directory++)
+    for (i=0 ; i<numtextures ; i++)
     {
 	if (!(i&63))
 	    printf (".");
@@ -584,8 +586,7 @@ void R_InitTextures (void)
 	mpatch = &mtexture->patches[0];
 	patch = &texture->patches[0];
 
-	for (j=0 ; j<texture->patchcount ; j++, mpatch++, patch++)
-	{
+	for (j=0 ; j<texture->patchcount ; j++) {
 	    patch->originx = SHORT(mpatch->originx);
 	    patch->originy = SHORT(mpatch->originy);
 	    patch->patch = patchlookup[SHORT(mpatch->patch)];
@@ -594,6 +595,7 @@ void R_InitTextures (void)
 		I_Error ("R_InitTextures: Missing patch in texture %s",
 			 texture->name);
 	    }
+		mpatch++; patch++;
 	}		
 	texturecolumnlump[i] = Z_Malloc (texture->width*sizeof(**texturecolumnlump), PU_STATIC,0);
 	texturecolumnofs[i] = Z_Malloc (texture->width*sizeof(**texturecolumnofs), PU_STATIC,0);
@@ -606,6 +608,7 @@ void R_InitTextures (void)
 	textureheight[i] = texture->height<<FRACBITS;
 		
 	totalwidth += texture->width;
+ directory++;
     }
 
     Z_Free(patchlookup);
