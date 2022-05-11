@@ -186,7 +186,7 @@ static void *saveg_readp(void)
 
 static void saveg_writep(const void *p)
 {
-    saveg_write32((intptr_t) p);
+    saveg_write32((int)((intptr_t) p));
 }
 
 // Enum values are 32-bit integers.
@@ -1538,7 +1538,7 @@ void P_UnArchiveWorld (void)
     side_t*		si;
     
     // do sectors
-    for (sec = sectors ; i<numsectors ; i++,sec++)
+    for (sec = sectors ; i<numsectors ; i++)
     {
 	sec->floorheight = saveg_read16() << FRACBITS;
 	sec->ceilingheight = saveg_read16() << FRACBITS;
@@ -1549,11 +1549,12 @@ void P_UnArchiveWorld (void)
 	sec->tag = saveg_read16();		// needed?
 	sec->specialdata = 0;
 	sec->soundtarget = 0;
+	sec++;
     }
     
     // do lines
     i = 0;
-    for (li = lines ; i<numlines ; i++,li++)
+    for (li = lines ; i<numlines ; i++)
     {
 	li->flags = saveg_read16();
 	li->special = saveg_read16();
@@ -1569,6 +1570,7 @@ void P_UnArchiveWorld (void)
 	    si->bottomtexture = saveg_read16();
 	    si->midtexture = saveg_read16();
 	}
+	li++;
     }
 }
 
