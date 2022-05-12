@@ -138,10 +138,11 @@ void P_LoadVertexes (int lump)
 
     // Copy and convert vertex coordinates,
     // internal representation as fixed.
-    for (i=0 ; i<numvertexes ; i++, li++, ml++)
+    for (i=0 ; i<numvertexes ; i++)
     {
 	li->x = SHORT(ml->x)<<FRACBITS;
 	li->y = SHORT(ml->y)<<FRACBITS;
+	li++; ml++;
     }
 
     // Free buffer memory.
@@ -188,7 +189,7 @@ void P_LoadSegs (int lump)
 	
     ml = (mapseg_t *)data;
     li = segs;
-    for (i=0 ; i<numsegs ; i++, li++, ml++)
+    for (i=0 ; i<numsegs ; i++)
     {
 	li->v1 = &vertexes[SHORT(ml->v1)];
 	li->v2 = &vertexes[SHORT(ml->v2)];
@@ -233,6 +234,7 @@ void P_LoadSegs (int lump)
         {
 	    li->backsector = 0;
         }
+		li++; ml++;
     }
 	
     W_ReleaseLumpNum(lump);
@@ -257,10 +259,11 @@ void P_LoadSubsectors (int lump)
     memset (subsectors,0, numsubsectors*sizeof(subsector_t));
     ss = subsectors;
     
-    for (i=0 ; i<numsubsectors ; i++, ss++, ms++)
+    for (i=0 ; i<numsubsectors ; i++)
     {
 	ss->numlines = SHORT(ms->numsegs);
 	ss->firstline = SHORT(ms->firstseg);
+	ss++; ms++;
     }
 	
     W_ReleaseLumpNum(lump);
@@ -285,7 +288,7 @@ void P_LoadSectors (int lump)
 	
     ms = (mapsector_t *)data;
     ss = sectors;
-    for (i=0 ; i<numsectors ; i++, ss++, ms++)
+    for (i=0 ; i<numsectors ; i++)
     {
 	ss->floorheight = SHORT(ms->floorheight)<<FRACBITS;
 	ss->ceilingheight = SHORT(ms->ceilingheight)<<FRACBITS;
@@ -295,6 +298,7 @@ void P_LoadSectors (int lump)
 	ss->special = SHORT(ms->special);
 	ss->tag = SHORT(ms->tag);
 	ss->thinglist = NULL;
+		ss++; ms++;
     }
 	
     W_ReleaseLumpNum(lump);
@@ -320,7 +324,7 @@ void P_LoadNodes (int lump)
     mn = (mapnode_t *)data;
     no = nodes;
     
-    for (i=0 ; i<numnodes ; i++, no++, mn++)
+    for (i=0 ; i<numnodes ; i++)
     {
 	no->x = SHORT(mn->x)<<FRACBITS;
 	no->y = SHORT(mn->y)<<FRACBITS;
@@ -332,6 +336,7 @@ void P_LoadNodes (int lump)
 	    for (k=0 ; k<4 ; k++)
 		no->bbox[j][k] = SHORT(mn->bbox[j][k])<<FRACBITS;
 	}
+		no++; mn++;
     }
 	
     W_ReleaseLumpNum(lump);
@@ -354,7 +359,7 @@ void P_LoadThings (int lump)
     numthings = W_LumpLength (lump) / sizeof(mapthing_t);
 	
     mt = (mapthing_t *)data;
-    for (i=0 ; i<numthings ; i++, mt++)
+    for (i=0 ; i<numthings ; i++)
     {
 	spawn = true;
 
@@ -388,6 +393,7 @@ void P_LoadThings (int lump)
 	spawnthing.options = SHORT(mt->options);
 	
 	P_SpawnMapThing(&spawnthing);
+	mt++;
     }
 
     if (!deathmatch)
@@ -426,7 +432,7 @@ void P_LoadLineDefs (int lump)
 	
     mld = (maplinedef_t *)data;
     ld = lines;
-    for (i=0 ; i<numlines ; i++, mld++, ld++)
+    for (i=0 ; i<numlines ; i++)
     {
 	ld->flags = SHORT(mld->flags);
 	ld->special = SHORT(mld->special);
@@ -482,6 +488,8 @@ void P_LoadLineDefs (int lump)
 	    ld->backsector = sides[ld->sidenum[1]].sector;
 	else
 	    ld->backsector = 0;
+
+    mld++; ld++;
     }
 
     W_ReleaseLumpNum(lump);
@@ -505,7 +513,7 @@ void P_LoadSideDefs (int lump)
 	
     msd = (mapsidedef_t *)data;
     sd = sides;
-    for (i=0 ; i<numsides ; i++, msd++, sd++)
+    for (i=0 ; i<numsides ; i++)
     {
 	sd->textureoffset = SHORT(msd->textureoffset)<<FRACBITS;
 	sd->rowoffset = SHORT(msd->rowoffset)<<FRACBITS;
@@ -513,6 +521,7 @@ void P_LoadSideDefs (int lump)
 	sd->bottomtexture = R_TextureNumForName(msd->bottomtexture);
 	sd->midtexture = R_TextureNumForName(msd->midtexture);
 	sd->sector = &sectors[SHORT(msd->sector)];
+    msd++; sd++;
     }
 
     W_ReleaseLumpNum(lump);
@@ -577,16 +586,17 @@ void P_GroupLines (void)
 	
     // look up sector number for each subsector
     ss = subsectors;
-    for (i=0 ; i<numsubsectors ; i++, ss++)
+    for (i=0 ; i<numsubsectors ; i++)
     {
 	seg = &segs[ss->firstline];
 	ss->sector = seg->sidedef->sector;
+	ss++;
     }
 
     // count number of lines in each sector
     li = lines;
     totallines = 0;
-    for (i=0 ; i<numlines ; i++, li++)
+    for (i=0 ; i<numlines ; i++)
     {
 	totallines++;
 	li->frontsector->linecount++;
@@ -596,6 +606,7 @@ void P_GroupLines (void)
 	    li->backsector->linecount++;
 	    totallines++;
 	}
+		li++;
     }
 
     // build line tables for each sector	
@@ -640,7 +651,7 @@ void P_GroupLines (void)
     // Generate bounding boxes for sectors
 	
     sector = sectors;
-    for (i=0 ; i<numsectors ; i++, sector++)
+    for (i=0 ; i<numsectors ; i++)
     {
 	M_ClearBox (bbox);
 
@@ -672,6 +683,7 @@ void P_GroupLines (void)
 	block = (bbox[BOXLEFT]-bmaporgx-MAXRADIUS)>>MAPBLOCKSHIFT;
 	block = block < 0 ? 0 : block;
 	sector->blockbox[BOXLEFT]=block;
+	sector++;
     }
 	
 }
