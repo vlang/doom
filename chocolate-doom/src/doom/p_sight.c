@@ -194,13 +194,16 @@ boolean P_CrossSubsector (int num)
     count = sub->numlines;
     seg = &segs[sub->firstline];
 
-    for ( ; count ; seg++, count--)
+    for ( ; count ; seg++)
     {
 	line = seg->linedef;
 
 	// allready checked other side?
 	if (line->validcount == validcount)
+	{
+		count--;
 	    continue;
+	}
 	
 	line->validcount = validcount;
 
@@ -210,8 +213,10 @@ boolean P_CrossSubsector (int num)
 	s2 = P_DivlineSide (v2->x, v2->y, &strace);
 
 	// line isn't crossed?
-	if (s1 == s2)
+	if (s1 == s2) {
+		count--;
 	    continue;
+	}
 	
 	divl.x = v1->x;
 	divl.y = v1->y;
@@ -221,8 +226,10 @@ boolean P_CrossSubsector (int num)
 	s2 = P_DivlineSide (t2x, t2y, &divl);
 
 	// line isn't crossed?
-	if (s1 == s2)
+	if (s1 == s2) {
+		count--;
 	    continue;	
+	}
 
         // Backsector may be NULL if this is an "impassible
         // glass" hack line.
@@ -244,7 +251,11 @@ boolean P_CrossSubsector (int num)
 	// no wall to block sight with?
 	if (front->floorheight == back->floorheight
 	    && front->ceilingheight == back->ceilingheight)
+	{
+
+		count--;
 	    continue;	
+	}
 
 	// possible occluder
 	// because of ceiling height differences
@@ -281,6 +292,8 @@ boolean P_CrossSubsector (int num)
 		
 	if (topslope <= bottomslope)
 	    return false;		// stop				
+	
+		count--;
     }
     // passed the subsector ok
     return true;		
@@ -300,10 +313,13 @@ boolean P_CrossBSPNode (int bspnum)
 
     if (bspnum & NF_SUBSECTOR)
     {
-	if (bspnum == -1)
+		// XTODO
+	if (bspnum == -1) {
 	    return P_CrossSubsector (0);
-	else
+	}
+	else {
 	    return P_CrossSubsector (bspnum&(~NF_SUBSECTOR));
+	}
     }
 		
     bsp = &nodes[bspnum];
