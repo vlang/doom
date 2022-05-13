@@ -254,8 +254,11 @@ static void PrintLevelName(FILE *stream, int episode, int level)
         case doom2:
             fprintf(stream, "MAP%02i\n", level + 1);
             break;
-        default:
         case none:
+            fprintf(stream, "E%iM%i / MAP%02i\n", 
+                    episode + 1, level + 1, level + 1);
+            break;
+        default:
             fprintf(stream, "E%iM%i / MAP%02i\n", 
                     episode + 1, level + 1, level + 1);
             break;
