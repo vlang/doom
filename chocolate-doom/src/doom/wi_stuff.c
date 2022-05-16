@@ -714,7 +714,7 @@ WI_drawTime
   int		t )
 {
 
-    int		div;
+    int		div_;
     int		n;
 
     if (t<0)
@@ -722,19 +722,19 @@ WI_drawTime
 
     if (t <= 61*59)
     {
-	div = 1;
+	div_ = 1;
 
 	do
 	{
-	    n = (t / div) % 60;
+	    n = (t / div_) % 60;
 	    x = WI_drawNum(x, y, n, 2) - SHORT(colon->width);
-	    div *= 60;
+	    div_ *= 60;
 
 	    // draw
-	    if (div==60 || t / div)
+	    if (div_==60 || t / div_)
 		V_DrawPatch(x, y, colon);
 	    
-	} while (t / div);
+	} while (t / div_);
     }
     else
     {
