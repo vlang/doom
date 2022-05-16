@@ -19,6 +19,44 @@
 #define DEH_DEFS_H
 
 #include "sha1.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef enum
+{
+    DEH_INPUT_FILE,
+    DEH_INPUT_LUMP
+} deh_input_type_t;
+
+
+struct deh_context_s
+{
+    deh_input_type_t type;
+    char *filename;
+
+    // If the input comes from a memory buffer, pointer to the memory
+    // buffer.
+    unsigned char *input_buffer;
+    size_t input_buffer_len;
+    unsigned int input_buffer_pos;
+    int lumpnum;
+
+    // If the input comes from a file, the file stream for reading
+    // data.
+    FILE *stream;
+
+    // Current line number that we have reached:
+    int linenum;
+
+    // Used by DEH_ReadLine:
+    boolean last_was_newline;
+    char *readbuffer;
+    int readbuffer_size;
+
+    // Error handling.
+    boolean had_error;
+};
+
 
 typedef struct deh_context_s deh_context_t;
 typedef struct deh_section_s deh_section_t;

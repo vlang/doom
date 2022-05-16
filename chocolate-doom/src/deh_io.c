@@ -28,6 +28,7 @@
 #include "deh_defs.h"
 #include "deh_io.h"
 
+/*
 typedef enum
 {
     DEH_INPUT_FILE,
@@ -61,6 +62,7 @@ struct deh_context_s
     // Error handling.
     boolean had_error;
 };
+*/
 
 static deh_context_t *DEH_NewContext(void)
 {
