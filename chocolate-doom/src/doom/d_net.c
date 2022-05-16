@@ -32,6 +32,8 @@
 #include "w_checksum.h"
 #include "w_wad.h"
 
+#include "r_defs.h" // XTODO
+
 #include "deh_main.h"
 
 #include "d_loop.h"
