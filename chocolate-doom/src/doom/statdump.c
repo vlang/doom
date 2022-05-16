@@ -27,6 +27,8 @@
 #include "d_mode.h"
 #include "m_argv.h"
 
+#include "r_defs.h" // XTODO wasn't included
+
 #include "statdump.h"
 
 /* Par times for E1M1-E1M9. */
