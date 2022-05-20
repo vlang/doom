@@ -68,9 +68,9 @@ static void PlayerQuitGame(player_t *player)
     }
 }
 
+    extern boolean advancedemo;
 static void RunTic(ticcmd_t *cmds, boolean *ingame)
 {
-    extern boolean advancedemo;
     unsigned int i;
 
     // Check for player quits.
