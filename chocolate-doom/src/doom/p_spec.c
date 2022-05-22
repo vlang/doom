@@ -1176,6 +1176,7 @@ void P_UpdateSpecials (void)
 	}
 }
 
+    extern int numflats;
 
 //
 // Donut overrun emulation
@@ -1194,7 +1195,8 @@ static void DonutOverrun(fixed_t *s3_floorheight, short *s3_floorpic,
     static int tmp_s3_floorheight;
     static int tmp_s3_floorpic;
 
-    extern int numflats;
+// XTODO
+    //extern int numflats;
 
     if (first)
     {
