@@ -1229,6 +1229,9 @@ static void G_CheckDemoStatusAtExit (void)
     G_CheckDemoStatus();
 }
 
+	extern int forwardmove[2];
+	extern int sidemove[2];
+
 //
 // D_DoomMain
 //
@@ -1407,8 +1410,6 @@ void D_DoomMain (void)
     if (p)
     {
 	int     scale = 200;
-	extern int forwardmove[2];
-	extern int sidemove[2];
 	
 	if (p<myargc-1)
 	    scale = atoi (myargv[p+1]);
