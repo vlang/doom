@@ -334,9 +334,9 @@ void G_BuildTiccmd (ticcmd_t* cmd, int maketic)
     int		forward;
     int		side;
 
-	printf("\n\nTAAAA SIZEOF=%d\n", sizeof(ticcmd_t));
-	printf("TAAAA len mousebuttons=%d\n", sizeof(mousebuttons));
-	printf("mousebstrafe=%d\n", mousebstrafe);
+	//printf("\n\nTAAAA SIZEOF=%d\n", sizeof(ticcmd_t));
+	//printf("TAAAA len mousebuttons=%d\n", sizeof(mousebuttons));
+	//printf("mousebstrafe=%d\n", mousebstrafe);
 
     memset(cmd, 0, sizeof(ticcmd_t));
 

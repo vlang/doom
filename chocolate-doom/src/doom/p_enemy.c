@@ -600,7 +600,7 @@ void A_KeenDie (mobj_t* mo)
 //
 void A_Look (mobj_t* actor)
 {
-	printf("A_Look size=%d => %d \n", sizeof(actor), sizeof(mobj_t));
+	//printf("A_Look size=%d => %d \n", sizeof(actor), sizeof(mobj_t));
 	////printf("sizeof thinker: %d \n", sizeof(actor->thinker));
 	//printf("sizeof floorz: %d \n", sizeof(actor->floorz));
     mobj_t*	targ;
