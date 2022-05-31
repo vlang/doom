@@ -381,19 +381,21 @@ R_StoreWallRange
 
     // don't overflow and crash
     //if (ds_p == &drawsegs[MAXDRAWSEGS])
-	//return;		
-		
+    //return;
+
 #ifdef RANGECHECK
-    if (start >=viewwidth || start > stop)
-	I_Error ("Bad R_RenderWallRange: %i to %i", start , stop);
+    if (start >=viewwidth || start > stop) {
+       printf("Bad R_RenderWallRange: %i to %i\n", start , stop);
+       return;
+    }
 #endif
-    
+
     sidedef = curline->sidedef;
     linedef = curline->linedef;
 
     // mark the segment as visible for auto map
     linedef->flags |= ML_MAPPED;
-    
+
     // calculate rw_distance for scale calculation
     rw_normalangle = curline->angle + ANG90;
     offsetangle = abs((int)rw_normalangle-(int)rw_angle1);
