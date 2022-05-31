@@ -151,7 +151,8 @@ EV_DoPlat
 	break;
     }
 	
-    while ((secnum = P_FindSectorFromLineTag(line,secnum)) >= 0)
+    secnum = P_FindSectorFromLineTag(line,secnum);
+    while (secnum >= 0)
     {
 	sec = &sectors[secnum];
 
@@ -239,6 +240,8 @@ EV_DoPlat
 	    break;
 	}
 	P_AddActivePlat(plat);
+
+    secnum = P_FindSectorFromLineTag(line,secnum);
     }
     return rtn;
 }
@@ -254,8 +257,8 @@ void P_ActivateInStasis(int tag)
 	    && (activeplats[i])->tag == tag
 	    && (activeplats[i])->status == in_stasis)
 	{
-	    (activeplats[i])->status = (activeplats[i])->oldstatus;
-	    (activeplats[i])->thinker.function.acp1
+	    activeplats[i]->status = (activeplats[i])->oldstatus;
+	    activeplats[i]->thinker.function.acp1
 	      = (actionf_p1) T_PlatRaise;
 	}
 }
@@ -266,12 +269,12 @@ void EV_StopPlat(line_t* line)
 	
     for (j = 0;j < MAXPLATS;j++)
 	if (activeplats[j]
-	    && ((activeplats[j])->status != in_stasis)
-	    && ((activeplats[j])->tag == line->tag))
+	    && (activeplats[j]->status != in_stasis)
+	    && (activeplats[j]->tag == line->tag))
 	{
-	    (activeplats[j])->oldstatus = (activeplats[j])->status;
-	    (activeplats[j])->status = in_stasis;
-	    (activeplats[j])->thinker.function.acv = (actionf_v)NULL;
+	    activeplats[j]->oldstatus = (activeplats[j])->status;
+	    activeplats[j]->status = in_stasis;
+	    activeplats[j]->thinker.function.acv = (actionf_v)NULL;
 	}
 }
 
