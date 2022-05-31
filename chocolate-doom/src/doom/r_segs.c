@@ -385,7 +385,7 @@ R_StoreWallRange
 
 #ifdef RANGECHECK
     if (start >=viewwidth || start > stop) {
-       printf("Bad R_RenderWallRange: %i to %i\n", start , stop);
+       printf("Bad R_RenderWallRange: %d to %d | viewwidth: %d\n", start , stop, viewwidth);
        return;
     }
 #endif
