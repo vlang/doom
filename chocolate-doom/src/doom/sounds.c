@@ -31,7 +31,7 @@
 #define MUSIC(name) \
     { name, 0, NULL, NULL }
 
-musicinfo_t S_music[] =
+musicinfo_t S_music[68] =
 {
     MUSIC(NULL),
     MUSIC("e1m1"),
