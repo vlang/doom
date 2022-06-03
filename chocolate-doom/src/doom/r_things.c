@@ -90,68 +90,16 @@ int		maxframe;
 const char	*spritename;
 
 
-
-
-//
-// R_InstallSpriteLump
-// Local function for R_InitSprites.
-//
 void
 R_InstallSpriteLump
 ( int		lump,
   unsigned	frame,
   unsigned	rotation,
-  boolean	flipped )
-{
-    int		r;
-	
-    if (frame >= 29 || rotation > 8)
-	I_Error("R_InstallSpriteLump: "
-		"Bad frame characters in lump %i", lump);
-	
-    if ((int)frame > maxframe)
-	maxframe = frame;
-		
-    if (rotation == 0)
-    {
-	// the lump should be used for all rotations
-	if (sprtemp[frame].rotate == false)
-	    I_Error ("R_InitSprites: Sprite %s frame %c has "
-		     "multip rot=0 lump", spritename, 'A'+frame);
-
-	if (sprtemp[frame].rotate == true)
-	    I_Error ("R_InitSprites: Sprite %s frame %c has rotations "
-		     "and a rot=0 lump", spritename, 'A'+frame);
-			
-	sprtemp[frame].rotate = false;
-	for (r=0 ; r<8 ; r++)
-	{
-	    sprtemp[frame].lump[r] = lump - firstspritelump;
-	    sprtemp[frame].flip[r] = (byte)flipped;
-	}
-	return;
-    }
-	
-    // the lump is only used for one rotation
-    if (sprtemp[frame].rotate == false)
-	I_Error ("R_InitSprites: Sprite %s frame %c has rotations "
-		 "and a rot=0 lump", spritename, 'A'+frame);
-		
-    sprtemp[frame].rotate = true;
-
-    // make 0 based
-    rotation--;		
-    if (sprtemp[frame].lump[rotation] != -1)
-	I_Error ("R_InitSprites: Sprite %s : %c : %c "
-		 "has two lumps mapped to it",
-		 spritename, 'A'+frame, '1'+rotation);
-		
-    sprtemp[frame].lump[rotation] = lump - firstspritelump;
-    sprtemp[frame].flip[rotation] = (byte)flipped;
-}
+  boolean	flipped );
 
 
 
+//
 
 //
 // R_InitSpriteDefs

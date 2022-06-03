@@ -60,6 +60,7 @@ add_library(doom STATIC
             r_sky.c         r_sky.h
                             r_state.h
             r_things.c      r_things.h
+            r_things_good.c
             s_sound.c       s_sound.h
             sounds.c        sounds.h
             statdump.c      statdump.h
