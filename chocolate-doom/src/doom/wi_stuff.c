@@ -271,12 +271,14 @@ static int NUMANIMS[NUMEPISODES] =
     6,//arrlen(epsd2animinfo),
 };
 
-static anim_t *anims[NUMEPISODES] =
+static anim_t *anims[NUMEPISODES];
+/*
 {
     epsd0animinfo,
     epsd1animinfo,
     epsd2animinfo
-};
+});
+*/
 
 
 //
@@ -1504,7 +1506,7 @@ void WI_checkForAccelerate(void)
 
     // check for button presses to skip delays
     player = players;
-    for (i=0; i<MAXPLAYERS ; i++, player++)
+    for (i=0; i<MAXPLAYERS ; i++)
     {
 	if (playeringame[i])
 	{
@@ -1525,6 +1527,7 @@ void WI_checkForAccelerate(void)
 	    else
 		player->usedown = false;
 	}
+	player++;
     }
 }
 

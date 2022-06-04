@@ -448,16 +448,19 @@ void EV_VerticalDoor(line_t *line,
 	{
 	case 117: // BLAZING DOOR RAISE
 	case 118: // BLAZING DOOR OPEN
-		S_StartSound(&sec->soundorg, sfx_bdopn);
+		; // XTODO
+		S_StartSound(&sec->soundorg, (int)sfx_bdopn);
 		break;
 
 	case 1: // NORMAL DOOR SOUND
 	case 31:
-		S_StartSound(&sec->soundorg, sfx_doropn);
+	;
+		S_StartSound(&sec->soundorg, (int)sfx_doropn);
 		break;
 
 	default: // LOCKED DOOR SOUND
-		S_StartSound(&sec->soundorg, sfx_doropn);
+	;
+		S_StartSound(&sec->soundorg, (int)sfx_doropn);
 		break;
 	}
 
