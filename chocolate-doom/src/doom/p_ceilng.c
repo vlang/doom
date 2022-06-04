@@ -65,6 +65,7 @@ void T_MoveCeiling (ceiling_t* ceiling)
 	      case silentCrushAndRaise:
 		break;
 	      default:
+		  ;
 		S_StartSound(&ceiling->sector->soundorg, sfx_stnmov);
 		// ?
 		break;
@@ -106,6 +107,7 @@ void T_MoveCeiling (ceiling_t* ceiling)
 	    {
 	      case silentCrushAndRaise: break;
 	      default:
+		  ;
 		S_StartSound(&ceiling->sector->soundorg, sfx_stnmov);
 	    }
 	}
