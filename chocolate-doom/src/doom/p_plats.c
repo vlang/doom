@@ -152,11 +152,11 @@ EV_DoPlat
     }
 	
     secnum = P_FindSectorFromLineTag(line,secnum);
-    while (secnum >= 0)
-    {
-	sec = &sectors[secnum];
+    while (secnum >= 0) {
+		sec = &sectors[secnum];
 
 	if (sec->specialdata)
+		secnum = P_FindSectorFromLineTag(line,secnum);
 	    continue;
 	
 	// Find lowest & highest floors around sector
