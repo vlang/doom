@@ -27,14 +27,14 @@
 #include "deh_main.h"
 #include "deh_mapping.h"
 
-DEH_BEGIN_MAPPING(state_mapping, state_t)
-  DEH_MAPPING("Sprite number",    sprite)
-  DEH_MAPPING("Sprite subnumber", frame)
-  DEH_MAPPING("Duration",         tics)
-  DEH_MAPPING("Next frame",       nextstate)
-  DEH_MAPPING("Unknown 1",        misc1)
-  DEH_MAPPING("Unknown 2",        misc2)
-  DEH_UNSUPPORTED_MAPPING("Codep frame")
+DEH_BEGIN_MAPPING(deh_frame, state_mapping, state_t)
+  DEH_MAPPING(deh_frame, "Sprite number",    sprite)
+  DEH_MAPPING(deh_frame, "Sprite subnumber", frame)
+  DEH_MAPPING(deh_frame, "Duration",         tics)
+  DEH_MAPPING(deh_frame, "Next frame",       nextstate)
+  DEH_MAPPING(deh_frame, "Unknown 1",        misc1)
+  DEH_MAPPING(deh_frame, "Unknown 2",        misc2)
+  DEH_UNSUPPORTED_MAPPING(deh_frame, "Codep frame")
 DEH_END_MAPPING
 
 static void *DEH_FrameStart(deh_context_t *context, char *line)

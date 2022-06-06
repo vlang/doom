@@ -27,13 +27,13 @@
 #include "deh_main.h"
 #include "deh_mapping.h"
 
-DEH_BEGIN_MAPPING(weapon_mapping, weaponinfo_t)
-  DEH_MAPPING("Ammo type",        ammo)
-  DEH_MAPPING("Deselect frame",   upstate)
-  DEH_MAPPING("Select frame",     downstate)
-  DEH_MAPPING("Bobbing frame",    readystate)
-  DEH_MAPPING("Shooting frame",   atkstate)
-  DEH_MAPPING("Firing frame",     flashstate)
+DEH_BEGIN_MAPPING(deh_weapon, weapon_mapping, weaponinfo_t)
+  DEH_MAPPING(deh_weapon, "Ammo type",        ammo)
+  DEH_MAPPING(deh_weapon, "Deselect frame",   upstate)
+  DEH_MAPPING(deh_weapon, "Select frame",     downstate)
+  DEH_MAPPING(deh_weapon, "Bobbing frame",    readystate)
+  DEH_MAPPING(deh_weapon, "Shooting frame",   atkstate)
+  DEH_MAPPING(deh_weapon, "Firing frame",     flashstate)
 DEH_END_MAPPING
 
 static void *DEH_WeaponStart(deh_context_t *context, char *line)

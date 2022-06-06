@@ -24,16 +24,16 @@
 #include "deh_mapping.h"
 #include "sounds.h"
 
-DEH_BEGIN_MAPPING(sound_mapping, sfxinfo_t)
-    DEH_UNSUPPORTED_MAPPING("Offset")
-    DEH_UNSUPPORTED_MAPPING("Zero/One")
-    DEH_MAPPING("Value", priority)
-    DEH_MAPPING("Zero 1", link)
-    DEH_MAPPING("Zero 2", pitch)
-    DEH_MAPPING("Zero 3", volume)
-    DEH_UNSUPPORTED_MAPPING("Zero 4")
-    DEH_MAPPING("Neg. One 1", usefulness)
-    DEH_MAPPING("Neg. One 2", lumpnum)
+DEH_BEGIN_MAPPING(deh_sound, sound_mapping, sfxinfo_t)
+    DEH_UNSUPPORTED_MAPPING(deh_sound, "Offset")
+    DEH_UNSUPPORTED_MAPPING(deh_sound, "Zero/One")
+    DEH_MAPPING(deh_sound, "Value", priority)
+    DEH_MAPPING(deh_sound, "Zero 1", link)
+    DEH_MAPPING(deh_sound, "Zero 2", pitch)
+    DEH_MAPPING(deh_sound, "Zero 3", volume)
+    DEH_UNSUPPORTED_MAPPING(deh_sound, "Zero 4")
+    DEH_MAPPING(deh_sound, "Neg. One 1", usefulness)
+    DEH_MAPPING(deh_sound, "Neg. One 2", lumpnum)
 DEH_END_MAPPING
 
 static void *DEH_SoundStart(deh_context_t *context, char *line)

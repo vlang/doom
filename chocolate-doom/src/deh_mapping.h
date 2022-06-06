@@ -24,24 +24,24 @@
 #include "deh_io.h"
 #include "sha1.h"
 
-#define DEH_BEGIN_MAPPING(mapping_name, structname)           \
-    static structname deh_mapping_base;                       \
+#define DEH_BEGIN_MAPPING(file, mapping_name, structname)     \
+    static structname file##__deh_mapping_base;               \
     static deh_mapping_t mapping_name =                       \
     {                                                         \
-        &deh_mapping_base,                                    \
+        &file##__deh_mapping_base,                            \
         {
 
-#define DEH_MAPPING(deh_name, fieldname)                      \
-             {deh_name, &deh_mapping_base.fieldname,          \
-                 sizeof(deh_mapping_base.fieldname),          \
+#define DEH_MAPPING(file, deh_name, fieldname)                \
+             {deh_name, &file##__deh_mapping_base.fieldname,  \
+                 sizeof(file##__deh_mapping_base.fieldname),  \
                  false},
 
-#define DEH_MAPPING_STRING(deh_name, fieldname)               \
-             {deh_name, &deh_mapping_base.fieldname,          \
-                 sizeof(deh_mapping_base.fieldname),          \
+#define DEH_MAPPING_STRING(file, deh_name, fieldname)         \
+             {deh_name, &file##__deh_mapping_base.fieldname,  \
+                 sizeof(file##__deh_mapping_base.fieldname),  \
                  true},
 
-#define DEH_UNSUPPORTED_MAPPING(deh_name)                     \
+#define DEH_UNSUPPORTED_MAPPING(file, deh_name)               \
              {deh_name, NULL, -1, false},
 
 #define DEH_END_MAPPING                                       \
