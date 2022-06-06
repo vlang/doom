@@ -1,126 +1,142 @@
 [translated]
 module main
 
-
 [typedef]
 struct C.FILE {}
-
 
 // vstart
 
 fn rand() int
 
-fn system( &i8) int
+fn system(&i8) int
 
 fn random() int
 
 type Sfxinfo_t = Sfxinfo_struct
-struct Sfxinfo_struct { 
-	tagname &i8
-	name [9]i8
-	priority int
-	link &Sfxinfo_t
-	pitch int
-	volume int
-	usefulness int
-	lumpnum int
+
+struct Sfxinfo_struct {
+	tagname     &i8
+	name        [9]i8
+	priority    int
+	link        &Sfxinfo_t
+	pitch       int
+	volume      int
+	usefulness  int
+	lumpnum     int
 	numchannels int
 	driver_data voidptr
 }
-struct Musicinfo_t { 
-	name &i8
+
+struct Musicinfo_t {
+	name    &i8
 	lumpnum int
-	data voidptr
-	handle voidptr
+	data    voidptr
+	handle  voidptr
 }
+
 enum Snddevice_t {
-	snddevice_none = 0	snddevice_pcspeaker = 1	snddevice_adlib = 2	snddevice_sb = 3	snddevice_pas = 4	snddevice_gus = 5	snddevice_waveblaster = 6	snddevice_soundcanvas = 7	snddevice_genmidi = 8	snddevice_awe32 = 9	snddevice_cd = 10}
-
-struct Sound_module_t { 
-	sound_devices &Snddevice_t
-	num_sound_devices int
-	Init fn (bool) bool
-	Shutdown fn ()
-	GetSfxLumpNum fn (&Sfxinfo_t) int
-	Update fn ()
-	UpdateSoundParams fn (int, int, int)
-	StartSound fn (&Sfxinfo_t, int, int, int, int) int
-	StopSound fn (int)
-	SoundIsPlaying fn (int) bool
-	CacheSounds fn (&Sfxinfo_t, int)
+	snddevice_none = 0
+	snddevice_pcspeaker = 1
+	snddevice_adlib = 2
+	snddevice_sb = 3
+	snddevice_pas = 4
+	snddevice_gus = 5
+	snddevice_waveblaster = 6
+	snddevice_soundcanvas = 7
+	snddevice_genmidi = 8
+	snddevice_awe32 = 9
+	snddevice_cd = 10
 }
-[c:'I_ShutdownSound']
-fn i_shutdownsound() 
 
-[c:'I_GetSfxLumpNum']
+struct Sound_module_t {
+	sound_devices     &Snddevice_t
+	num_sound_devices int
+	Init              fn (bool) bool
+	Shutdown          fn ()
+	GetSfxLumpNum     fn (&Sfxinfo_t) int
+	Update            fn ()
+	UpdateSoundParams fn (int, int, int)
+	StartSound        fn (&Sfxinfo_t, int, int, int, int) int
+	StopSound         fn (int)
+	SoundIsPlaying    fn (int) bool
+	CacheSounds       fn (&Sfxinfo_t, int)
+}
+
+[c: 'I_ShutdownSound']
+fn i_shutdownsound()
+
+[c: 'I_GetSfxLumpNum']
 fn i_getsfxlumpnum(sfxinfo &Sfxinfo_t) int
 
-[c:'I_UpdateSound']
-fn i_updatesound() 
+[c: 'I_UpdateSound']
+fn i_updatesound()
 
-[c:'I_UpdateSoundParams']
-fn i_updatesoundparams(channel int, vol int, sep int) 
+[c: 'I_UpdateSoundParams']
+fn i_updatesoundparams(channel int, vol int, sep int)
 
-[c:'I_StartSound']
+[c: 'I_StartSound']
 fn i_startsound(sfxinfo &Sfxinfo_t, channel int, vol int, sep int, pitch int) int
 
-[c:'I_StopSound']
-fn i_stopsound(channel int) 
+[c: 'I_StopSound']
+fn i_stopsound(channel int)
 
-[c:'I_SoundIsPlaying']
+[c: 'I_SoundIsPlaying']
 fn i_soundisplaying(channel int) bool
 
-[c:'I_PrecacheSounds']
-fn i_precachesounds(sounds &Sfxinfo_t, num_sounds int) 
+[c: 'I_PrecacheSounds']
+fn i_precachesounds(sounds &Sfxinfo_t, num_sounds int)
 
-struct Music_module_t { 
-	sound_devices &Snddevice_t
+struct Music_module_t {
+	sound_devices     &Snddevice_t
 	num_sound_devices int
-	Init fn () bool
-	Shutdown fn ()
-	SetMusicVolume fn (int)
-	PauseMusic fn ()
-	ResumeMusic fn ()
-	RegisterSong fn (voidptr, int) voidptr
-	UnRegisterSong fn (voidptr)
-	PlaySong fn (voidptr, bool)
-	StopSong fn ()
-	MusicIsPlaying fn () bool
-	Poll fn ()
+	Init              fn () bool
+	Shutdown          fn ()
+	SetMusicVolume    fn (int)
+	PauseMusic        fn ()
+	ResumeMusic       fn ()
+	RegisterSong      fn (voidptr, int) voidptr
+	UnRegisterSong    fn (voidptr)
+	PlaySong          fn (voidptr, bool)
+	StopSong          fn ()
+	MusicIsPlaying    fn () bool
+	Poll              fn ()
 }
-[c:'I_ShutdownMusic']
-fn i_shutdownmusic() 
 
-[c:'I_SetMusicVolume']
-fn i_setmusicvolume(volume int) 
+[c: 'I_ShutdownMusic']
+fn i_shutdownmusic()
 
-[c:'I_PauseSong']
-fn i_pausesong() 
+[c: 'I_SetMusicVolume']
+fn i_setmusicvolume(volume int)
 
-[c:'I_ResumeSong']
-fn i_resumesong() 
+[c: 'I_PauseSong']
+fn i_pausesong()
 
-[c:'I_RegisterSong']
+[c: 'I_ResumeSong']
+fn i_resumesong()
+
+[c: 'I_RegisterSong']
 fn i_registersong(data voidptr, len int) voidptr
 
-[c:'I_UnRegisterSong']
-fn i_unregistersong(handle voidptr) 
+[c: 'I_UnRegisterSong']
+fn i_unregistersong(handle voidptr)
 
-[c:'I_PlaySong']
-fn i_playsong(handle voidptr, looping bool) 
+[c: 'I_PlaySong']
+fn i_playsong(handle voidptr, looping bool)
 
-[c:'I_StopSong']
-fn i_stopsong() 
+[c: 'I_StopSong']
+fn i_stopsong()
 
-[c:'I_MusicIsPlaying']
+[c: 'I_MusicIsPlaying']
 fn i_musicisplaying() bool
 
-[weak]__global ( snd_musicdevice int 
-
+[weak]
+__global (
+	snd_musicdevice int
 )
 
-[weak]__global ( snd_pitchshift int 
-
+[weak]
+__global (
+	snd_pitchshift int
 )
 
 enum Opl_driver_ver_t {
@@ -129,50 +145,55 @@ enum Opl_driver_ver_t {
 	opl_doom_1_9
 }
 
-[c:'I_SetOPLDriverVer']
-fn i_setopldriverver(ver Opl_driver_ver_t) 
+[c: 'I_SetOPLDriverVer']
+fn i_setopldriverver(ver Opl_driver_ver_t)
 
+[c: 'I_Error']
 [c2v_variadic]
-[c:'I_Error']
-fn i_error(error &i8) 
+fn i_error(error ...&i8)
 
-[c:'I_AtExit']
-fn i_atexit(func Atexit_func_t, run_if_error bool) 
+[c: 'I_AtExit']
+fn i_atexit(func Atexit_func_t, run_if_error bool)
 
-[c:'DEH_String']
+[c: 'DEH_String']
 fn deh_string(s &i8) &i8
-
 
 const ( // empty enum
 )
 
-[c:'FixedMul']
+[c: 'FixedMul']
 fn fixedmul(a int, b int) int
 
-[c_extern]__global ( finesine [10240]int 
-
+[c_extern]
+__global (
+	finesine [10240]int
 )
 
-[weak]__global ( gameepisode int 
-
+[weak]
+__global (
+	gameepisode int
 )
 
-[weak]__global ( gamemap int 
-
+[weak]
+__global (
+	gamemap int
 )
 
 // skipped extern global sfxVolume
 // skipped extern global musicVolume
-[weak]__global ( paused bool 
-
+[weak]
+__global (
+	paused bool
 )
 
-[c_extern]__global ( S_sfx [109]Sfxinfo_t 
-
+[c_extern]
+__global (
+	S_sfx [109]Sfxinfo_t
 )
 
-[c_extern]__global ( S_music [68]Musicinfo_t 
-
+[c_extern]
+__global (
+	S_music [68]Musicinfo_t
 )
 
 enum Musicenum_t {
@@ -360,131 +381,143 @@ enum Sfxenum_t {
 	numsfx
 }
 
-[c:'S_Init']
-fn s_init(sfxvolume int, musicvolume int) 
+[c: 'S_Init']
+fn s_init(sfxvolume int, musicvolume int)
 
-[c:'S_Shutdown']
-fn s_shutdown() 
+[c: 'S_Shutdown']
+fn s_shutdown()
 
-[c:'S_Start']
-fn s_start() 
+[c: 'S_Start']
+fn s_start()
 
-[c:'S_StartSound']
-fn s_startsound(origin voidptr, sound_id int) 
+[c: 'S_StartSound']
+fn s_startsound(origin voidptr, sound_id int)
 
-[c:'S_StopSound']
-fn s_stopsound(origin &Mobj_t) 
+[c: 'S_StopSound']
+fn s_stopsound(origin &Mobj_t)
 
-[c:'S_StartMusic']
-fn s_startmusic(music_id int) 
+[c: 'S_StartMusic']
+fn s_startmusic(music_id int)
 
-[c:'S_ChangeMusic']
-fn s_changemusic(music_id int, looping int) 
+[c: 'S_ChangeMusic']
+fn s_changemusic(music_id int, looping int)
 
-[c:'S_MusicPlaying']
+[c: 'S_MusicPlaying']
 fn s_musicplaying() bool
 
-[c:'S_StopMusic']
-fn s_stopmusic() 
+[c: 'S_StopMusic']
+fn s_stopmusic()
 
-[c:'S_PauseSound']
-fn s_pausesound() 
+[c: 'S_PauseSound']
+fn s_pausesound()
 
-[c:'S_ResumeSound']
-fn s_resumesound() 
+[c: 'S_ResumeSound']
+fn s_resumesound()
 
-[c:'S_UpdateSounds']
-fn s_updatesounds(listener &Mobj_t) 
+[c: 'S_UpdateSounds']
+fn s_updatesounds(listener &Mobj_t)
 
-[c:'S_SetMusicVolume']
-fn s_setmusicvolume(volume int) 
+[c: 'S_SetMusicVolume']
+fn s_setmusicvolume(volume int)
 
-[c:'S_SetSfxVolume']
-fn s_setsfxvolume(volume int) 
+[c: 'S_SetSfxVolume']
+fn s_setsfxvolume(volume int)
 
 // skipped extern global snd_channels
+[c: 'M_snprintf']
 [c2v_variadic]
-[c:'M_snprintf']
-fn m_snprintf(buf &i8, buf_len usize, s &i8) int
+fn m_snprintf(buf &i8, buf_len usize, s ...&i8) int
 
-[c:'M_Random']
+[c: 'M_Random']
 fn m_random() int
 
-[c:'R_PointToAngle']
+[c: 'R_PointToAngle']
 fn r_pointtoangle(x int, y int) Angle_t
 
-[c:'R_PointToAngle2']
+[c: 'R_PointToAngle2']
 fn r_pointtoangle2(x1 int, y1 int, x2 int, y2 int) Angle_t
 
 type Drawfunc_t = fn (int, int)
+
 type Planefunction_t = fn (int, int)
-struct Divline_t { 
-	x int
-	y int
+
+struct Divline_t {
+	x  int
+	y  int
 	dx int
 	dy int
 }
-union Ddunion { 
+
+union Ddunion {
 	thing &Mobj_t
-	line &Line_t
-	a int
+	line  &Line_t
+	a     int
 }
-struct Intercept_t { 
-	frac int
+
+struct Intercept_t {
+	frac    int
 	isaline bool
-	d Ddunion
+	d       Ddunion
 }
+
 type Traverser_t = fn (&Intercept_t) bool
-struct Fireflicker_t { 
-	thinker Thinker_t
-	sector &Sector_t
-	count int
+
+struct Fireflicker_t {
+	thinker  Thinker_t
+	sector   &Sector_t
+	count    int
 	maxlight int
 	minlight int
 }
-struct Lightflash_t { 
-	thinker Thinker_t
-	sector &Sector_t
-	count int
+
+struct Lightflash_t {
+	thinker  Thinker_t
+	sector   &Sector_t
+	count    int
 	maxlight int
 	minlight int
-	maxtime int
-	mintime int
+	maxtime  int
+	mintime  int
 }
-struct Strobe_t { 
-	thinker Thinker_t
-	sector &Sector_t
-	count int
-	minlight int
-	maxlight int
-	darktime int
+
+struct Strobe_t {
+	thinker    Thinker_t
+	sector     &Sector_t
+	count      int
+	minlight   int
+	maxlight   int
+	darktime   int
 	brighttime int
 }
-struct Glow_t { 
-	thinker Thinker_t
-	sector &Sector_t
-	minlight int
-	maxlight int
+
+struct Glow_t {
+	thinker   Thinker_t
+	sector    &Sector_t
+	minlight  int
+	maxlight  int
 	direction int
 }
-struct Switchlist_t { 
-	name1 [9]i8
-	name2 [9]i8
+
+struct Switchlist_t {
+	name1   [9]i8
+	name2   [9]i8
 	episode i16
 }
+
 enum Bwhere_e {
 	top
 	middle
 	bottom
 }
 
-struct Button_t { 
-	line &Line_t
-	where Bwhere_e
+struct Button_t {
+	line     &Line_t
+	where    Bwhere_e
 	btexture int
-	btimer int
+	btimer   int
 	soundorg &Degenmobj_t
 }
+
 enum Plat_e {
 	up
 	down
@@ -500,20 +533,21 @@ enum Plattype_e {
 	blazedwus
 }
 
-struct Plat_t { 
-	thinker Thinker_t
-	sector &Sector_t
-	speed int
-	low int
-	high int
-	wait int
-	count int
-	status Plat_e
+struct Plat_t {
+	thinker   Thinker_t
+	sector    &Sector_t
+	speed     int
+	low       int
+	high      int
+	wait      int
+	count     int
+	status    Plat_e
 	oldstatus Plat_e
-	crush bool
-	tag int
-	type_ Plattype_e
+	crush     bool
+	tag       int
+	type_     Plattype_e
 }
+
 enum Vldoor_e {
 	vld_normal
 	vld_close30thenopen
@@ -525,16 +559,17 @@ enum Vldoor_e {
 	vld_blazeclose
 }
 
-struct Vldoor_t { 
-	thinker Thinker_t
-	type_ Vldoor_e
-	sector &Sector_t
-	topheight int
-	speed int
-	direction int
-	topwait int
+struct Vldoor_t {
+	thinker      Thinker_t
+	type_        Vldoor_e
+	sector       &Sector_t
+	topheight    int
+	speed        int
+	direction    int
+	topwait      int
 	topcountdown int
 }
+
 enum Ceiling_e {
 	lowertofloor
 	raisetohighest
@@ -544,18 +579,19 @@ enum Ceiling_e {
 	silentcrushandraise
 }
 
-struct Ceiling_t { 
-	thinker Thinker_t
-	type_ Ceiling_e
-	sector &Sector_t
+struct Ceiling_t {
+	thinker      Thinker_t
+	type_        Ceiling_e
+	sector       &Sector_t
 	bottomheight int
-	topheight int
-	speed int
-	crush bool
-	direction int
-	tag int
+	topheight    int
+	speed        int
+	crush        bool
+	direction    int
+	tag          int
 	olddirection int
 }
+
 enum Floor_e {
 	lowerfloor
 	lowerfloortolowest
@@ -577,96 +613,111 @@ enum Stair_e {
 	turbo16
 }
 
-struct Floormove_t { 
-	thinker Thinker_t
-	type_ Floor_e
-	crush bool
-	sector &Sector_t
-	direction int
-	newspecial int
-	texture i16
+struct Floormove_t {
+	thinker         Thinker_t
+	type_           Floor_e
+	crush           bool
+	sector          &Sector_t
+	direction       int
+	newspecial      int
+	texture         i16
 	floordestheight int
-	speed int
+	speed           int
 }
+
 enum Result_e {
 	ok
 	crushed
 	pastdest
 }
 
-[c:'W_CheckNumForName']
+[c: 'W_CheckNumForName']
 fn w_checknumforname(name &i8) Lumpindex_t
 
-[c:'W_GetNumForName']
+[c: 'W_GetNumForName']
 fn w_getnumforname(name &i8) Lumpindex_t
 
-[c:'W_LumpLength']
+[c: 'W_LumpLength']
 fn w_lumplength(lump Lumpindex_t) int
 
-[c:'W_CacheLumpNum']
+[c: 'W_CacheLumpNum']
 fn w_cachelumpnum(lump Lumpindex_t, tag int) voidptr
 
-[c:'W_ReleaseLumpNum']
-fn w_releaselumpnum(lump Lumpindex_t) 
+[c: 'W_ReleaseLumpNum']
+fn w_releaselumpnum(lump Lumpindex_t)
 
-[c:'Z_Malloc']
+[c: 'Z_Malloc']
 fn z_malloc(size int, tag int, ptr voidptr) voidptr
 
-struct Channel_t { 
+struct Channel_t {
 	sfxinfo &Sfxinfo_t
-	origin &Mobj_t
-	handle int
-	pitch int
+	origin  &Mobj_t
+	handle  int
+	pitch   int
 }
-[weak]__global ( channels &Channel_t 
 
+[weak]
+__global (
+	channels &Channel_t
 )
 
-/*!*/[weak] __global ( sfxVolume  = int (8)
+//!
+[weak]
+__global (
+	sfxVolume = int(8)
 )
 
-/*!*/[weak] __global ( musicVolume  = int (8)
+//!
+[weak]
+__global (
+	musicVolume = int(8)
 )
 
-[weak]__global ( snd_SfxVolume int 
-
+[weak]
+__global (
+	snd_SfxVolume int
 )
 
-[weak]__global ( mus_paused bool 
-
+[weak]
+__global (
+	mus_paused bool
 )
 
-/*!*/[weak] __global ( mus_playing  = &Musicinfo_t ((voidptr(0)))
+//!
+[weak]
+__global (
+	mus_playing = &Musicinfo_t((voidptr(0)))
 )
 
-/*!*/[weak] __global ( snd_channels  = int (8)
+//!
+[weak]
+__global (
+	snd_channels = int(8)
 )
 
-[c:'S_Init']
-fn s_init(sfxvolume int, musicvolume int)  {
+[c: 'S_Init']
+fn s_init(sfxvolume int, musicvolume int) {
 	i := 0
 	if gameversion == GameVersion_t.exe_doom_1_666 {
 		if GameMission_t.doom == GameMission_t.doom {
 			i_setopldriverver(Opl_driver_ver_t.opl_doom1_1_666)
-		}
-		else {
+		} else {
 			i_setopldriverver(Opl_driver_ver_t.opl_doom2_1_666)
 		}
-	}
-	else {
+	} else {
 		i_setopldriverver(Opl_driver_ver_t.opl_doom_1_9)
 	}
 	i_precachesounds(S_sfx, Sfxenum_t.numsfx)
 	s_setsfxvolume(sfxVolume)
 	s_setmusicvolume(musicVolume)
 	channels = z_malloc(snd_channels * sizeof(Channel_t), 1, 0)
-	for i = 0 ; i < snd_channels ; i ++ {
-		channels [i] .sfxinfo = 0
+	for i = 0; i < snd_channels; i++ {
+		channels[i].sfxinfo = 0
 	}
 	mus_paused = 0
-	for i = 1 ; i < Sfxenum_t.numsfx ; i ++ {
-		S_sfx [i] .lumpnum = -1
-		S_sfx [i] .usefulness = -1
+	for i = 1; i < Sfxenum_t.numsfx; i++ {
+		S_sfx[i].lumpnum = -1
+		S_sfx[i].usefulness = -1
 	}
 	if snd_pitchshift == -1 {
 		snd_pitchshift = 0
@@ -674,107 +725,100 @@ fn s_init(sfxvolume int, musicvolume int)  {
 	i_atexit(s_shutdown, true)
 }
 
-[c:'S_Shutdown']
-fn s_shutdown()  {
+[c: 'S_Shutdown']
+fn s_shutdown() {
 	i_shutdownsound()
 	i_shutdownmusic()
 }
 
-[c:'S_StopChannel']
-fn s_stopchannel(cnum int)  {
+[c: 'S_StopChannel']
+fn s_stopchannel(cnum int) {
 	i := 0
 	c := &Channel_t(0)
-	c = &channels [cnum] 
+	c = &channels[cnum]
 	if c.sfxinfo {
 		if i_soundisplaying(c.handle) {
 			i_stopsound(c.handle)
 		}
-		for i = 0 ; i < snd_channels ; i ++ {
-			if cnum != i && c.sfxinfo == channels [i] .sfxinfo {
+		for i = 0; i < snd_channels; i++ {
+			if cnum != i && c.sfxinfo == channels[i].sfxinfo {
 				break
-				
 			}
 		}
-		c.sfxinfo.usefulness --
+		c.sfxinfo.usefulness--
 		c.sfxinfo = (voidptr(0))
 		c.origin = (voidptr(0))
 	}
 }
 
-[c:'S_Start']
-fn s_start()  {
+[c: 'S_Start']
+fn s_start() {
 	cnum := 0
 	mnum := 0
-	for cnum = 0 ; cnum < snd_channels ; cnum ++ {
-		if channels [cnum] .sfxinfo {
+	for cnum = 0; cnum < snd_channels; cnum++ {
+		if channels[cnum].sfxinfo {
 			s_stopchannel(cnum)
 		}
 	}
 	mus_paused = 0
 	if gamemode == GameMode_t.commercial {
 		mnum = Musicenum_t.mus_runnin + gamemap - 1
-	}
-	else {
-		spmus := [Musicenum_t.mus_e3m4, Musicenum_t.mus_e3m2, Musicenum_t.mus_e3m3, Musicenum_t.mus_e1m5, Musicenum_t.mus_e2m7, Musicenum_t.mus_e2m4, Musicenum_t.mus_e2m6, Musicenum_t.mus_e2m5, Musicenum_t.mus_e1m9]!
-		
+	} else {
+		spmus := [Musicenum_t.mus_e3m4, Musicenum_t.mus_e3m2, Musicenum_t.mus_e3m3,
+			Musicenum_t.mus_e1m5, Musicenum_t.mus_e2m7, Musicenum_t.mus_e2m4, Musicenum_t.mus_e2m6,
+			Musicenum_t.mus_e2m5, Musicenum_t.mus_e1m9]!
+
 		if gameepisode < 4 {
 			mnum = Musicenum_t.mus_e1m1 + (gameepisode - 1) * 9 + gamemap - 1
-		}
-		else {
-			mnum = spmus [gamemap - 1] 
+		} else {
+			mnum = spmus[gamemap - 1]
 		}
 	}
 	s_changemusic(mnum, true)
 }
 
-[c:'S_StopSound']
-fn s_stopsound(origin &Mobj_t)  {
+[c: 'S_StopSound']
+fn s_stopsound(origin &Mobj_t) {
 	cnum := 0
-	for cnum = 0 ; cnum < snd_channels ; cnum ++ {
-		if channels [cnum] .sfxinfo && channels [cnum] .origin == origin {
+	for cnum = 0; cnum < snd_channels; cnum++ {
+		if channels[cnum].sfxinfo && channels[cnum].origin == origin {
 			s_stopchannel(cnum)
 			break
-			
 		}
 	}
 }
 
-[c:'S_GetChannel']
+[c: 'S_GetChannel']
 fn s_getchannel(origin &Mobj_t, sfxinfo &Sfxinfo_t) int {
 	cnum := 0
 	c := &Channel_t(0)
-	for cnum = 0 ; cnum < snd_channels ; cnum ++ {
-		if !channels [cnum] .sfxinfo {
+	for cnum = 0; cnum < snd_channels; cnum++ {
+		if !channels[cnum].sfxinfo {
 			break
-			
-		}
-		else if origin && channels [cnum] .origin == origin {
+		} else if origin && channels[cnum].origin == origin {
 			s_stopchannel(cnum)
 			break
-			
 		}
 	}
 	if cnum == snd_channels {
-		for cnum = 0 ; cnum < snd_channels ; cnum ++ {
-			if channels [cnum] .sfxinfo.priority >= sfxinfo.priority {
+		for cnum = 0; cnum < snd_channels; cnum++ {
+			if channels[cnum].sfxinfo.priority >= sfxinfo.priority {
 				break
-				
 			}
 		}
 		if cnum == snd_channels {
 			return -1
-		}
-		else {
+		} else {
 			s_stopchannel(cnum)
 		}
 	}
-	c = &channels [cnum] 
+	c = &channels[cnum]
 	c.sfxinfo = sfxinfo
 	c.origin = origin
 	return cnum
 }
 
-[c:'S_AdjustSoundParams']
+[c: 'S_AdjustSoundParams']
 fn s_adjustsoundparams(listener &Mobj_t, source &Mobj_t, vol &int, sep &int) int {
 	approx_dist := 0
 	adx := 0
@@ -782,47 +826,43 @@ fn s_adjustsoundparams(listener &Mobj_t, source &Mobj_t, vol &int, sep &int) int
 	angle := u32(0)
 	adx = C.abs(listener.x - source.x)
 	ady = C.abs(listener.y - source.y)
-	approx_dist = adx + ady - ((if adx < ady{ adx } else {ady}) >> 1)
+	approx_dist = adx + ady - ((if adx < ady { adx } else { ady }) >> 1)
 	if gamemap != 8 && approx_dist > (1200 * (1 << 16)) {
 		return 0
 	}
 	angle = r_pointtoangle2(listener.x, listener.y, source.x, source.y)
 	if angle > listener.angle {
 		angle = angle - listener.angle
-	}
-	else {
+	} else {
 		angle = angle + (4294967295 - listener.angle)
 	}
 	angle >>= 19
-	*sep = 128 - (fixedmul((96 * (1 << 16)), finesine [angle] ) >> 16)
+	*sep = 128 - (fixedmul((96 * (1 << 16)), finesine[angle]) >> 16)
 	if approx_dist < (200 * (1 << 16)) {
 		*vol = snd_SfxVolume
-	}
-	else if gamemap == 8 {
+	} else if gamemap == 8 {
 		if approx_dist > (1200 * (1 << 16)) {
 			approx_dist = (1200 * (1 << 16))
 		}
-		*vol = 15 + ((snd_SfxVolume - 15) * (((1200 * (1 << 16)) - approx_dist) >> 16)) / (((1200 * (1 << 16)) - (200 * (1 << 16))) >> 16)
-	}
-	else {
+		*vol = 15 +((snd_SfxVolume - 15) * (((1200 * (1 << 16)) - approx_dist) >> 16)) / (((1200 * (1 << 16)) - (200 * (1 << 16))) >> 16)
+	} else {
 		*vol = (snd_SfxVolume * (((1200 * (1 << 16)) - approx_dist) >> 16)) / (((1200 * (1 << 16)) - (200 * (1 << 16))) >> 16)
 	}
-	return (*vol > 0)
+	return *vol > 0
 }
 
-[c:'Clamp']
+[c: 'Clamp']
 fn clamp(x int) int {
 	if x < 0 {
 		return 0
-	}
-	else if x > 255 {
+	} else if x > 255 {
 		return 255
 	}
 	return x
 }
 
-[c:'S_StartSound']
-fn s_startsound(origin_p voidptr, sfx_id int)  {
+[c: 'S_StartSound']
+fn s_startsound(origin_p voidptr, sfx_id int) {
 	sfx := &Sfxinfo_t(0)
 	origin := &Mobj_t(0)
 	rc := 0
@@ -835,70 +875,68 @@ fn s_startsound(origin_p voidptr, sfx_id int)  {
 	if sfx_id < 1 || sfx_id > Sfxenum_t.numsfx {
 		i_error(c'Bad sfx #: %d', sfx_id)
 	}
-	sfx = &S_sfx [sfx_id] 
+	sfx = &S_sfx[sfx_id]
 	pitch = 127
 	if sfx.link {
 		volume += sfx.volume
 		pitch = sfx.pitch
 		if volume < 1 {
-			return 
+			return
 		}
 		if volume > snd_SfxVolume {
 			volume = snd_SfxVolume
 		}
 	}
-	if origin && origin != players [consoleplayer] .mo {
-		rc = s_adjustsoundparams(players [consoleplayer] .mo, origin, &volume, &sep)
-		if origin.x == players [consoleplayer] .mo.x && origin.y == players [consoleplayer] .mo.y {
+	if origin && origin != players[consoleplayer].mo {
+		rc = s_adjustsoundparams(players[consoleplayer].mo, origin, &volume, &sep)
+		if origin.x == players[consoleplayer].mo.x && origin.y == players[consoleplayer].mo.y {
 			sep = 128
 		}
 		if !rc {
-			return 
+			return
 		}
-	}
-	else {
+	} else {
 		sep = 128
 	}
 	if sfx_id >= Sfxenum_t.sfx_sawup && sfx_id <= Sfxenum_t.sfx_sawhit {
 		pitch += 8 - (m_random() & 15)
-	}
-	else if sfx_id != Sfxenum_t.sfx_itemup && sfx_id != Sfxenum_t.sfx_tink {
+	} else if sfx_id != Sfxenum_t.sfx_itemup && sfx_id != Sfxenum_t.sfx_tink {
 		pitch += 16 - (m_random() & 31)
 	}
 	pitch = clamp(pitch)
 	s_stopsound(origin)
 	cnum = s_getchannel(origin, sfx)
 	if cnum < 0 {
-		return 
+		return
 	}
-	if sfx.usefulness ++ < 0 {
+	if sfx.usefulness++ < 0 {
 		sfx.usefulness = 1
 	}
 	if sfx.lumpnum < 0 {
 		sfx.lumpnum = i_getsfxlumpnum(sfx)
 	}
-	channels [cnum] .pitch = pitch
-	channels [cnum] .handle = i_startsound(sfx, cnum, volume, sep, channels [cnum] .pitch)
+	channels[cnum].pitch = pitch
+	channels[cnum].handle = i_startsound(sfx, cnum, volume, sep, channels[cnum].pitch)
 }
 
-[c:'S_PauseSound']
-fn s_pausesound()  {
+[c: 'S_PauseSound']
+fn s_pausesound() {
 	if mus_playing && !mus_paused {
 		i_pausesong()
 		mus_paused = true
 	}
 }
 
-[c:'S_ResumeSound']
-fn s_resumesound()  {
+[c: 'S_ResumeSound']
+fn s_resumesound() {
 	if mus_playing && mus_paused {
 		i_resumesong()
 		mus_paused = false
 	}
 }
 
-[c:'S_UpdateSounds']
-fn s_updatesounds(listener &Mobj_t)  {
+[c: 'S_UpdateSounds']
+fn s_updatesounds(listener &Mobj_t) {
 	audible := 0
 	cnum := 0
 	volume := 0
@@ -906,8 +944,8 @@ fn s_updatesounds(listener &Mobj_t)  {
 	sfx := &Sfxinfo_t(0)
 	c := &Channel_t(0)
 	i_updatesound()
-	for cnum = 0 ; cnum < snd_channels ; cnum ++ {
-		c = &channels [cnum] 
+	for cnum = 0; cnum < snd_channels; cnum++ {
+		c = &channels[cnum]
 		sfx = c.sfxinfo
 		if c.sfxinfo {
 			if i_soundisplaying(c.handle) {
@@ -918,9 +956,7 @@ fn s_updatesounds(listener &Mobj_t)  {
 					if volume < 1 {
 						s_stopchannel(cnum)
 						continue
-						
-					}
-					else if volume > snd_SfxVolume {
+					} else if volume > snd_SfxVolume {
 						volume = snd_SfxVolume
 					}
 				}
@@ -928,56 +964,54 @@ fn s_updatesounds(listener &Mobj_t)  {
 					audible = s_adjustsoundparams(listener, c.origin, &volume, &sep)
 					if !audible {
 						s_stopchannel(cnum)
-					}
-					else {
+					} else {
 						i_updatesoundparams(c.handle, volume, sep)
 					}
 				}
-			}
-			else {
+			} else {
 				s_stopchannel(cnum)
 			}
 		}
 	}
 }
 
-[c:'S_SetMusicVolume']
-fn s_setmusicvolume(volume int)  {
+[c: 'S_SetMusicVolume']
+fn s_setmusicvolume(volume int) {
 	if volume < 0 || volume > 127 {
 		i_error(c'Attempt to set music volume at %d', volume)
 	}
 	i_setmusicvolume(volume)
 }
 
-[c:'S_SetSfxVolume']
-fn s_setsfxvolume(volume int)  {
+[c: 'S_SetSfxVolume']
+fn s_setsfxvolume(volume int) {
 	if volume < 0 || volume > 127 {
 		i_error(c'Attempt to set sfx volume at %d', volume)
 	}
 	snd_SfxVolume = volume
 }
 
-[c:'S_StartMusic']
-fn s_startmusic(m_id int)  {
+[c: 'S_StartMusic']
+fn s_startmusic(m_id int) {
 	s_changemusic(m_id, false)
 }
 
-[c:'S_ChangeMusic']
-fn s_changemusic(musicnum int, looping int)  {
+[c: 'S_ChangeMusic']
+fn s_changemusic(musicnum int, looping int) {
 	music := &Musicinfo_t(0)
 	namebuf := [9]i8{}
 	handle := &voidptr(0)
-	if musicnum == Musicenum_t.mus_intro && (snd_musicdevice == Snddevice_t.snddevice_adlib || snd_musicdevice == Snddevice_t.snddevice_sb) && w_checknumforname(c'D_INTROA') >= 0 {
+	if musicnum == Musicenum_t.mus_intro && (snd_musicdevice == Snddevice_t.snddevice_adlib
+		|| snd_musicdevice == Snddevice_t.snddevice_sb) && w_checknumforname(c'D_INTROA') >= 0 {
 		musicnum = Musicenum_t.mus_introa
 	}
 	if musicnum <= Musicenum_t.mus_none || musicnum >= Musicenum_t.nummusic {
 		i_error(c'Bad music number %d', musicnum)
-	}
-	else {
-		music = &S_music [musicnum] 
+	} else {
+		music = &S_music[musicnum]
 	}
 	if mus_playing == music {
-		return 
+		return
 	}
 	s_stopmusic()
 	if !music.lumpnum {
@@ -991,13 +1025,13 @@ fn s_changemusic(musicnum int, looping int)  {
 	mus_playing = music
 }
 
-[c:'S_MusicPlaying']
+[c: 'S_MusicPlaying']
 fn s_musicplaying() bool {
 	return i_musicisplaying()
 }
 
-[c:'S_StopMusic']
-fn s_stopmusic()  {
+[c: 'S_StopMusic']
+fn s_stopmusic() {
 	if mus_playing {
 		if mus_paused {
 			i_resumesong()
@@ -1009,4 +1043,3 @@ fn s_stopmusic()  {
 		mus_playing = (voidptr(0))
 	}
 }
-

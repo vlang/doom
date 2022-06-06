@@ -1,22 +1,22 @@
 [translated]
 module main
 
-
 [typedef]
 struct C.FILE {}
 
-
 // vstart
 
-struct Lldiv_t { 
+struct Lldiv_t {
 	quot i64
-	rem i64
+	rem  i64
 }
-fn system( &i8) int
+
+fn system(&i8) int
 
 type Byte = u8
 type Pixel_t = u8
 type Dpixel_t = i16
+
 enum GameMission_t {
 	doom
 	doom2
@@ -63,7 +63,9 @@ enum GameVariant_t {
 }
 
 enum Skill_t {
-	sk_noitems = -1	sk_baby = 0	sk_easy
+	sk_noitems = -1
+	sk_baby = 0
+	sk_easy
 	sk_medium
 	sk_hard
 	sk_nightmare
@@ -133,18 +135,22 @@ enum Powertype_t {
 }
 
 enum Powerduration_t {
-	invulntics = 30 * 35	invistics = 60 * 35	infratics = 120 * 35	irontics = 60 * 35}
+	invulntics = 30 * 35
+	invistics = 60 * 35
+	infratics = 120 * 35
+	irontics = 60 * 35
+}
 
-[c:'D_ProcessEvents']
-fn d_processevents() 
+[c: 'D_ProcessEvents']
+fn d_processevents()
 
-[c:'D_DoAdvanceDemo']
-fn d_doadvancedemo() 
+[c: 'D_DoAdvanceDemo']
+fn d_doadvancedemo()
 
-[c:'M_CheckParm']
+[c: 'M_CheckParm']
 fn m_checkparm(check &i8) int
 
-[c:'M_ParmExists']
+[c: 'M_ParmExists']
 fn m_parmexists(check &i8) bool
 
 enum Evtype_t {
@@ -155,7 +161,7 @@ enum Evtype_t {
 	ev_quit
 }
 
-struct Event_t { 
+struct Event_t {
 	type_ Evtype_t
 	data1 int
 	data2 int
@@ -163,147 +169,182 @@ struct Event_t {
 	data4 int
 	data5 int
 }
+
 enum Buttoncode_t {
-	bt_attack = 1	bt_use = 2	bt_special = 128	bt_specialmask = 3	bt_change = 4	bt_weaponmask = 8 + 16 + 32	bt_weaponshift = 3	bts_pause = 1	bts_savegame = 2	bts_savemask = 4 + 8 + 16	bts_saveshift = 2}
+	bt_attack = 1
+	bt_use = 2
+	bt_special = 128
+	bt_specialmask = 3
+	bt_change = 4
+	bt_weaponmask = 8 + 16 + 32
+	bt_weaponshift = 3
+	bts_pause = 1
+	bts_savegame = 2
+	bts_savemask = 4 + 8 + 16
+	bts_saveshift = 2
+}
 
 enum Buttoncode2_t {
-	bt2_lookup = 1	bt2_lookdown = 2	bt2_centerview = 4	bt2_invuse = 8	bt2_invdrop = 16	bt2_jump = 32	bt2_health = 128}
+	bt2_lookup = 1
+	bt2_lookdown = 2
+	bt2_centerview = 4
+	bt2_invuse = 8
+	bt2_invdrop = 16
+	bt2_jump = 32
+	bt2_health = 128
+}
 
-[c:'M_Ticker']
-fn m_ticker() 
+[c: 'M_Ticker']
+fn m_ticker()
 
-[c:'M_StringCopy']
+[c: 'M_StringCopy']
 fn m_stringcopy(dest &i8, src &i8, dest_size usize) bool
 
-struct Ticcmd_t { 
+struct Ticcmd_t {
 	forwardmove i8
-	sidemove i8
-	angleturn i16
-	chatchar u8
-	buttons u8
+	sidemove    i8
+	angleturn   i16
+	chatchar    u8
+	buttons     u8
 	consistancy u8
-	buttons2 u8
-	inventory int
-	lookfly u8
-	arti u8
+	buttons2    u8
+	inventory   int
+	lookfly     u8
+	arti        u8
 }
+
 type Atexit_func_t = fn ()
+
 type Grabmouse_callback_t = fn () bool
-[c:'G_CheckDemoStatus']
+
+[c: 'G_CheckDemoStatus']
 fn g_checkdemostatus() bool
 
-[c:'G_BuildTiccmd']
-fn g_buildticcmd(cmd &Ticcmd_t, maketic int) 
+[c: 'G_BuildTiccmd']
+fn g_buildticcmd(cmd &Ticcmd_t, maketic int)
 
-[c:'G_Ticker']
-fn g_ticker() 
-
+[c: 'G_Ticker']
+fn g_ticker()
 
 const ( // empty enum
-	ml_label = 0
-	ml_things = 1
+	ml_label    = 0
+	ml_things   = 1
 	ml_linedefs = 2
 	ml_sidedefs = 3
 	ml_vertexes = 4
-	ml_segs = 5
+	ml_segs     = 5
 	ml_ssectors = 6
-	ml_nodes = 7
-	ml_sectors = 8
-	ml_reject = 9
+	ml_nodes    = 7
+	ml_sectors  = 8
+	ml_reject   = 9
 	ml_blockmap = 10
 )
 
-struct Mapvertex_t { 
+struct Mapvertex_t {
 	x i16
 	y i16
 }
-struct Mapsidedef_t { 
+
+struct Mapsidedef_t {
 	textureoffset i16
-	rowoffset i16
-	toptexture [8]i8
+	rowoffset     i16
+	toptexture    [8]i8
 	bottomtexture [8]i8
-	midtexture [8]i8
-	sector i16
+	midtexture    [8]i8
+	sector        i16
 }
-struct Maplinedef_t { 
-	v1 i16
-	v2 i16
-	flags i16
+
+struct Maplinedef_t {
+	v1      i16
+	v2      i16
+	flags   i16
 	special i16
-	tag i16
+	tag     i16
 	sidenum [2]i16
 }
-struct Mapsector_t { 
-	floorheight i16
+
+struct Mapsector_t {
+	floorheight   i16
 	ceilingheight i16
-	floorpic [8]i8
-	ceilingpic [8]i8
-	lightlevel i16
-	special i16
-	tag i16
+	floorpic      [8]i8
+	ceilingpic    [8]i8
+	lightlevel    i16
+	special       i16
+	tag           i16
 }
-struct Mapsubsector_t { 
-	numsegs i16
+
+struct Mapsubsector_t {
+	numsegs  i16
 	firstseg i16
 }
-struct Mapseg_t { 
-	v1 i16
-	v2 i16
-	angle i16
+
+struct Mapseg_t {
+	v1      i16
+	v2      i16
+	angle   i16
 	linedef i16
-	side i16
-	offset i16
+	side    i16
+	offset  i16
 }
-struct Mapnode_t { 
-	x i16
-	y i16
-	dx i16
-	dy i16
-	bbox [2][4]i16
+
+struct Mapnode_t {
+	x        i16
+	y        i16
+	dx       i16
+	dy       i16
+	bbox     [2][4]i16
 	children [2]u16
 }
-struct Mapthing_t { 
-	x i16
-	y i16
-	angle i16
-	type_ i16
+
+struct Mapthing_t {
+	x       i16
+	y       i16
+	angle   i16
+	type_   i16
 	options i16
 }
+
 type Sha1_context_t = Sha1_context_s
 type Sha1_digest_t = [20]u8
-struct Sha1_context_s { 
-	h0 u32
-	h1 u32
-	h2 u32
-	h3 u32
-	h4 u32
+
+struct Sha1_context_s {
+	h0      u32
+	h1      u32
+	h2      u32
+	h3      u32
+	h4      u32
 	nblocks u32
-	buf [64]u8
-	count int
+	buf     [64]u8
+	count   int
 }
+
 type Net_module_t = Net_module_s
 type Net_packet_t = Net_packet_s
 type Net_addr_t = Net_addr_s
-struct Net_packet_s { 
-	data &u8
-	len usize
+
+struct Net_packet_s {
+	data    &u8
+	len     usize
 	alloced usize
-	pos u32
+	pos     u32
 }
-struct Net_module_s { 
-	InitClient fn () bool
-	InitServer fn () bool
-	SendPacket fn (&Net_addr_t, &Net_packet_t)
-	RecvPacket fn (&&Net_addr_t, &&Net_packet_t) bool
-	AddrToString fn (&Net_addr_t, &i8, int)
-	FreeAddress fn (&Net_addr_t)
+
+struct Net_module_s {
+	InitClient     fn () bool
+	InitServer     fn () bool
+	SendPacket     fn (&Net_addr_t, &Net_packet_t)
+	RecvPacket     fn (&&Net_addr_t, &&Net_packet_t) bool
+	AddrToString   fn (&Net_addr_t, &i8, int)
+	FreeAddress    fn (&Net_addr_t)
 	ResolveAddress fn (&i8) &Net_addr_t
 }
-struct Net_addr_s { 
-	module_ &Net_module_t
+
+struct Net_addr_s {
+	module_  &Net_module_t
 	refcount int
-	handle voidptr
+	handle   voidptr
 }
+
 enum Net_protocol_t {
 	net_protocol_chocolate_doom_0
 	net_num_protocols
@@ -345,110 +386,125 @@ enum Net_master_packet_type_t {
 	net_master_packet_type_nat_hole_punch_all
 }
 
-struct Net_connect_data_t { 
-	gamemode int
-	gamemission int
-	lowres_turn int
-	drone int
-	max_players int
-	is_freedoom int
-	wad_sha1sum Sha1_digest_t
-	deh_sha1sum Sha1_digest_t
+struct Net_connect_data_t {
+	gamemode     int
+	gamemission  int
+	lowres_turn  int
+	drone        int
+	max_players  int
+	is_freedoom  int
+	wad_sha1sum  Sha1_digest_t
+	deh_sha1sum  Sha1_digest_t
 	player_class int
 }
-struct Net_gamesettings_t { 
-	ticdup int
-	extratics int
-	deathmatch int
-	episode int
-	nomonsters int
-	fast_monsters int
+
+struct Net_gamesettings_t {
+	ticdup           int
+	extratics        int
+	deathmatch       int
+	episode          int
+	nomonsters       int
+	fast_monsters    int
 	respawn_monsters int
-	map_ int
-	skill int
-	gameversion int
-	lowres_turn int
-	new_sync int
-	timelimit int
-	loadgame int
-	random int
-	num_players int
-	consoleplayer int
-	player_classes [8]int
+	map_             int
+	skill            int
+	gameversion      int
+	lowres_turn      int
+	new_sync         int
+	timelimit        int
+	loadgame         int
+	random           int
+	num_players      int
+	consoleplayer    int
+	player_classes   [8]int
 }
-struct Net_ticdiff_t { 
+
+struct Net_ticdiff_t {
 	diff u32
-	cmd Ticcmd_t
+	cmd  Ticcmd_t
 }
-struct Net_full_ticcmd_t { 
-	latency int
-	seq u32
+
+struct Net_full_ticcmd_t {
+	latency      int
+	seq          u32
 	playeringame [8]bool
-	cmds [8]Net_ticdiff_t
+	cmds         [8]Net_ticdiff_t
 }
-struct Net_querydata_t { 
-	version &i8
+
+struct Net_querydata_t {
+	version      &i8
 	server_state int
-	num_players int
-	max_players int
-	gamemode int
-	gamemission int
-	description &i8
-	protocol Net_protocol_t
+	num_players  int
+	max_players  int
+	gamemode     int
+	gamemission  int
+	description  &i8
+	protocol     Net_protocol_t
 }
-struct Net_waitdata_t { 
-	num_players int
-	num_drones int
+
+struct Net_waitdata_t {
+	num_players   int
+	num_drones    int
 	ready_players int
-	max_players int
+	max_players   int
 	is_controller int
 	consoleplayer int
-	player_names [8][30]i8
-	player_addrs [8][30]i8
-	wad_sha1sum Sha1_digest_t
-	deh_sha1sum Sha1_digest_t
-	is_freedoom int
+	player_names  [8][30]i8
+	player_addrs  [8][30]i8
+	wad_sha1sum   Sha1_digest_t
+	deh_sha1sum   Sha1_digest_t
+	is_freedoom   int
 }
-type Netgame_startup_callback_t = fn (int, int) bool
-struct Loop_interface_t { 
-	ProcessEvents fn ()
-	BuildTiccmd fn (&Ticcmd_t, int)
-	RunTic fn (&Ticcmd_t, &bool)
-	RunMenu fn ()
-}
-[c:'D_RegisterLoopCallbacks']
-fn d_registerloopcallbacks(i &Loop_interface_t) 
 
-[c:'D_InitNetGame']
+type Netgame_startup_callback_t = fn (int, int) bool
+
+struct Loop_interface_t {
+	ProcessEvents fn ()
+	BuildTiccmd   fn (&Ticcmd_t, int)
+	RunTic        fn (&Ticcmd_t, &bool)
+	RunMenu       fn ()
+}
+
+[c: 'D_RegisterLoopCallbacks']
+fn d_registerloopcallbacks(i &Loop_interface_t)
+
+[c: 'D_InitNetGame']
 fn d_initnetgame(connect_data &Net_connect_data_t) bool
 
-[c:'D_StartNetGame']
-fn d_startnetgame(settings &Net_gamesettings_t, callback Netgame_startup_callback_t) 
+[c: 'D_StartNetGame']
+fn d_startnetgame(settings &Net_gamesettings_t, callback Netgame_startup_callback_t)
 
-struct Weaponinfo_t { 
-	ammo Ammotype_t
-	upstate int
-	downstate int
+struct Weaponinfo_t {
+	ammo       Ammotype_t
+	upstate    int
+	downstate  int
 	readystate int
-	atkstate int
+	atkstate   int
 	flashstate int
 }
+
 type Fixed_t = int
 type Angle_t = u32
 type Actionf_v = fn ()
+
 type Actionf_p1 = fn (voidptr)
+
 type Actionf_p2 = fn (voidptr, voidptr)
-union Actionf_t { 
-	acv Actionf_v
+
+union Actionf_t {
+	acv  Actionf_v
 	acp1 Actionf_p1
 	acp2 Actionf_p2
 }
+
 type Think_t = Actionf_t
-struct Thinker_t { 
-	prev &Thinker_t
-	next &Thinker_t
+
+struct Thinker_t {
+	prev     &Thinker_t
+	next     &Thinker_t
 	function Think_t
 }
+
 enum Spritenum_t {
 	spr_troo
 	spr_shtg
@@ -1562,15 +1618,16 @@ enum Statenum_t {
 	numstates
 }
 
-struct State_t { 
-	sprite Spritenum_t
-	frame int
-	tics int
-	action Actionf_t
+struct State_t {
+	sprite    Spritenum_t
+	frame     int
+	tics      int
+	action    Actionf_t
 	nextstate Statenum_t
-	misc1 int
-	misc2 int
+	misc1     int
+	misc2     int
 }
+
 enum Mobjtype_t {
 	mt_player
 	mt_possessed
@@ -1712,83 +1769,114 @@ enum Mobjtype_t {
 	nummobjtypes
 }
 
-struct Mobjinfo_t { 
-	doomednum int
-	spawnstate int
-	spawnhealth int
-	seestate int
-	seesound int
+struct Mobjinfo_t {
+	doomednum    int
+	spawnstate   int
+	spawnhealth  int
+	seestate     int
+	seesound     int
 	reactiontime int
-	attacksound int
-	painstate int
-	painchance int
-	painsound int
-	meleestate int
+	attacksound  int
+	painstate    int
+	painchance   int
+	painsound    int
+	meleestate   int
 	missilestate int
-	deathstate int
-	xdeathstate int
-	deathsound int
-	speed int
-	radius int
-	height int
-	mass int
-	damage int
-	activesound int
-	flags int
-	raisestate int
+	deathstate   int
+	xdeathstate  int
+	deathsound   int
+	speed        int
+	radius       int
+	height       int
+	mass         int
+	damage       int
+	activesound  int
+	flags        int
+	raisestate   int
 }
+
 enum Psprnum_t {
 	ps_weapon
 	ps_flash
 	numpsprites
 }
 
-struct Pspdef_t { 
+struct Pspdef_t {
 	state &State_t
-	tics int
-	sx int
-	sy int
+	tics  int
+	sx    int
+	sy    int
 }
-enum Mobjflag_t {
-	mf_special = 1	mf_solid = 2	mf_shootable = 4	mf_nosector = 8	mf_noblockmap = 16	mf_ambush = 32	mf_justhit = 64	mf_justattacked = 128	mf_spawnceiling = 256	mf_nogravity = 512	mf_dropoff = 1024	mf_pickup = 2048	mf_noclip = 4096	mf_slide = 8192	mf_float = 16384	mf_teleport = 32768	mf_missile = 65536	mf_dropped = 131072	mf_shadow = 262144	mf_noblood = 524288	mf_corpse = 1048576	mf_infloat = 2097152	mf_countkill = 4194304	mf_countitem = 8388608	mf_skullfly = 16777216	mf_notdmatch = 33554432	mf_translation = 201326592	mf_transshift = 26}
 
-struct Mobj_t { 
-	thinker Thinker_t
-	x int
-	y int
-	z int
-	snext &Mobj_t
-	sprev &Mobj_t
-	angle Angle_t
-	sprite Spritenum_t
-	frame int
-	bnext &Mobj_t
-	bprev &Mobj_t
-	subsector &Subsector_t
-	floorz int
-	ceilingz int
-	radius int
-	height int
-	momx int
-	momy int
-	momz int
-	validcount int
-	type_ Mobjtype_t
-	info &Mobjinfo_t
-	tics int
-	state &State_t
-	flags int
-	health int
-	movedir int
-	movecount int
-	target &Mobj_t
-	reactiontime int
-	threshold int
-	player &Player_t
-	lastlook int
-	spawnpoint Mapthing_t
-	tracer &Mobj_t
+enum Mobjflag_t {
+	mf_special = 1
+	mf_solid = 2
+	mf_shootable = 4
+	mf_nosector = 8
+	mf_noblockmap = 16
+	mf_ambush = 32
+	mf_justhit = 64
+	mf_justattacked = 128
+	mf_spawnceiling = 256
+	mf_nogravity = 512
+	mf_dropoff = 1024
+	mf_pickup = 2048
+	mf_noclip = 4096
+	mf_slide = 8192
+	mf_float = 16384
+	mf_teleport = 32768
+	mf_missile = 65536
+	mf_dropped = 131072
+	mf_shadow = 262144
+	mf_noblood = 524288
+	mf_corpse = 1048576
+	mf_infloat = 2097152
+	mf_countkill = 4194304
+	mf_countitem = 8388608
+	mf_skullfly = 16777216
+	mf_notdmatch = 33554432
+	mf_translation = 201326592
+	mf_transshift = 26
 }
+
+struct Mobj_t {
+	thinker      Thinker_t
+	x            int
+	y            int
+	z            int
+	snext        &Mobj_t
+	sprev        &Mobj_t
+	angle        Angle_t
+	sprite       Spritenum_t
+	frame        int
+	bnext        &Mobj_t
+	bprev        &Mobj_t
+	subsector    &Subsector_t
+	floorz       int
+	ceilingz     int
+	radius       int
+	height       int
+	momx         int
+	momy         int
+	momz         int
+	validcount   int
+	type_        Mobjtype_t
+	info         &Mobjinfo_t
+	tics         int
+	state        &State_t
+	flags        int
+	health       int
+	movedir      int
+	movecount    int
+	target       &Mobj_t
+	reactiontime int
+	threshold    int
+	player       &Player_t
+	lastlook     int
+	spawnpoint   Mapthing_t
+	tracer       &Mobj_t
+}
+
 enum Playerstate_t {
 	pst_live
 	pst_dead
@@ -1796,231 +1884,271 @@ enum Playerstate_t {
 }
 
 enum Cheat_t {
-	cf_noclip = 1	cf_godmode = 2	cf_nomomentum = 4}
+	cf_noclip = 1
+	cf_godmode = 2
+	cf_nomomentum = 4
+}
 
-struct Player_t { 
-	mo &Mobj_t
-	playerstate Playerstate_t
-	cmd Ticcmd_t
-	viewz int
-	viewheight int
+struct Player_t {
+	mo              &Mobj_t
+	playerstate     Playerstate_t
+	cmd             Ticcmd_t
+	viewz           int
+	viewheight      int
 	deltaviewheight int
-	bob int
-	health int
-	armorpoints int
-	armortype int
-	powers [6]int
-	cards [6]bool
-	backpack bool
-	frags [4]int
-	readyweapon Weapontype_t
-	pendingweapon Weapontype_t
-	weaponowned [9]int
-	ammo [4]int
-	maxammo [4]int
-	attackdown int
-	usedown int
-	cheats int
-	refire int
-	killcount int
-	itemcount int
-	secretcount int
-	message &i8
-	damagecount int
-	bonuscount int
-	attacker &Mobj_t
-	extralight int
-	fixedcolormap int
-	colormap int
-	psprites [2]Pspdef_t
-	didsecret bool
+	bob             int
+	health          int
+	armorpoints     int
+	armortype       int
+	powers          [6]int
+	cards           [6]bool
+	backpack        bool
+	frags           [4]int
+	readyweapon     Weapontype_t
+	pendingweapon   Weapontype_t
+	weaponowned     [9]int
+	ammo            [4]int
+	maxammo         [4]int
+	attackdown      int
+	usedown         int
+	cheats          int
+	refire          int
+	killcount       int
+	itemcount       int
+	secretcount     int
+	message         &i8
+	damagecount     int
+	bonuscount      int
+	attacker        &Mobj_t
+	extralight      int
+	fixedcolormap   int
+	colormap        int
+	psprites        [2]Pspdef_t
+	didsecret       bool
 }
-struct Wbplayerstruct_t { 
-	in_ bool
-	skills int
-	sitems int
+
+struct Wbplayerstruct_t {
+	in_     bool
+	skills  int
+	sitems  int
 	ssecret int
-	stime int
-	frags [4]int
-	score int
+	stime   int
+	frags   [4]int
+	score   int
 }
-struct Wbstartstruct_t { 
-	epsd int
+
+struct Wbstartstruct_t {
+	epsd      int
 	didsecret bool
-	last int
-	next int
-	maxkills int
-	maxitems int
+	last      int
+	next      int
+	maxkills  int
+	maxitems  int
 	maxsecret int
-	maxfrags int
-	partime int
-	pnum int
-	plyr [4]Wbplayerstruct_t
+	maxfrags  int
+	partime   int
+	pnum      int
+	plyr      [4]Wbplayerstruct_t
 }
-[weak]__global ( nomonsters bool 
 
+[weak]
+__global (
+	nomonsters bool
 )
 
-[weak]__global ( respawnparm bool 
-
+[weak]
+__global (
+	respawnparm bool
 )
 
-[weak]__global ( fastparm bool 
-
+[weak]
+__global (
+	fastparm bool
 )
 
-[weak]__global ( gamemode GameMode_t 
-
+[weak]
+__global (
+	gamemode GameMode_t
 )
 
-[weak]__global ( gamemission GameMission_t 
-
+[weak]
+__global (
+	gamemission GameMission_t
 )
 
-[weak]__global ( gameversion GameVersion_t 
-
+[weak]
+__global (
+	gameversion GameVersion_t
 )
 
-[weak]__global ( startskill Skill_t 
-
+[weak]
+__global (
+	startskill Skill_t
 )
 
-[weak]__global ( startepisode int 
-
+[weak]
+__global (
+	startepisode int
 )
 
-[weak]__global ( startmap int 
-
+[weak]
+__global (
+	startmap int
 )
 
-[weak]__global ( startloadgame int 
-
+[weak]
+__global (
+	startloadgame int
 )
 
-[weak]__global ( autostart bool 
-
+[weak]
+__global (
+	autostart bool
 )
 
-[weak]__global ( timelimit int 
-
+[weak]
+__global (
+	timelimit int
 )
 
-[weak]__global ( netgame bool 
-
+[weak]
+__global (
+	netgame bool
 )
 
-[weak]__global ( deathmatch int 
-
+[weak]
+__global (
+	deathmatch int
 )
 
-[weak]__global ( viewangleoffset int 
-
+[weak]
+__global (
+	viewangleoffset int
 )
 
-[weak]__global ( consoleplayer int 
-
+[weak]
+__global (
+	consoleplayer int
 )
 
-[weak]__global ( demoplayback bool 
-
+[weak]
+__global (
+	demoplayback bool
 )
 
-[weak]__global ( demorecording bool 
-
+[weak]
+__global (
+	demorecording bool
 )
 
-[weak]__global ( lowres_turn bool 
-
+[weak]
+__global (
+	lowres_turn bool
 )
 
-[c_extern]__global ( players [4]Player_t 
-
+[c_extern]
+__global (
+	players [4]Player_t
 )
 
-[c_extern]__global ( playeringame [4]bool 
-
+[c_extern]
+__global (
+	playeringame [4]bool
 )
 
-[weak]__global ( netcmds &Ticcmd_t 
-
+[weak]
+__global (
+	netcmds &Ticcmd_t
 )
 
-[c:'W_Checksum']
-fn w_checksum(digest &u8) 
+[c: 'W_Checksum']
+fn w_checksum(digest &u8)
 
 type Wad_file_t = Wad_file_s
-struct Wad_file_class_t { 
-	OpenFile fn (&i8) &Wad_file_t
+
+struct Wad_file_class_t {
+	OpenFile  fn (&i8) &Wad_file_t
 	CloseFile fn (&Wad_file_t)
-	Read fn (&Wad_file_t, u32, voidptr, usize) usize
+	Read      fn (&Wad_file_t, u32, voidptr, usize) usize
 }
-struct Wad_file_s { 
+
+struct Wad_file_s {
 	file_class &Wad_file_class_t
-	mapped &u8
-	length u32
-	path &i8
+	mapped     &u8
+	length     u32
+	path       &i8
 }
+
 type Lumpinfo_t = Lumpinfo_s
 type Lumpindex_t = int
-struct Lumpinfo_s { 
-	name [8]i8
+
+struct Lumpinfo_s {
+	name     [8]i8
 	wad_file &Wad_file_t
 	position int
-	size int
-	cache voidptr
-	next Lumpindex_t
+	size     int
+	cache    voidptr
+	next     Lumpindex_t
 }
-[c:'W_CheckNumForName']
+
+[c: 'W_CheckNumForName']
 fn w_checknumforname(name &i8) Lumpindex_t
 
-struct Patch_t { 
-	width i16
-	height i16
+struct Patch_t {
+	width      i16
+	height     i16
 	leftoffset i16
-	topoffset i16
-	columnofs [8]int
+	topoffset  i16
+	columnofs  [8]int
 }
-struct Post_t { 
+
+struct Post_t {
 	topdelta u8
-	length u8
+	length   u8
 }
+
 type Column_t = Post_t
-struct Vertex_t { 
+
+struct Vertex_t {
 	x int
 	y int
 }
-struct Degenmobj_t { 
+
+struct Degenmobj_t {
 	thinker Thinker_t
-	x int
-	y int
-	z int
+	x       int
+	y       int
+	z       int
 }
-struct Sector_t { 
-	floorheight int
-	ceilingheight int
-	floorpic i16
-	ceilingpic i16
-	lightlevel i16
-	special i16
-	tag i16
+
+struct Sector_t {
+	floorheight    int
+	ceilingheight  int
+	floorpic       i16
+	ceilingpic     i16
+	lightlevel     i16
+	special        i16
+	tag            i16
 	soundtraversed int
-	soundtarget &Mobj_t
-	blockbox [4]int
-	soundorg Degenmobj_t
-	validcount int
-	thinglist &Mobj_t
-	specialdata voidptr
-	linecount int
-	lines &&Line_t
+	soundtarget    &Mobj_t
+	blockbox       [4]int
+	soundorg       Degenmobj_t
+	validcount     int
+	thinglist      &Mobj_t
+	specialdata    voidptr
+	linecount      int
+	lines          &&Line_t
 }
-struct Side_t { 
+
+struct Side_t {
 	textureoffset int
-	rowoffset int
-	toptexture i16
+	rowoffset     int
+	toptexture    i16
 	bottomtexture i16
-	midtexture i16
-	sector &Sector_t
+	midtexture    i16
+	sector        &Sector_t
 }
+
 enum Slopetype_t {
 	st_horizontal
 	st_vertical
@@ -2028,149 +2156,161 @@ enum Slopetype_t {
 	st_negative
 }
 
-struct Line_t { 
-	v1 &Vertex_t
-	v2 &Vertex_t
-	dx int
-	dy int
-	flags i16
-	special i16
-	tag i16
-	sidenum [2]i16
-	bbox [4]int
-	slopetype Slopetype_t
+struct Line_t {
+	v1          &Vertex_t
+	v2          &Vertex_t
+	dx          int
+	dy          int
+	flags       i16
+	special     i16
+	tag         i16
+	sidenum     [2]i16
+	bbox        [4]int
+	slopetype   Slopetype_t
 	frontsector &Sector_t
-	backsector &Sector_t
-	validcount int
+	backsector  &Sector_t
+	validcount  int
 	specialdata voidptr
 }
-struct Subsector_t { 
-	sector &Sector_t
-	numlines i16
+
+struct Subsector_t {
+	sector    &Sector_t
+	numlines  i16
 	firstline i16
 }
-struct Seg_t { 
-	v1 &Vertex_t
-	v2 &Vertex_t
-	offset int
-	angle Angle_t
-	sidedef &Side_t
-	linedef &Line_t
+
+struct Seg_t {
+	v1          &Vertex_t
+	v2          &Vertex_t
+	offset      int
+	angle       Angle_t
+	sidedef     &Side_t
+	linedef     &Line_t
 	frontsector &Sector_t
-	backsector &Sector_t
+	backsector  &Sector_t
 }
-struct Node_t { 
-	x int
-	y int
-	dx int
-	dy int
-	bbox [2][4]int
+
+struct Node_t {
+	x        int
+	y        int
+	dx       int
+	dy       int
+	bbox     [2][4]int
 	children [2]u16
 }
+
 type Lighttable_t = u8
-struct Drawseg_t { 
-	curline &Seg_t
-	x1 int
-	x2 int
-	scale1 int
-	scale2 int
-	scalestep int
-	silhouette int
-	bsilheight int
-	tsilheight int
-	sprtopclip &i16
-	sprbottomclip &i16
+
+struct Drawseg_t {
+	curline          &Seg_t
+	x1               int
+	x2               int
+	scale1           int
+	scale2           int
+	scalestep        int
+	silhouette       int
+	bsilheight       int
+	tsilheight       int
+	sprtopclip       &i16
+	sprbottomclip    &i16
 	maskedtexturecol &i16
 }
-struct Vissprite_t { 
-	prev &Vissprite_t
-	next &Vissprite_t
-	x1 int
-	x2 int
-	gx int
-	gy int
-	gz int
-	gzt int
-	startfrac int
-	scale int
-	xiscale int
+
+struct Vissprite_t {
+	prev       &Vissprite_t
+	next       &Vissprite_t
+	x1         int
+	x2         int
+	gx         int
+	gy         int
+	gz         int
+	gzt        int
+	startfrac  int
+	scale      int
+	xiscale    int
 	texturemid int
-	patch int
-	colormap &Lighttable_t
-	mobjflags int
+	patch      int
+	colormap   &Lighttable_t
+	mobjflags  int
 }
-struct Spriteframe_t { 
+
+struct Spriteframe_t {
 	rotate bool
-	lump [8]i16
-	flip [8]u8
+	lump   [8]i16
+	flip   [8]u8
 }
-struct Spritedef_t { 
-	numframes int
+
+struct Spritedef_t {
+	numframes    int
 	spriteframes &Spriteframe_t
 }
-struct Visplane_t { 
-	height int
-	picnum int
+
+struct Visplane_t {
+	height     int
+	picnum     int
 	lightlevel int
-	minx int
-	maxx int
-	pad1 u8
-	top [320]u8
-	pad2 u8
-	pad3 u8
-	bottom [320]u8
-	pad4 u8
+	minx       int
+	maxx       int
+	pad1       u8
+	top        [320]u8
+	pad2       u8
+	pad3       u8
+	bottom     [320]u8
+	pad4       u8
 }
-[c:'DEH_String']
+
+[c: 'DEH_String']
 fn deh_string(s &i8) &i8
 
+[c: 'DEH_printf']
 [c2v_variadic]
-[c:'DEH_printf']
-fn deh_printf(fmt &i8) 
+fn deh_printf(fmt ...&i8)
 
-[c:'DEH_Checksum']
-fn deh_checksum(digest &u8) 
+[c: 'DEH_Checksum']
+fn deh_checksum(digest &u8)
 
-[c:'PlayerQuitGame']
-fn playerquitgame(player &Player_t)  {
+[c: 'PlayerQuitGame']
+fn playerquitgame(player &Player_t) {
 	exitmsg := [80]i8{}
 	player_num := u32(0)
 	player_num = player - players
 	m_stringcopy(exitmsg, deh_string(c'Player 1 left the game'), sizeof(exitmsg))
-	exitmsg [7]  += player_num
-	playeringame [player_num]  = false
-	players [consoleplayer] .message = exitmsg
+	exitmsg[7] += player_num
+	playeringame[player_num] = false
+	players[consoleplayer].message = exitmsg
 	if demorecording {
 		g_checkdemostatus()
 	}
 }
 
-[weak]__global ( advancedemo bool 
-
+[weak]
+__global (
+	advancedemo bool
 )
 
-[c:'RunTic']
-fn runtic(cmds &Ticcmd_t, ingame &bool)  {
+[c: 'RunTic']
+fn runtic(cmds &Ticcmd_t, ingame &bool) {
 	i := u32(0)
-	for i = 0 ; i < 4 ; i ++ {
-		if !demoplayback && playeringame [i]  && !ingame [i]  {
-			playerquitgame(&players [i] )
+	for i = 0; i < 4; i++ {
+		if !demoplayback && playeringame[i] && !ingame[i] {
+			playerquitgame(&players[i])
 		}
 	}
 	netcmds = cmds
 	if advancedemo {
-	d_doadvancedemo()
+		d_doadvancedemo()
 	}
 	g_ticker()
 }
 
-/*!*/[weak] __global ( doom_loop_interface  = Loop_interface_t {
-d_processevents, g_buildticcmd, runtic, m_ticker}
-
+//!
+[weak]
+__global (
+	doom_loop_interface = Loop_interface_t{d_processevents, g_buildticcmd, runtic, m_ticker}
 )
 
-[c:'LoadGameSettings']
-fn loadgamesettings(settings &Net_gamesettings_t)  {
+[c: 'LoadGameSettings']
+fn loadgamesettings(settings &Net_gamesettings_t) {
 	i := u32(0)
 	deathmatch = settings.deathmatch
 	startepisode = settings.episode
@@ -2186,13 +2326,13 @@ fn loadgamesettings(settings &Net_gamesettings_t)  {
 	if lowres_turn {
 		C.printf(c'NOTE: Turning resolution is reduced; this is probably because there is a client recording a Vanilla demo.\n')
 	}
-	for i = 0 ; i < 4 ; i ++ {
-		playeringame [i]  = i < settings.num_players
+	for i = 0; i < 4; i++ {
+		playeringame[i] = i < settings.num_players
 	}
 }
 
-[c:'SaveGameSettings']
-fn savegamesettings(settings &Net_gamesettings_t)  {
+[c: 'SaveGameSettings']
+fn savegamesettings(settings &Net_gamesettings_t) {
 	settings.deathmatch = deathmatch
 	settings.episode = startepisode
 	settings.map_ = startmap
@@ -2203,11 +2343,12 @@ fn savegamesettings(settings &Net_gamesettings_t)  {
 	settings.fast_monsters = fastparm
 	settings.respawn_monsters = respawnparm
 	settings.timelimit = timelimit
-	settings.lowres_turn = (m_parmexists(c'-record') && !m_parmexists(c'-longtics')) || m_parmexists(c'-shorttics')
+	settings.lowres_turn = (m_parmexists(c'-record') && !m_parmexists(c'-longtics'))
+		|| m_parmexists(c'-shorttics')
 }
 
-[c:'InitConnectData']
-fn initconnectdata(connect_data &Net_connect_data_t)  {
+[c: 'InitConnectData']
+fn initconnectdata(connect_data &Net_connect_data_t) {
 	shorttics := false
 	connect_data.max_players = 4
 	connect_data.drone = false
@@ -2222,14 +2363,15 @@ fn initconnectdata(connect_data &Net_connect_data_t)  {
 	connect_data.gamemode = gamemode
 	connect_data.gamemission = gamemission
 	shorttics = m_parmexists(c'-shorttics')
-	connect_data.lowres_turn = (m_parmexists(c'-record') && !m_parmexists(c'-longtics')) || shorttics
+	connect_data.lowres_turn = (m_parmexists(c'-record') && !m_parmexists(c'-longtics'))
+		|| shorttics
 	w_checksum(connect_data.wad_sha1sum)
 	deh_checksum(connect_data.deh_sha1sum)
 	connect_data.is_freedoom = w_checknumforname(c'FREEDOOM') >= 0
 }
 
-[c:'D_ConnectNetGame']
-fn d_connectnetgame()  {
+[c: 'D_ConnectNetGame']
+fn d_connectnetgame() {
 	connect_data := Net_connect_data_t{}
 	initconnectdata(&connect_data)
 	netgame = d_initnetgame(&connect_data)
@@ -2238,8 +2380,8 @@ fn d_connectnetgame()  {
 	}
 }
 
-[c:'D_CheckNetGame']
-fn d_checknetgame()  {
+[c: 'D_CheckNetGame']
+fn d_checknetgame() {
 	settings := Net_gamesettings_t{}
 	if netgame {
 		autostart = true
@@ -2248,19 +2390,19 @@ fn d_checknetgame()  {
 	savegamesettings(&settings)
 	d_startnetgame(&settings, (voidptr(0)))
 	loadgamesettings(&settings)
-	deh_printf(c'startskill %i  deathmatch: %i  startmap: %i  startepisode: %i\n', startskill, deathmatch, startmap, startepisode)
-	deh_printf(c'player %i of %i (%i nodes)\n', consoleplayer + 1, settings.num_players, settings.num_players)
+	deh_printf(c'startskill %i  deathmatch: %i  startmap: %i  startepisode: %i\n', startskill,
+		deathmatch, startmap, startepisode)
+	deh_printf(c'player %i of %i (%i nodes)\n', consoleplayer + 1, settings.num_players,
+		settings.num_players)
 	if timelimit > 0 && deathmatch {
 		if timelimit == 20 && m_checkparm(c'-avg') {
 			deh_printf(c'Austin Virtual Gaming: Levels will end after 20 minutes\n')
-		}
-		else {
+		} else {
 			deh_printf(c'Levels will end after %d minute', timelimit)
 			if timelimit > 1 {
-			C.printf(c's')
+				C.printf(c's')
 			}
 			C.printf(c'.\n')
 		}
 	}
 }
-

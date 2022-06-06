@@ -1,95 +1,99 @@
 [translated]
 module main
 
-
 [typedef]
 struct C.FILE {}
 
-
 // vstart
-
 
 const ( // empty enum
 )
 
-[c:'FixedMul']
+[c: 'FixedMul']
 fn fixedmul(a int, b int) int
 
-[c:'FixedDiv']
+[c: 'FixedDiv']
 fn fixeddiv(a int, b int) int
 
+[c: 'I_Error']
 [c2v_variadic]
-[c:'I_Error']
-fn i_error(error &i8) 
+fn i_error(error ...&i8)
 
-[c:'P_InterceptVector']
+[c: 'P_InterceptVector']
 fn p_interceptvector(v2 &Divline_t, v1 &Divline_t) int
 
-[c:'P_LineOpening']
-fn p_lineopening(linedef &Line_t) 
+[c: 'P_LineOpening']
+fn p_lineopening(linedef &Line_t)
 
-[c:'P_PathTraverse']
+[c: 'P_PathTraverse']
 fn p_pathtraverse(x1 int, y1 int, x2 int, y2 int, flags int, trav fn (&Intercept_t) bool) bool
 
-[c:'P_CheckSight']
+[c: 'P_CheckSight']
 fn p_checksight(t1 &Mobj_t, t2 &Mobj_t) bool
 
-[weak]__global ( sightzstart int 
-
+[weak]
+__global (
+	sightzstart int
 )
 
-[weak]__global ( topslope int 
-
+[weak]
+__global (
+	topslope int
 )
 
-[weak]__global ( bottomslope int 
-
+[weak]
+__global (
+	bottomslope int
 )
 
-[weak]__global ( strace Divline_t 
-
+[weak]
+__global (
+	strace Divline_t
 )
 
-[weak]__global ( t2x int 
-
+[weak]
+__global (
+	t2x int
 )
 
-[weak]__global ( t2y int 
-
+[weak]
+__global (
+	t2y int
 )
 
-[weak]__global ( sightcounts [2]int 
-
+[weak]
+__global (
+	sightcounts [2]int
 )
 
-[c:'PTR_SightTraverse']
+[c: 'PTR_SightTraverse']
 fn ptr_sighttraverse(in_ &Intercept_t) bool {
 	li := &Line_t(0)
 	slope := 0
 	li = in_.d.line
 	p_lineopening(li)
 	if openbottom >= opentop {
-	return false
+		return false
 	}
 	if li.frontsector.floorheight != li.backsector.floorheight {
 		slope = fixeddiv(openbottom - sightzstart, in_.frac)
 		if slope > bottomslope {
-		bottomslope = slope
+			bottomslope = slope
 		}
 	}
 	if li.frontsector.ceilingheight != li.backsector.ceilingheight {
 		slope = fixeddiv(opentop - sightzstart, in_.frac)
 		if slope < topslope {
-		topslope = slope
+			topslope = slope
 		}
 	}
 	if topslope <= bottomslope {
-	return false
+		return false
 	}
 	return true
 }
 
-[c:'P_DivlineSide']
+[c: 'P_DivlineSide']
 fn p_divlineside(x int, y int, node &Divline_t) int {
 	dx := 0
 	dy := 0
@@ -97,19 +101,19 @@ fn p_divlineside(x int, y int, node &Divline_t) int {
 	right := 0
 	if !node.dx {
 		if x == node.x {
-		return 2
+			return 2
 		}
 		if x <= node.x {
-		return node.dy > 0
+			return node.dy > 0
 		}
 		return node.dy < 0
 	}
 	if !node.dy {
 		if x == node.y {
-		return 2
+			return 2
 		}
 		if y <= node.y {
-		return node.dx < 0
+			return node.dx < 0
 		}
 		return node.dx > 0
 	}
@@ -118,29 +122,29 @@ fn p_divlineside(x int, y int, node &Divline_t) int {
 	left = (node.dy >> 16) * (dx >> 16)
 	right = (dy >> 16) * (node.dx >> 16)
 	if right < left {
-	return 0
+		return 0
 	}
 	if left == right {
-	return 2
+		return 2
 	}
 	return 1
 }
 
-[c:'P_InterceptVector2']
+[c: 'P_InterceptVector2']
 fn p_interceptvector2(v2 &Divline_t, v1 &Divline_t) int {
 	frac := 0
 	num := 0
 	den := 0
 	den = fixedmul(v1.dy >> 8, v2.dx) - fixedmul(v1.dx >> 8, v2.dy)
 	if den == 0 {
-	return 0
+		return 0
 	}
 	num = fixedmul((v1.x - v2.x) >> 8, v1.dy) + fixedmul((v2.y - v1.y) >> 8, v1.dx)
 	frac = fixeddiv(num, den)
 	return frac
 }
 
-[c:'P_CrossSubsector']
+[c: 'P_CrossSubsector']
 fn p_crosssubsector(num int) bool {
 	seg := &Seg_t(0)
 	line := &Line_t(0)
@@ -158,17 +162,16 @@ fn p_crosssubsector(num int) bool {
 	frac := 0
 	slope := 0
 	if num >= numsubsectors {
-	i_error(c'P_CrossSubsector: ss %i with numss = %i', num, numsubsectors)
+		i_error(c'P_CrossSubsector: ss %i with numss = %i', num, numsubsectors)
 	}
-	sub = &subsectors [num] 
+	sub = &subsectors[num]
 	count = sub.numlines
-	seg = &segs [sub.firstline] 
-	for  ; count ; seg ++ {
+	seg = &segs[sub.firstline]
+	for ; count; seg++ {
 		line = seg.linedef
 		if line.validcount == validcount {
-			count --
+			count--
 			continue
-			
 		}
 		line.validcount = validcount
 		v1 = line.v1
@@ -176,9 +179,8 @@ fn p_crosssubsector(num int) bool {
 		s1 = p_divlineside(v1.x, v1.y, &strace)
 		s2 = p_divlineside(v2.x, v2.y, &strace)
 		if s1 == s2 {
-			count --
+			count--
 			continue
-			
 		}
 		divl.x = v1.x
 		divl.y = v1.y
@@ -187,86 +189,81 @@ fn p_crosssubsector(num int) bool {
 		s1 = p_divlineside(strace.x, strace.y, &divl)
 		s2 = p_divlineside(t2x, t2y, &divl)
 		if s1 == s2 {
-			count --
+			count--
 			continue
-			
 		}
 		if line.backsector == (voidptr(0)) {
 			return false
 		}
 		if !(line.flags & 4) {
-		return false
+			return false
 		}
 		front = seg.frontsector
 		back = seg.backsector
 		if front.floorheight == back.floorheight && front.ceilingheight == back.ceilingheight {
-			count --
+			count--
 			continue
-			
 		}
 		if front.ceilingheight < back.ceilingheight {
-		opentop = front.ceilingheight
+			opentop = front.ceilingheight
+		} else { // 3
+			opentop = back.ceilingheight
 		}
-		else { // 3
-		opentop = back.ceilingheight
-}
 		if front.floorheight > back.floorheight {
-		openbottom = front.floorheight
+			openbottom = front.floorheight
+		} else { // 3
+			openbottom = back.floorheight
 		}
-		else { // 3
-		openbottom = back.floorheight
-}
 		if openbottom >= opentop {
-		return false
+			return false
 		}
 		frac = p_interceptvector2(&strace, &divl)
 		if front.floorheight != back.floorheight {
 			slope = fixeddiv(openbottom - sightzstart, frac)
 			if slope > bottomslope {
-			bottomslope = slope
+				bottomslope = slope
 			}
 		}
 		if front.ceilingheight != back.ceilingheight {
 			slope = fixeddiv(opentop - sightzstart, frac)
 			if slope < topslope {
-			topslope = slope
+				topslope = slope
 			}
 		}
 		if topslope <= bottomslope {
-		return false
+			return false
 		}
-		count --
+		count--
 	}
 	return true
 }
 
-[c:'P_CrossBSPNode']
+[c: 'P_CrossBSPNode']
 fn p_crossbspnode(bspnum int) bool {
 	bsp := &Node_t(0)
 	side := 0
 	if bspnum & 32768 {
 		if bspnum == -1 {
 			return p_crosssubsector(0)
-		}
-		else {
+		} else {
 			return p_crosssubsector(bspnum & (~32768))
 		}
 	}
-	bsp = &nodes [bspnum] 
+	bsp = &nodes[bspnum]
 	side = p_divlineside(strace.x, strace.y, &Divline_t(bsp))
 	if side == 2 {
-	side = 0
+		side = 0
 	}
-	if !p_crossbspnode(bsp.children [side] ) {
-	return false
+	if !p_crossbspnode(bsp.children[side]) {
+		return false
 	}
 	if side == p_divlineside(t2x, t2y, &Divline_t(bsp)) {
 		return true
 	}
-	return p_crossbspnode(bsp.children [side ^ 1] )
+	return p_crossbspnode(bsp.children[side ^ 1])
 }
 
-[c:'P_CheckSight']
+[c: 'P_CheckSight']
 fn p_checksight(t1 &Mobj_t, t2 &Mobj_t) bool {
 	s1 := 0
 	s2 := 0
@@ -278,12 +275,12 @@ fn p_checksight(t1 &Mobj_t, t2 &Mobj_t) bool {
 	pnum = s1 * numsectors + s2
 	bytenum = pnum >> 3
 	bitnum = 1 << (pnum & 7)
-	if rejectmatrix [bytenum]  & bitnum {
-		sightcounts [0]  ++
+	if rejectmatrix[bytenum] & bitnum {
+		sightcounts[0]++
 		return false
 	}
-	sightcounts [1]  ++
-	validcount ++
+	sightcounts[1]++
+	validcount++
 	sightzstart = t1.z + t1.height - (t1.height >> 2)
 	topslope = (t2.z + t2.height) - sightzstart
 	bottomslope = (t2.z) - sightzstart
@@ -298,4 +295,3 @@ fn p_checksight(t1 &Mobj_t, t2 &Mobj_t) bool {
 	strace.dy = t2.y - t1.y
 	return p_crossbspnode(numnodes - 1)
 }
-

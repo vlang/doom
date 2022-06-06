@@ -3614,6 +3614,7 @@ const (
 )
 
 //!
+
 [weak]
 __global (
 	next_weapon = int(0)
@@ -3653,6 +3654,7 @@ __global (
 )
 
 //!
+
 [weak]
 __global (
 	mousebuttons = &bool(&mousearray[1])
@@ -3719,6 +3721,7 @@ __global (
 )
 
 //!
+
 [weak]
 __global (
 	joybuttons = &bool(&joyarray[1])

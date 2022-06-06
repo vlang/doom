@@ -3468,6 +3468,7 @@ fn a_skelmissile(actor &Mobj_t) {
 }
 
 //!
+
 [weak]
 __global (
 	TRACEANGLE = int(201326592)
@@ -4048,6 +4049,7 @@ __global (
 )
 
 //!
+
 [weak]
 __global (
 	braintargeton = int(0)
