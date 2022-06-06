@@ -50,7 +50,7 @@
 
 //
 // Animating textures and planes
-// There is another anim_t used in wi_stuff, unrelated.
+// There is another animplane_t used in wi_stuff, unrelated.
 //
 typedef struct
 {
@@ -60,7 +60,7 @@ typedef struct
     int		numpics;
     int		speed;
     
-} anim_t;
+} animplane_t;
 
 //
 //      source animation definition
@@ -77,8 +77,8 @@ typedef struct
 
 #define MAXANIMS                32
 
-extern anim_t	anims[MAXANIMS];
-extern anim_t*	lastanim;
+extern animplane_t	anims[MAXANIMS];
+extern animplane_t*	lastanim;
 
 //
 // P_InitPicAnims
@@ -126,8 +126,8 @@ animdef_t		animdefs[] =
     {-1,        "",             "",             0},
 };
 
-anim_t		anims[MAXANIMS];
-anim_t*		lastanim;
+animplane_t		anims[MAXANIMS];
+animplane_t*		lastanim;
 
 
 //
@@ -1102,7 +1102,7 @@ int		levelTimeCount;
 
 void P_UpdateSpecials (void)
 {
-    anim_t*	anim;
+    animplane_t*	anim;
     int		pic;
     int		i;
     line_t*	line;
