@@ -385,7 +385,7 @@ void F_CastTicker (void)
 	castframes++;
 	
 	// sound hacks....
-	switch (st)
+	switch ((statenum_t)st) // XTODO cast needed
 	{
 	  case S_PLAY_ATK1:	sfx = sfx_dshtgn; break;
 	  case S_POSS_ATK2:	sfx = sfx_pistol; break;
