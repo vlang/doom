@@ -21,6 +21,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "doom/r_defs.h" // XTODO
+#include "doom/d_player.h" // XTODO
+
 // Data.
 #include "sounds.h"
 #include "m_fixed.h"
