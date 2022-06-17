@@ -1,3 +1,7 @@
+#!/usr/bin/env bash
+
+set -e
+
 cc -o doomv ~/code/doom/chocolate-doom/src/CMakeFiles/chocolate-doom.dir/*.o \
   ~/code/doom/chocolate-doom/textscreen/CMakeFiles/textscreen.dir/*.o \
   ~/code/doom/chocolate-doom/pcsound/CMakeFiles/pcsound.dir/*.o \
