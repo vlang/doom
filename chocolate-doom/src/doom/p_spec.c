@@ -77,7 +77,7 @@ typedef struct
 
 #define MAXANIMS                32
 
-extern animplane_t	anims[MAXANIMS];
+extern animplane_t	animplanes[MAXANIMS];
 extern animplane_t*	lastanim;
 
 //
@@ -126,7 +126,7 @@ animdef_t		animdefs[] =
     {-1,        "",             "",             0},
 };
 
-animplane_t		anims[MAXANIMS];
+animplane_t		animplanes[MAXANIMS];
 animplane_t*		lastanim;
 
 
@@ -146,7 +146,7 @@ void P_InitPicAnims (void)
 
     
     //	Init animation
-    lastanim = anims;
+    lastanim = animplanes;
     for (i=0 ; animdefs[i].istexture != -1 ; i++)
     {
         const char *startname, *endname;
@@ -1117,7 +1117,7 @@ void P_UpdateSpecials (void)
     }
     
     //	ANIMATE FLATS AND TEXTURES GLOBALLY
-    for (anim = anims ; anim < lastanim ; anim++)
+    for (anim = animplanes ; anim < lastanim ; anim++)
     {
 	for (i=anim->basepic ; i<anim->basepic+anim->numpics ; i++)
 	{
