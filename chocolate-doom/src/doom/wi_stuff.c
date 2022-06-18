@@ -275,6 +275,7 @@ static anim_t* anims[NUMEPISODES] = {
     &epsd0animinfo,
     &epsd1animinfo,
     &epsd2animinfo,
+    &epsd0animinfo,
 };
 
 
