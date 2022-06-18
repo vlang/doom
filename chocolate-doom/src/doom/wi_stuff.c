@@ -271,14 +271,11 @@ static int NUMANIMS[NUMEPISODES] =
     6,//arrlen(epsd2animinfo),
 };
 
-static anim_t* anims[NUMEPISODES];
-/*
-{
-    epsd0animinfo,
-    epsd1animinfo,
-    epsd2animinfo
+static anim_t* anims[NUMEPISODES] = {
+    &epsd0animinfo,
+    &epsd1animinfo,
+    &epsd2animinfo,
 };
-*/
 
 
 //
@@ -524,11 +521,6 @@ WI_drawOnLnode
 
 void WI_initAnimatedBack(void)
 {
-
-anims[0] = epsd0animinfo;
-    anims[1]=epsd1animinfo;
-    anims[2]=epsd2animinfo;
-
     int		i;
     anim_t*	a;
 
