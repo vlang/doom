@@ -24,8 +24,9 @@ fn __ctype_b_loc() &&U16 { return C.__ctype_b_loc() }
 EOF
 
 cd $DOOM_FOLDER/chocolate-doom/src/doom ;
-v -cc $CC -o /tmp/doom.c -is_o -gc none -showcc -cg -cflags "-w" -w -translated c2v_out.dir/
-$CC -c -w -std=c99 -D_DEFAULT_SOURCE -g -o c2v_out.dir/doom.o -c /tmp/doom.c -rdynamic
+## compile the produced V source code to an .o file that can be linked to the rest:
+v -cc $CC -cflags "-c" -o c2v_out.dir/doom.o -is_o -gc none -showcc -cg -cflags "-w" -w -translated c2v_out.dir/
+
 $CC -o doomv \
   $DOOM_FOLDER/chocolate-doom/src/CMakeFiles/chocolate-doom.dir/*.o \
   $DOOM_FOLDER/chocolate-doom/textscreen/CMakeFiles/textscreen.dir/*.o \
