@@ -3,7 +3,7 @@
 set -e;
 set -x;
 
-if [ -z ${CC+x} ]; then export CC=clang-12; fi
+if [ -z ${CC+x} ]; then export CC=clang; fi
 if [ -z ${DOOM_FOLDER+x} ]; then export DOOM_FOLDER=~/code/doom; fi
 if [ -z ${WAD_FILE+x} ]; then export WAD_FILE=~/Downloads/DOOM1.WAD; fi
 
