@@ -25,7 +25,7 @@ EOF
 
 cd $DOOM_FOLDER/chocolate-doom/src/doom ;
 ## compile the produced V source code to an .o file that can be linked to the rest:
-v -cc $CC -cflags "-c" -o c2v_out.dir/doom.o -is_o -gc none -showcc -cg -cflags "-w" -w -translated c2v_out.dir/
+v -cc $CC -o c2v_out.dir/doom.o -w -translated c2v_out.dir/
 
 $CC -o doomv \
   $DOOM_FOLDER/chocolate-doom/src/CMakeFiles/chocolate-doom.dir/*.o \
