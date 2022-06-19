@@ -1,0 +1,4 @@
+[project]
+uses_sdl = true
+output_dirname = "c2v_out.dir"
+additional_flags = "-I. -I.. -I../.."
