@@ -1,4 +1,4 @@
 [project]
 uses_sdl = true
-output_dirname = "c2v_out.dir"
+output_dirname = "doom_v"
 additional_flags = "-I. -I.. -I../.."
