@@ -2,4 +2,4 @@
 
 set -e
 
-v -o c2v_out.dir/doom.o -w -translated c2v_out.dir/
+v -o doom_v/doom.o -w -translated doom_v/

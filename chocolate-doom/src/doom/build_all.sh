@@ -9,10 +9,14 @@
 
 set -e
 
+export DOOM=~/code/doom/chocolate-doom
+
+v -cg -o doom_v/doom.o -w -translated doom_v
+
 cc -o doomv \
-  ~/code/doom/chocolate-doom/src/CMakeFiles/chocolate-doom.dir/*.o \
-  ~/code/doom/chocolate-doom/textscreen/CMakeFiles/textscreen.dir/*.o \
-  ~/code/doom/chocolate-doom/pcsound/CMakeFiles/pcsound.dir/*.o \
-  ~/code/doom/chocolate-doom/opl/CMakeFiles/opl.dir/*.o \
-  ~/code/doom/chocolate-doom/src/doom/c2v_out.dir/doom.o \
+  $DOOM/src/doom/doom_v/doom.o \
+  $DOOM/src/CMakeFiles/chocolate-doom.dir/*.o \
+  $DOOM/textscreen/CMakeFiles/textscreen.dir/*.o \
+  $DOOM/pcsound/CMakeFiles/pcsound.dir/*.o \
+  $DOOM/opl/CMakeFiles/opl.dir/*.o \
   $(sdl2-config --libs) -lSDL2_mixer -lSDL2_net -lpng $LDFLAGS
