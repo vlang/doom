@@ -39,3 +39,22 @@ All of these except for the globals are going to be fixed by the translator:
 - `++/--` expressions will be replaced with statements at the right place
 - unused variables will be removed
 - mutable variables will be marked as mutable.
+
+## How to build and run this demo
+
+### Preparations (Ubuntu Linux)
+
+1. Install dependencies
+   ```bash
+   apt install libsdl2-dev libsdl2-mixer-dev libsdl2-net-dev
+   ```
+
+2. Download doom1.wad into `~/Downloads` from [here](https://distro.ibiblio.org/slitaz/sources/packages/d/doom1.wad). (ref: `External links` section in [this doomwiki page](https://doomwiki.org/wiki/DOOM1.WAD))
+
+### Clone, build and run the demo
+
+```bash
+git clone git@github.com:vlang/doom.git
+cd doom/
+./build_whole_project.sh
+```
