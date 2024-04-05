@@ -31,7 +31,7 @@ make chocolate-doom && src/chocolate-doom -width 640
 There are several things that are allowed in translated code:
 - Globals
 - `++/--` expressions and int to bool conversions (`for i-- {`)
-- Variables can be unsed
+- Variables can be unused
 - Immutability is not enforced
 
 All of these except for the globals are going to be fixed by the translator: 
