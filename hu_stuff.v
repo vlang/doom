@@ -1,299 +1,1487 @@
-[translated]
+@[translated]
 module main
 
-[typedef]
-struct C.FILE {}
-
-// vstart
-
-[c: 'DEH_String']
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//	Simple basic typedefs, isolated here to make it easier
+//	 separating modules.
+//
+// #define macros to provide functions missing in Windows.
+// Outside Windows, we use strings.h for str[n]casecmp.
+//
+// The packed attribute forces structures to be packed into the minimum
+// space necessary.  If this is not done, the compiler may align structure
+// fields differently to optimize memory access, inflating the overall
+// structure size.  It is important to use the packed attribute on certain
+// structures where alignment is important, particularly data read/written
+// to disk.
+//
+// C99 integer types; with gcc we just use this.  Other compilers
+// should add conditional statements that define the C99 types.
+// What is really wanted here is stdint.h; however, some old versions
+// of Solaris don't have stdint.h and only have inttypes.h (the
+// pre-standardisation version).  inttypes.h is also in the C99
+// standard and defined to include stdint.h, so include this.
+// Use builtin bool type with C++.
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//      System-specific timer interface
+//
+// Called by D_DoomLoop,
+// returns current time in tics.
+// returns current time in ms
+// Pause for a specified number of ms
+// Initialize timer
+// Wait for vertical retrace or pause a bit.
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//   Functions and definitions relating to the game type and operational
+//   mode.
+//
+// The "mission" controls what game we are playing.
+// The "mode" allows more accurate specification of the game mode we are
+// in: eg. shareware vs. registered.  So doom1.wad and doom.wad are the
+// same mission, but a different mode.
+// What version are we emulating?
+// What IWAD variant are we using?
+// Skill level.
+// #ifndef __D_MODE__
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//  Internally used data structures for virtually everything,
+//   lots of other stuff.
+//
+//
+// Global parameters/defines.
+//
+// DOOM version
+// Version code for cph's longtics hack ("v1.91")
+// If rangecheck is undefined,
+// most parameter validation debugging code will not be compiled
+// The maximum number of players, multiplayer/networking.
+// The current state of the game: whether we are
+// playing, gazing at the intermission screen,
+// the game final animation, or a demo.
+//
+// Difficulty/skill settings/filters.
+//
+// Skill flags.
+// Deaf monsters/do not react to sound.
+//
+// Key cards.
+//
+// The defined weapons,
+//  including a marker indicating
+//  user has not changed weapon.
+// Ammunition types defined.
+// Power up artifacts.
+//
+// Power up durations,
+//  how many seconds till expiration,
+//  assuming TICRATE is 35 ticks/second.
+//
+// __DOOMDEF__
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//      Zone Memory Allocation, perhaps NeXT ObjectiveC inspired.
+//	Remark: this was the only stuff that, according
+//	 to John Carmack, might have been useful for
+//	 Quake.
+//
+//
+// ZONE MEMORY
+// PU - purge tags.
+// static entire execution time
+// static while playing
+// static while playing
+// a free block
+// static until level exited
+// a special thinker in a level
+// Tags >= PU_PURGELEVEL are purgable whenever needed.
+// Total number of different tag types
+//
+// This is used to get the local FILE:LINE info from CPP
+// prior to really call the function in question.
+//
+//
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+//
+// Dehacked string replacements
+//
+// Used to do dehacked text substitutions throughout the program
+@[c: 'DEH_String']
 fn deh_string(s &i8) &i8
 
-[c: 'DEH_snprintf']
-[c2v_variadic]
+@[c: 'DEH_snprintf']
+@[c2v_variadic]
 fn deh_snprintf(buffer &i8, len usize, fmt ...&i8)
 
-[c: 'I_StartTextInput']
-fn i_starttextinput(x1 int, y1 int, x2 int, y2 int)
+// Static macro versions of the functions above
+// #ifndef DEH_STR_H
+//
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//     SHA-1 digest.
+//
+// #ifndef __SHA1_H__
+//
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+//
+// Dehacked entrypoint and common code
+//
+// These are the limits that dehacked uses (from dheinit.h in the dehacked
+// source).  If these limits are exceeded, it does not generate an error, but
+// a warning is displayed.
+// #ifndef DEH_MAIN_H
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//    System-specific keyboard/mouse input.
+//
+// I_StartTextInput begins text input, activating the on-screen keyboard
+// (if one is used). The caller indicates that any entered text will be
+// displayed in the rectangle given by the provided set of coordinates.
+@[c: 'I_StartTextInput']
+fn i_start_text_input(x1 int, y1 int, x2 int, y2 int)
 
-[c: 'I_StopTextInput']
-fn i_stoptextinput()
+// I_StopTextInput finishes text input, deactivating the on-screen keyboard
+// (if one is used).
+@[c: 'I_StopTextInput']
+fn i_stop_text_input()
 
-[c: 'HU_Init']
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//	System specific interface stuff.
+//
+// Screen width and height.
+// Screen height used when aspect_ratio_correct=true.
+// Called by D_DoomMain,
+// determines the hardware configuration
+// and sets up the video mode
+// Takes full 8 bit values.
+// Called before processing any tics in a frame (just after displaying a frame).
+// Time consuming syncronous operations are performed here (joystick reading).
+// Called before processing each tic in a frame.
+// Quick syncronous operations are performed here.
+// Enable the loading disk image displayed when reading from disk.
+// Joystic/gamepad hysteresis
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//
+//
+//
+// Event handling.
+//
+// Input event types.
+// Event structure.
+//
+// Button/action code definitions.
+//
+// villsa [STRIFE] Strife specific buttons
+// TODO - not finished
+// Called by IO functions when input is detected.
+// Read an event from the event queue
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:  Head up display
+//
+//
+// Globally visible constants.
+//
+// the first font characters
+// the last font characters
+// Calculate # of glyphs in font.
+// in characters
+// in lines
+//
+// HEADS UP TEXT
+//
+@[c: 'HU_Init']
 fn hu_init()
 
-[c: 'HU_Start']
+@[c: 'HU_Start']
 fn hu_start()
 
-[c: 'HU_Responder']
+@[c: 'HU_Responder']
 fn hu_responder(ev &Event_t) bool
 
-[c: 'HU_Ticker']
+@[c: 'HU_Ticker']
 fn hu_ticker()
 
-[c: 'HU_Drawer']
+@[c: 'HU_Drawer']
 fn hu_drawer()
 
-[c: 'HU_dequeueChatChar']
-fn hu_dequeuechatchar() i8
+@[c: 'HU_dequeueChatChar']
+fn hu_dequeue_chat_char() i8
 
-[c: 'HU_Erase']
+@[c: 'HU_Erase']
 fn hu_erase()
 
 // skipped extern global chat_macros
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//	Fixed point arithemtics, implementation.
+//
+//
+// Fixed point, 32bit as 16.16.
+//
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//  MapObj data. Map Objects or mobjs are actors, entities,
+//  thinker, take-your-pick... anything that moves, acts, or
+//  suffers state changes of more or less violent nature.
+//
+//
+// Experimental stuff.
+// To compile this as "ANSI C with classes"
+//  we will need to handle the various
+//  action functions cleanly.
+//
+// Historically, "think_t" is yet another
+//  function pointer to a routine to handle
+//  an actor.
+// Doubly linked list of actors.
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 1993-2008 Raven Software
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//	Lookup tables.
+//	Do not try to look them up :-).
+//	In the order of appearance:
+//
+//	int finetangent[4096]	- Tangens LUT.
+//	 Should work with BAM fairly well (12 of 16bit,
+//      effectively, by shifting).
+//
+//	int finesine[10240]		- Sine lookup.
+//	 Guess what, serves as cosine, too.
+//	 Remarkable thing is, how to use BAMs with this?
+//
+//	int tantoangle[2049]	- ArcTan LUT,
+//	  maps tan(angle) to angle fast. Gotta search.	
+//
+// 0x100000000 to 0x2000
+// Effective size is 10240.
+// Re-use data, is just PI/2 pahse shift.
+// Effective size is 4096.
+// Gamma correction tables.
+// Binary Angle Measument, BAM.
+// Heretic code uses this definition as though it represents one
+// degree, but it is not!  This is actually ~1.40 degrees.
+// Effective size is 2049;
+// The +1 size is to handle the case when x==y
+//  without additional checking.
+// Utility function,
+//  called by R_PointToAngle.
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//  all external data is defined here
+//  most of the data is loaded into different structures at run time
+//  some internal structures shared by many modules are here
+//
+// The most basic types we use, portability.
+// Some global defines, that configure the game.
+//
+// Map level types.
+// The following data structures define the persistent format
+// used in the lumps of the WAD files.
+//
+// Lump order in a map WAD: each map needs a couple of lumps
+// to provide a complete scene geometry description.
 
-const ( // empty enum
-)
 
-struct Hu_textline_t {
-	x           int
-	y           int
-	f           &&Patch_t
-	sc          int
-	l           [81]i8
-	len         int
-	needsupdate int
-}
+// A single Vertex.
+// A separator, name, ExMx or MAPxx
+// Monsters, items..
+// LineDefs, from editing                   // A single Vertex.
+// SideDefs, from editing                   typedef PACKED_STRUCT (
+// Vertices, edited and BSP splits generated{
+// LineSegs, from LineDefs split by BSP       short		x;
+// SubSectors, list of LineSegs               short		y;
+// BSP nodes                                }) mapvertex_t;
+// Sectors, from editing
+// LUT, sector-sector visibility	
+// LUT, motion clipping, walls/grid element // A SideDef, defining the visual appearance of a wall,
+// by setting textures and offsets.
+// A LineDef, as used for editing, and as input
+// to the BSP builder.
+//
+// LineDef attributes.
+//
+// Solid, is an obstacle.
+// Blocks monsters only.
+// Backside will not be present at all
+//  if not two sided.
+// If a texture is pegged, the texture will have
+// the end exposed to air held constant at the
+// top or bottom of the texture (stairs or pulled
+// down things) and will move with a height change
+// of one of the neighbor sectors.
+// Unpegged textures allways have the first row of
+// the texture at the top pixel of the line for both
+// top and bottom textures (use next to windows).
+// upper texture unpegged
+// lower texture unpegged
+// In AutoMap: don't map as two sided: IT'S A SECRET!
+// Sound rendering: don't let sound cross two of these.
+// Don't draw on the automap at all.
+// Set if already seen, thus drawn in automap.
+// Sector definition, from editing.
+// SubSector, as generated by BSP.
+// LineSeg, generated by splitting LineDefs
+// using partition lines selected by BSP builder.
+// BSP node structure.
+// Indicate a leaf.
+// Thing definition, position, orientation and type,
+// plus skill/visibility flags and attributes.
+// __DOOMDATA__
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//	Thing frame/state LUT,
+//	generated by multigen utilitiy.
+//	This one is the original DOOM version, preserved.
+//
+// Needed for action function pointer handling.
+// skipping global dup "states"
+// skipping global dup "sprnames"
+// skipping global dup "mobjinfo"
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//	Map Objects, MObj, definition and handling.
+//
+// Basics.
+// We need the thinker_t stuff.
+// We need the WAD data structure for Map things,
+// from the THINGS lump.
+// States are tied to finite states are
+//  tied to animation frames.
+// Needs precompiled tables/data structures.
+//
+// NOTES: mobj_t
+//
+// mobj_ts are used to tell the refresh where to draw an image,
+// tell the world simulation when objects are contacted,
+// and tell the sound driver how to position a sound.
+//
+// The refresh uses the next and prev links to follow
+// lists of things in sectors as they are being drawn.
+// The sprite, frame, and angle elements determine which patch_t
+// is used to draw the sprite if it is visible.
+// The sprite and frame values are allmost allways set
+// from state_t structures.
+// The statescr.exe utility generates the states.h and states.c
+// files that contain the sprite/frame numbers from the
+// statescr.txt source file.
+// The xyz origin point represents a point at the bottom middle
+// of the sprite (between the feet of a biped).
+// This is the default origin position for patch_ts grabbed
+// with lumpy.exe.
+// A walking creature will have its z equal to the floor
+// it is standing on.
+//
+// The sound code uses the x,y, and subsector fields
+// to do stereo positioning of any sound effited by the mobj_t.
+//
+// The play simulation uses the blocklinks, x,y,z, radius, height
+// to determine when mobj_ts are touching each other,
+// touching lines in the map, or hit by trace lines (gunshots,
+// lines of sight, etc).
+// The mobj_t->flags element has various bit flags
+// used by the simulation.
+//
+// Every mobj_t is linked into a single sector
+// based on its origin coordinates.
+// The subsector_t is found with R_PointInSubsector(x,y),
+// and the sector_t can be found with subsector->sector.
+// The sector links are only used by the rendering code,
+// the play simulation does not care about them at all.
+//
+// Any mobj_t that needs to be acted upon by something else
+// in the play world (block movement, be shot, etc) will also
+// need to be linked into the blockmap.
+// If the thing has the MF_NOBLOCK flag set, it will not use
+// the block links. It can still interact with other things,
+// but only as the instigator (missiles will run into other
+// things, but nothing can run into a missile).
+// Each block in the grid is 128*128 units, and knows about
+// every line_t that it contains a piece of, and every
+// interactable mobj_t that has its origin contained.
+//
+// A valid mobj_t is a mobj_t that has the proper subsector_t
+// filled in for its xy coordinates and is linked into the
+// sector from which the subsector was made, or has the
+// MF_NOSECTOR flag set (the subsector_t needs to be valid
+// even if MF_NOSECTOR is set), and is linked into a blockmap
+// block or has the MF_NOBLOCKMAP flag set.
+// Links should only be modified by the P_[Un]SetThingPosition()
+// functions.
+// Do not change the MF_NO? flags while a thing is valid.
+//
+// Any questions?
+//
+//
+// Misc. mobj flags
+//
+// Map Object definition.
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//      Refresh/rendering module, shared data struct definitions.
+//
+// Screenwidth.
+// Some more or less basic data types
+// we depend on.
+// We rely on the thinker data struct
+// to handle sound origins in sectors.
+// SECTORS do store MObjs anyway.
+// Silhouette, needed for clipping Segs (mainly)
+// and sprites representing things.
+//
+// INTERNAL MAP TYPES
+//  used by play and refresh
+//
+//
+// Your plain vanilla vertex.
+// Note: transformed values not buffered locally,
+//  like some DOOM-alikes ("wt", "WebView") did.
+//
+// Forward of LineDefs, for Sectors.
+// Each sector has a degenmobj_t in its center
+//  for sound origin purposes.
+// I suppose this does not handle sound from
+//  moving objects (doppler), because
+//  position is prolly just buffered, not
+//  updated.
+//
+// The SECTORS record, at runtime.
+// Stores things/mobjs.
+//
+//
+// The SideDef.
+//
+//
+// Move clipping aid for LineDefs.
+//
+//
+// A SubSector.
+// References a Sector.
+// Basically, this is a list of LineSegs,
+//  indicating the visible walls that define
+//  (all or some) sides of a convex BSP leaf.
+//
+//
+// The LineSeg.
+//
+//
+// BSP node.
+//
+// PC direct to screen pointers
+// B UNUSED - keep till detailshift in r_draw.c resolved
+// extern byte*	destview;
+// extern byte*	destscreen;
+//
+// OTHER TYPES
+//
+// This could be wider for >8 bit display.
+// Indeed, true color support is posibble
+//  precalculating 24bpp lightmap/colormap LUT.
+//  from darkening PLAYPAL to all black.
+// Could even us emore than 32 levels.
+// typedef pixel_t		lighttable_t;
+// XTODO  alias to alias
+//
+// ?
+//
+// A vissprite_t is a thing
+//  that will be drawn during a refresh.
+// I.e. a sprite object that is partly visible.
+//	
+// Sprites are patches with a special naming convention
+//  so they can be recognized by R_InitSprites.
+// The base name is NNNNFx or NNNNFxFx, with
+//  x indicating the rotation, x = 0, 1-7.
+// The sprite and frame specified by a thing_t
+//  is range checked at run time.
+// A sprite is a patch_t that is assumed to represent
+//  a three dimensional object and may have multiple
+//  rotations pre drawn.
+// Horizontal flipping is used to save space,
+//  thus NNNNF2F5 defines a mirrored patch.
+// Some sprites will only have one picture used
+// for all views: NNNNF0
+//
+//
+// A sprite definition:
+//  a number of animation frames.
+//
+//
+// Now what is a visplane, anyway?
+//
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:  none
+//
+// We are referring to patches.
+// font stuff
+//
+// Typedefs of widgets
+//
+// Text Line widget
+//  (parent of Scrolling Text and Input Text widgets)
+// Scrolling Text window widget
+//  (child of Text Line widget)
+// Input Text Line widget
+//  (child of Text Line widget)
+//
+// Widget creation, access, and update routines
+//
+// initializes heads-up widget library
+//
+// textline code
+//
+// clear a line of text
+@[c: 'HUlib_initTextLine']
+fn hu_lib_init_text_line(t &Hu_textline_t, x int, y int, f &&Patch_t, sc int)
 
-struct Hu_stext_t {
-	l      [4]Hu_textline_t
-	h      int
-	cl     int
-	on     &bool
-	laston bool
-}
+// returns success
+@[c: 'HUlib_addCharToTextLine']
+fn hu_lib_add_char_to_text_line(t &Hu_textline_t, ch i8) bool
 
-struct Hu_itext_t {
-	l      Hu_textline_t
-	lm     int
-	on     &bool
-	laston bool
-}
+// returns success
+// draws tline
+@[c: 'HUlib_drawTextLine']
+fn hu_lib_draw_text_line(l &Hu_textline_t, drawcursor bool)
 
-[c: 'HUlib_init']
-fn hulib_init()
+// erases text line
+@[c: 'HUlib_eraseTextLine']
+fn hu_lib_erase_text_line(l &Hu_textline_t)
 
-[c: 'HUlib_initTextLine']
-fn hulib_inittextline(t &Hu_textline_t, x int, y int, f &&Patch_t, sc int)
+//
+// Scrolling Text window widget routines
+//
+// ?
+@[c: 'HUlib_initSText']
+fn hu_lib_init_st_ext(s &Hu_stext_t, x int, y int, h int, font &&Patch_t, startchar int, on &bool)
 
-[c: 'HUlib_addCharToTextLine']
-fn hulib_addchartotextline(t &Hu_textline_t, ch i8) bool
+// add a new line
+// ?
+@[c: 'HUlib_addMessageToSText']
+fn hu_lib_add_message_to_st_ext(s &Hu_stext_t, prefix &i8, msg &i8)
 
-[c: 'HUlib_drawTextLine']
-fn hulib_drawtextline(l &Hu_textline_t, drawcursor bool)
+// draws stext
+@[c: 'HUlib_drawSText']
+fn hu_lib_draw_st_ext(s &Hu_stext_t)
 
-[c: 'HUlib_eraseTextLine']
-fn hulib_erasetextline(l &Hu_textline_t)
+// erases all stext lines
+@[c: 'HUlib_eraseSText']
+fn hu_lib_erase_st_ext(s &Hu_stext_t)
 
-[c: 'HUlib_initSText']
-fn hulib_initstext(s &Hu_stext_t, x int, y int, h int, font &&Patch_t, startchar int, on &bool)
+// Input Text Line widget routines
+@[c: 'HUlib_initIText']
+fn hu_lib_init_it_ext(it &Hu_itext_t, x int, y int, font &&Patch_t, startchar int, on &bool)
 
-[c: 'HUlib_addMessageToSText']
-fn hulib_addmessagetostext(s &Hu_stext_t, prefix &i8, msg &i8)
+// enforces left margin
+// enforces left margin
+// resets line and left margin
+@[c: 'HUlib_resetIText']
+fn hu_lib_reset_it_ext(it &Hu_itext_t)
 
-[c: 'HUlib_drawSText']
-fn hulib_drawstext(s &Hu_stext_t)
+// left of left-margin
+// whether eaten
+@[c: 'HUlib_keyInIText']
+fn hu_lib_key_in_it_ext(it &Hu_itext_t, ch u8) bool
 
-[c: 'HUlib_eraseSText']
-fn hulib_erasestext(s &Hu_stext_t)
+@[c: 'HUlib_drawIText']
+fn hu_lib_draw_it_ext(it &Hu_itext_t)
 
-[c: 'HUlib_initIText']
-fn hulib_inititext(it &Hu_itext_t, x int, y int, font &&Patch_t, startchar int, on &bool)
+// erases all itext lines
+@[c: 'HUlib_eraseIText']
+fn hu_lib_erase_it_ext(it &Hu_itext_t)
 
-[c: 'HUlib_resetIText']
-fn hulib_resetitext(it &Hu_itext_t)
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 1993-2008 Raven Software
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// villsa [STRIFE] strife keys
+// menu keys:
+// #ifndef __M_CONTROLS_H__
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//      Miscellaneous.
+//
+@[c: 'M_StringCopy']
+fn m_string_copy(dest &i8, src &i8, dest_size usize) bool
 
-[c: 'HUlib_keyInIText']
-fn hulib_keyinitext(it &Hu_itext_t, ch u8) bool
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//	WAD I/O functions.
+//
+// Open the specified file. Returns a pointer to a new wad_file_t
+// handle for the WAD file, or NULL if it could not be opened.
+// Close the specified WAD file.
+// Read data from the specified file into the provided buffer.  The
+// data is read from the specified offset from the start of the file.
+// Returns the number of bytes read.
+// #ifndef __W_FILE__
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//	WAD I/O functions.
+//
+//
+// TYPES
+//
+//
+// WADFILE I/O related stuff.
+//
+@[c: 'W_CacheLumpName']
+fn w_cache_lump_name(name &i8, tag int) voidptr
 
-[c: 'HUlib_drawIText']
-fn hulib_drawitext(it &Hu_itext_t)
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//	The not so system specific sound interface.
+//
+// so that the individual game logic and sound driver code agree
+//
+// SoundFX struct.
+//
+//
+// MusicInfo struct.
+//
+// Interface for sound modules
+// Interface for music modules
+// DMX version to emulate for OPL emulation:
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//	Created by the sound utility written by Dave Taylor.
+//	Kept as a sample, DOOM2  sounds. Frozen.
+//
+// the complete set of sound effects
+// skipping global dup "S_sfx"
+// the complete set of music
+// skipping global dup "S_music"
+//
+// Identifiers for all music in game.
+//
+//
+// Identifiers for all sfx in game.
+//
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//	The not so system specific sound interface.
+//
+//
+// Initializes sound stuff, including volume
+// Sets channels, SFX and music volume,
+//  allocates channel buffer, sets S_sfx lookup.
+//
+// Shut down sound
+//
+// Per level startup code.
+// Kills playing sounds at start of level,
+//  determines music if any, changes music.
+//
+//
+// Start sound for thing at <origin>
+//  using <sound_id> from sounds.h
+//
+@[c: 'S_StartSound']
+fn s_start_sound(origin voidptr, sound_id int)
 
-[c: 'HUlib_eraseIText']
-fn hulib_eraseitext(it &Hu_itext_t)
-
-[weak]
-__global (
-	key_message_refresh int
-)
-
-[weak]
-__global (
-	key_multi_msg int
-)
-
-[c_extern]
-__global (
-	key_multi_msgplayer [8]int
-)
-
-[c: 'M_StringCopy']
-fn m_stringcopy(dest &i8, src &i8, dest_size usize) bool
-
-[c: 'M_snprintf']
-[c2v_variadic]
-fn m_snprintf(buf &i8, buf_len usize, s ...&i8) int
-
-[c: 'W_CacheLumpName']
-fn w_cachelumpname(name &i8, tag int) voidptr
-
-[c: 'S_Start']
-fn s_start()
-
-[c: 'S_StartSound']
-fn s_startsound(origin voidptr, sound_id int)
-
-[export: 'chat_macros']
-const (
-	chat_macros = [c'No', c"I'm ready to kick butt!", c"I'm OK.", c"I'm not looking too good!",
-		c'Help!', c'You suck!', c'Next time, scumbag...', c'Come here!', c"I'll take care of it.",
-		c'Yes']!
-)
-
-[export: 'player_names']
-const (
-	player_names = [c'Green: ', c'Indigo: ', c'Brown: ', c'Red: ']!
-)
-
-[weak]
-__global (
-	chat_char i8
-)
-
-[weak]
-__global (
-	w_title Hu_textline_t
-)
-
-[weak]
-__global (
-	w_chat Hu_itext_t
-)
-
-//!
-[weak]
-__global (
-	always_off = bool(false)
-)
-
-[weak]
-__global (
-	chat_dest [4]i8
-)
-
-[weak]
-__global (
-	w_inputbuffer [4]Hu_itext_t
-)
-
-[weak]
-__global (
-	message_on bool
-)
-
-[weak]
-__global (
-	message_nottobefuckedwith bool
-)
-
-[weak]
-__global (
-	w_message Hu_stext_t
-)
-
-[weak]
-__global (
-	message_counter int
-)
-
-//!
-[weak]
-__global (
-	headsupactive = bool(false)
-)
-
-[export: 'mapnames']
-const (
-	mapnames = [c'E1M1: Hangar', c'E1M2: Nuclear Plant', c'E1M3: Toxin Refinery',
-		c'E1M4: Command Control', c'E1M5: Phobos Lab', c'E1M6: Central Processing',
-		c'E1M7: Computer Station', c'E1M8: Phobos Anomaly', c'E1M9: Military Base',
-		c'E2M1: Deimos Anomaly', c'E2M2: Containment Area', c'E2M3: Refinery', c'E2M4: Deimos Lab',
-		c'E2M5: Command Center', c'E2M6: Halls of the Damned', c'E2M7: Spawning Vats',
-		c'E2M8: Tower of Babel', c'E2M9: Fortress of Mystery', c'E3M1: Hell Keep',
-		c'E3M2: Slough of Despair', c'E3M3: Pandemonium', c'E3M4: House of Pain',
-		c'E3M5: Unholy Cathedral', c'E3M6: Mt. Erebus', c'E3M7: Limbo', c'E3M8: Dis', c'E3M9: Warrens',
-		c'E4M1: Hell Beneath', c'E4M2: Perfect Hatred', c'E4M3: Sever The Wicked',
-		c'E4M4: Unruly Evil', c'E4M5: They Will Repent', c'E4M6: Against Thee Wickedly',
-		c'E4M7: And Hell Followed', c'E4M8: Unto The Cruel', c'E4M9: Fear', c'NEWLEVEL', c'NEWLEVEL',
-		c'NEWLEVEL', c'NEWLEVEL', c'NEWLEVEL', c'NEWLEVEL', c'NEWLEVEL', c'NEWLEVEL', c'NEWLEVEL']!
-)
-
-[export: 'mapnames_chex']
-const (
-	mapnames_chex = [c'E1M1: Hangar', c'E1M2: Nuclear Plant', c'E1M3: Toxin Refinery',
-		c'E1M4: Command Control', c'E1M5: Phobos Lab', c'E1M5: Phobos Lab', c'E1M5: Phobos Lab',
-		c'E1M5: Phobos Lab', c'E1M5: Phobos Lab', c'E1M5: Phobos Lab', c'E1M5: Phobos Lab',
-		c'E1M5: Phobos Lab', c'E1M5: Phobos Lab', c'E1M5: Phobos Lab', c'E1M5: Phobos Lab',
-		c'E1M5: Phobos Lab', c'E1M5: Phobos Lab', c'E1M5: Phobos Lab', c'E1M5: Phobos Lab',
-		c'E1M5: Phobos Lab', c'E1M5: Phobos Lab', c'E1M5: Phobos Lab', c'E1M5: Phobos Lab',
-		c'E1M5: Phobos Lab', c'E1M5: Phobos Lab', c'E1M5: Phobos Lab', c'E1M5: Phobos Lab',
-		c'E1M5: Phobos Lab', c'E1M5: Phobos Lab', c'E1M5: Phobos Lab', c'E1M5: Phobos Lab',
-		c'E1M5: Phobos Lab', c'E1M5: Phobos Lab', c'E1M5: Phobos Lab', c'E1M5: Phobos Lab',
-		c'E1M5: Phobos Lab', c'NEWLEVEL', c'NEWLEVEL', c'NEWLEVEL', c'NEWLEVEL', c'NEWLEVEL',
-		c'NEWLEVEL', c'NEWLEVEL', c'NEWLEVEL', c'NEWLEVEL']!
-)
-
-[export: 'mapnames_commercial']
-const (
-	mapnames_commercial = [c'level 1: entryway', c'level 2: underhalls', c'level 3: the gantlet',
-		c'level 4: the focus', c'level 5: the waste tunnels', c'level 6: the crusher',
-		c'level 7: dead simple', c'level 8: tricks and traps', c'level 9: the pit',
-		c'level 10: refueling base', c"level 11: 'o' of destruction!", c'level 12: the factory',
-		c'level 13: downtown', c'level 14: the inmost dens', c'level 15: industrial zone',
-		c'level 16: suburbs', c'level 17: tenements', c'level 18: the courtyard',
-		c'level 19: the citadel', c'level 20: gotcha!', c'level 21: nirvana',
-		c'level 22: the catacombs', c"level 23: barrels o' fun", c'level 24: the chasm',
-		c'level 25: bloodfalls', c'level 26: the abandoned mines', c'level 27: monster condo',
-		c'level 28: the spirit world', c'level 29: the living end', c'level 30: icon of sin',
-		c'level 31: wolfenstein', c'level 32: grosse', c'level 1: congo', c'level 2: well of souls',
-		c'level 3: aztec', c'level 4: caged', c'level 5: ghost town', c"level 6: baron's lair",
-		c'level 7: caughtyard', c'level 8: realm', c'level 9: abattoire', c'level 10: onslaught',
-		c'level 11: hunted', c'level 12: speed', c'level 13: the crypt', c'level 14: genesis',
-		c'level 15: the twilight', c'level 16: the omen', c'level 17: compound',
-		c'level 18: neurosphere', c'level 19: nme', c'level 20: the death domain', c'level 21: slayer',
-		c'level 22: impossible mission', c'level 23: tombstone', c'level 24: the final frontier',
-		c'level 25: the temple of darkness', c'level 26: bunker', c'level 27: anti-christ',
-		c'level 28: the sewers', c'level 29: odyssey of noises', c'level 30: the gateway of hell',
-		c'level 31: cyberden', c'level 32: go 2 it', c'level 1: system control', c'level 2: human bbq',
-		c'level 3: power control', c'level 4: wormhole', c'level 5: hanger', c'level 6: open season',
-		c'level 7: prison', c'level 8: metal', c'level 9: stronghold', c'level 10: redemption',
-		c'level 11: storage facility', c'level 12: crater', c'level 13: nukage processing',
-		c'level 14: steel works', c'level 15: dead zone', c'level 16: deepest reaches',
-		c'level 17: processing area', c'level 18: mill', c'level 19: shipping/respawning',
-		c'level 20: central processing', c'level 21: administration center', c'level 22: habitat',
-		c'level 23: lunar mining project', c'level 24: quarry', c"level 25: baron's den",
-		c'level 26: ballistyx', c'level 27: mount pain', c'level 28: heck', c'level 29: river styx',
-		c'level 30: last call', c'level 31: pharaoh', c'level 32: caribbean', c'', c'', c'']!
-)
-
-[c: 'HU_Init']
+// Stop sound for thing at <origin>
+// Start music using <music_id> from sounds.h
+// Start music using <music_id> from sounds.h,
+//  and set whether looping
+// query if music is playing
+// Stops the music fer sure.
+// Stop and resume music, during game PAUSE.
+//
+// Updates music & sounds
+//
+// skipping global dup "snd_channels"
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 1993-2008 Raven Software
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//	System specific interface stuff.
+//
+// The data sampled per tick (single player)
+// and transmitted to other peers (multiplayer).
+// Mainly movements/button commands per game tick,
+// plus a checksum for internal state consistency.
+//
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//     Definitions for use in networking code.
+//
+// Absolute maximum number of "nodes" in the game.  This is different to
+// NET_MAXPLAYERS, as there may be observers that are not participating
+// (eg. left/right monitors)
+// The maximum number of players, multiplayer/networking.
+// This is the maximum supported by the networking code; individual games
+// have their own values for MAXPLAYERS that can be smaller.
+// Maximum length of a player's name.
+// Networking and tick handling related.
+// net_addr_t
+// Magic number sent when connecting to check this is a valid client
+// Old magic number used by Chocolate Doom versions before v3.0:
+// header field value indicating that the packet is a reliable packet
+// Supported protocols. If you're developing a fork of Chocolate
+// Doom, you can add your own entry to this list while maintaining
+// compatibility with Chocolate Doom servers. Higher-numbered enum values
+// will be preferred when negotiating a protocol for the client and server
+// to use, so the order matters.
+// NOTE: The values in this enum do not have any special value outside of
+// the program they're compiled in. What matters is the string representation.
+// packet types
+// Settings specified when the client connects to the server.
+// Game settings sent by client to server when initiating game start,
+// and received from the server by clients when the game starts.
+// Complete set of ticcmds from all players
+// Data sent in response to server queries
+// Data sent by the server while waiting for the game to start.
+// #ifndef NET_DEFS_H
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//	Main loop stuff.
+//
+// Callback function invoked while waiting for the netgame to start.
+// The callback is invoked when new players are ready. The callback
+// should return true, or return false to abort startup.
+// Register callback functions for the main loop code to use.
+// Create any new ticcmds and broadcast to other players.
+// Broadcasts special packets to other players
+//  to notify of game exit
+//? how many ticks to run?
+// Called at start of game loop to initialize timers
+// Initialize networking code and connect to server.
+// Start game with specified settings. The structure will be updated
+// with the actual settings for the game.
+// Check if it is permitted to record a demo with a non-vanilla feature.
+// Check if it is permitted to play back a demo with a non-vanilla feature.
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//	Items: key cards, artifacts, weapon, ammunition.
+//
+// Weapon info: sprite frames, ammunition use.
+// skipping global dup "weaponinfo"
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//  Sprite animation.
+//
+// Basic data types.
+// Needs fixed point, and BAM angles.
+//
+// Needs to include the precompiled
+//  sprite animation tables.
+// Header generated by multigen utility.
+// This includes all the data for thing animation,
+// i.e. the Thing Atrributes table
+// and the Frame Sequence table.
+//
+// Frame flags:
+// handles maximum brightness (torches, muzzle flare, light sources)
+//
+// flag in thing->frame
+//
+// Overlay psprites are scaled shapes
+// drawn directly on the view screen,
+// coordinates are given for a 320*200 view screen.
+//
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//
+//
+// The player data structure depends on a number
+// of other structs: items (internal inventory),
+// animation states (closely tied to the sprites
+// used to represent them, unfortunately).
+// In addition, the player is just a special
+// case of the generic moving object/actor.
+// Finally, for odd reasons, the player input
+// is buffered within the player data struct,
+// as commands per game tick.
+//
+// Player states.
+//
+//
+// Player internal flags, for cheats and debug.
+//
+//
+// Extended player object info: player_t
+//
+//
+// INTERMISSION
+// Structure passed e.g. to WI_Start(wb)
+//
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//   All the global variables that store the internal state.
+//   Theoretically speaking, the internal state of the engine
+//    should be found by looking at the variables collected
+//    here, and every relevant module will have to include
+//    this header file.
+//   In practice, things are a bit messy.
+//
+// We need globally shared data structures,
+//  for defining the global state variables.
+// We need the playr data structure as well.
+// Game mode/mission
+// ------------------------
+// Command line parameters.
+//
+// skipping global dup "nomonsters"
+// checkparm of -nomonsters
+// skipping global dup "respawnparm"
+// checkparm of -respawn
+// skipping global dup "fastparm"
+// checkparm of -fast
+// skipping global dup "devparm"
+// DEBUG: launched with -devparm
+// -----------------------------------------------------
+// Game Mode - identify IWAD as shareware, retail etc.
+//
+// skipping global dup "gamemode"
+// skipping global dup "gamemission"
+// skipping global dup "gameversion"
+// skipping global dup "gamevariant"
+// skipping global dup "gamedescription"
+// Convenience macro.
+// 'gamemission' can be equal to pack_chex or pack_hacx, but these are
+// just modified versions of doom and doom2, and should be interpreted
+// as the same most of the time.
+//
+//#define logical_gamemission                             \
+//    (gamemission == pack_chex ? doom :                  \
+//     gamemission == pack_hacx ? doom2 : gamemission)
+//
+// Set if homebrew PWAD stuff has been added.
+// skipping global dup "modifiedgame"
+// -------------------------------------------
+// Selected skill type, map etc.
+//
+// Defaults for menu, methinks.
+// skipping global dup "startskill"
+// skipping global dup "startepisode"
+// skipping global dup "startmap"
+// Savegame slot to load on startup.  This is the value provided to
+// the -loadgame option.  If this has not been provided, this is -1.
+// skipping global dup "startloadgame"
+// skipping global dup "autostart"
+// Selected by user.
+// skipping global dup "gameskill"
+// skipping global dup "gameepisode"
+// skipping global dup "gamemap"
+// If non-zero, exit the level after this number of minutes
+// skipping global dup "timelimit"
+// Nightmare mode flag, single player.
+// skipping global dup "respawnmonsters"
+// Netgame? Only true if >1 player.
+// skipping global dup "netgame"
+// 0=Cooperative; 1=Deathmatch; 2=Altdeath
+// skipping global dup "deathmatch"
+// -------------------------
+// Internal parameters for sound rendering.
+// These have been taken from the DOS version,
+//  but are not (yet) supported with Linux
+//  (e.g. no sound volume adjustment with menu.
+// From m_menu.c:
+//  Sound FX volume has default, 0 - 15
+//  Music volume has default, 0 - 15
+// These are multiplied by 8.
+// skipping global dup "sfxVolume"
+// skipping global dup "musicVolume"
+// Current music/sfx card - index useless
+//  w/o a reference LUT in a sound module.
+// Ideally, this would use indices found
+//  in: /usr/include/linux/soundcard.h
+// Config file? Same disclaimer as above.
+// -------------------------
+// Status flags for refresh.
+//
+// Depending on view size - no status bar?
+// Note that there is no way to disable the
+//  status bar explicitely.
+// skipping global dup "automapactive"
+// In AutoMap mode?
+// skipping global dup "menuactive"
+// Menu overlayed?
+// skipping global dup "paused"
+// Game Pause?
+// skipping global dup "viewactive"
+// skipping global dup "nodrawers"
+// skipping global dup "testcontrols"
+// skipping global dup "testcontrols_mousespeed"
+// This one is related to the 3-screen display mode.
+// ANG90 = left side, ANG270 = right
+// skipping global dup "viewangleoffset"
+// Player taking events, and displaying.
+// skipping global dup "consoleplayer"
+// skipping global dup "displayplayer"
+// -------------------------------------
+// Scores, rating.
+// Statistics on a given map, for intermission.
+//
+// skipping global dup "totalkills"
+// skipping global dup "totalitems"
+// skipping global dup "totalsecret"
+// Timer, for scores.
+// skipping global dup "levelstarttic"
+// gametic at level start
+// skipping global dup "leveltime"
+// tics in game play for par
+// --------------------------------------
+// DEMO playback/recording related stuff.
+// No demo, there is a human player in charge?
+// Disable save/end game?
+// skipping global dup "usergame"
+//?
+// skipping global dup "demoplayback"
+// skipping global dup "demorecording"
+// Round angleturn in ticcmds to the nearest 256.  This is used when
+// recording Vanilla demos in netgames.
+// skipping global dup "lowres_turn"
+// Quit after playing a demo from cmdline.
+// skipping global dup "singledemo"
+//?
+// skipping global dup "gamestate"
+//-----------------------------
+// Internal parameters, fixed.
+// These are set by the engine, and not changed
+//  according to user inputs. Partly load from
+//  WAD, partly set at startup time.
+// Bookkeeping on players - state.
+// skipping global dup "players"
+// Alive? Disconnected?
+// skipping global dup "playeringame"
+// Player spawn spots for deathmatch.
+// skipping global dup "deathmatchstarts"
+// skipping global dup "deathmatch_p"
+// Player spawn spots.
+// skipping global dup "playerstarts"
+// skipping global dup "playerstartsingame"
+// Intermission stats.
+// Parameters for world map / intermission.
+// skipping global dup "wminfo"
+//-----------------------------------------
+// Internal parameters, used for engine.
+//
+// File handling stuff.
+// skipping global dup "savegamedir"
+// if true, load all graphics at level load
+// skipping global dup "precache"
+// wipegamestate can be set to -1
+//  to force a wipe on the next draw
+// skipping global dup "wipegamestate"
+// skipping global dup "mouseSensitivity"
+// skipping global dup "bodyqueslot"
+// Needed to store the number of the dummy sky flat.
+// Used for rendering,
+//  as well as tracking projectiles etc.
+// skipping global dup "skyflatnum"
+// Netgame stuff (buffers and pointers, i.e. indices).
+// skipping global dup "rndindex"
+// skipping global dup "netcmds"
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+//
+// DESCRIPTION:
+//	DOOM strings, by language.
+//
+// All important printed strings.
+// Misc. other strings.
+// QuitDOOM messages
+// 8 per each game type
+// skipping global dup "doom1_endmsg"
+// skipping global dup "doom2_endmsg"
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:  Heads-up displays
+//
+// Data.
+//
+// Locally used constants, shortcuts.
+//
+// remove later.
+// skipping global dup "plr"
+// skipping global dup "showMessages"
+//
+// Builtin map names.
+// The actual names can be found in DStrings.h.
+//
+// List of names for levels in commercial IWADs
+// (doom2.wad, plutonia.wad, tnt.wad).  These are stored in a
+// single large array; WADs like pl2.wad have a MAP33, and rely on
+// the layout in the Vanilla executable, where it is possible to
+// overflow the end of one array into the next.
+@[c: 'HU_Init']
 fn hu_init() {
 	i := 0
 	j := 0
 	buffer := [9]i8{}
+	// load the heads-up font
 	j = `!`
 	for i = 0; i < (`_` - `!` + 1); i++ {
 		deh_snprintf(buffer, 9, c'STCFN%.3d', j++)
-		hu_font[i] = &Patch_t(w_cachelumpname(buffer, 1))
+		hu_font[i] = &Patch_t(w_cache_lump_name(buffer, 1))
 	}
 }
 
-[c: 'HU_Stop']
+@[c: 'HU_Stop']
 fn hu_stop() {
 	headsupactive = false
 }
 
-[c: 'HU_Start']
+@[c: 'HU_Start']
 fn hu_start() {
 	i := 0
 	s := &i8(0)
@@ -305,53 +1493,86 @@ fn hu_start() {
 	message_dontfuckwithme = false
 	message_nottobefuckedwith = false
 	chat_on = false
-	hulib_initstext(&w_message, 0, 0, 1, hu_font, `!`, &message_on)
-	hulib_inittextline(&w_title, 0, (167 - (i16((hu_font[0].height)))), hu_font, `!`)
+	// create the message widget
+	hu_lib_init_st_ext(&w_message, 0, 0, 1, hu_font, `!`, &message_on)
+	// create the map title widget
+	hu_lib_init_text_line(&w_title, 0, (167 - (i16((hu_font[0].height)))), hu_font, `!`)
+	// XTODO
+	//
+	//    switch ( logical_gamemission )
+	//    {
+	//      case doom:
+	//	s = HU_TITLE;
+	//	break;
+	//      case doom2:
+	//	 s = HU_TITLE2;
+	//         // Pre-Final Doom compatibility: map33-map35 names don't spill over
+	//         if (gameversion <= exe_doom_1_9 && gamemap >= 33)
+	//         {
+	//             s = "";
+	//         }
+	//	 break;
+	//      case pack_plut:
+	//	s = HU_TITLEP;
+	//	break;
+	//      case pack_tnt:
+	//	s = HU_TITLET;
+	//	break;
+	//      default:
+	//         s = "Unknown level";
+	//         break;
+	//    }
+	//	
 	s = (mapnames[(gameepisode - 1) * 9 + gamemap - 1])
 	if GameMission_t.doom == GameMission_t.doom && gameversion == GameVersion_t.exe_chex {
 		s = (mapnames_chex[(gameepisode - 1) * 9 + gamemap - 1])
 	}
+	// dehacked substitution to get modified level name
 	s = deh_string(s)
 	for *s {
-		hulib_addchartotextline(&w_title, *(s++))
+		hu_lib_add_char_to_text_line(&w_title, *(s++))
 	}
-	hulib_inititext(&w_chat, 0, (0 + 1 * ((i16((hu_font[0].height))) + 1)), hu_font, `!`,
-		&chat_on)
+	// create the chat widget
+	hu_lib_init_it_ext(&w_chat, 0, (0 + 1 * ((i16((hu_font[0].height))) + 1)), hu_font,
+		`!`, &chat_on)
+	// create the inputbuffer widgets
 	for i = 0; i < 4; i++ {
-		hulib_inititext(&w_inputbuffer[i], 0, 0, 0, 0, &always_off)
+		hu_lib_init_it_ext(&w_inputbuffer[i], 0, 0, 0, 0, &always_off)
 	}
 	headsupactive = true
 }
 
-[c: 'HU_Drawer']
+@[c: 'HU_Drawer']
 fn hu_drawer() {
-	hulib_drawstext(&w_message)
-	hulib_drawitext(&w_chat)
+	hu_lib_draw_st_ext(&w_message)
+	hu_lib_draw_it_ext(&w_chat)
 	if automapactive {
-		hulib_drawtextline(&w_title, false)
+		hu_lib_draw_text_line(&w_title, false)
 	}
 }
 
-[c: 'HU_Erase']
+@[c: 'HU_Erase']
 fn hu_erase() {
-	hulib_erasestext(&w_message)
-	hulib_eraseitext(&w_chat)
-	hulib_erasetextline(&w_title)
+	hu_lib_erase_st_ext(&w_message)
+	hu_lib_erase_it_ext(&w_chat)
+	hu_lib_erase_text_line(&w_title)
 }
 
-[c: 'HU_Ticker']
+@[c: 'HU_Ticker']
 fn hu_ticker() {
 	i := 0
 	rc := 0
 
 	c := i8(0)
-	if message_counter && !message_counter-- {
+	// tick down message counter if message is up
+	if message_counter && !message_counter--$ {
 		message_on = false
 		message_nottobefuckedwith = false
 	}
 	if showMessages || message_dontfuckwithme {
+		// display message if necessary
 		if (plr.message && !message_nottobefuckedwith) || (plr.message && message_dontfuckwithme) {
-			hulib_addmessagetostext(&w_message, 0, plr.message)
+			hu_lib_add_message_to_st_ext(&w_message, 0, plr.message)
 			plr.message = 0
 			message_on = true
 			message_counter = (4 * 35)
@@ -359,6 +1580,8 @@ fn hu_ticker() {
 			message_dontfuckwithme = 0
 		}
 	}
+	// else message_on = false;
+	// check for incoming chat characters
 	if netgame {
 		for i = 0; i < 4; i++ {
 			if !playeringame[i] {
@@ -371,22 +1594,22 @@ fn hu_ticker() {
 						if c <= 5 {
 							chat_dest[i] = c
 						} else {
-							rc = hulib_keyinitext(&w_inputbuffer[i], c)
+							rc = hu_lib_key_in_it_ext(&w_inputbuffer[i], c)
 							if rc && c == 13 {
 								if w_inputbuffer[i].l.len
 									&& (chat_dest[i] == consoleplayer + 1 || chat_dest[i] == 5) {
-									hulib_addmessagetostext(&w_message, deh_string(player_names[i]),
+									hu_lib_add_message_to_st_ext(&w_message, deh_string(player_names[i]),
 										w_inputbuffer[i].l.l)
 									message_nottobefuckedwith = true
 									message_on = true
 									message_counter = (4 * 35)
 									if gamemode == GameMode_t.commercial {
-										s_startsound(0, Sfxenum_t.sfx_radio)
+										s_start_sound(0, Sfxenum_t.sfx_radio)
 									} else if gameversion > GameVersion_t.exe_doom_1_2 {
-										s_startsound(0, Sfxenum_t.sfx_tink)
+										s_start_sound(0, Sfxenum_t.sfx_tink)
 									}
 								}
-								hulib_resetitext(&w_inputbuffer[i])
+								hu_lib_reset_it_ext(&w_inputbuffer[i])
 							}
 						}
 						players[i].cmd.chatchar = 0
@@ -397,25 +1620,8 @@ fn hu_ticker() {
 	}
 }
 
-[weak]
-__global (
-	chatchars [128]i8
-)
-
-//!
-[weak]
-__global (
-	head = int(0)
-)
-
-//!
-[weak]
-__global (
-	tail = int(0)
-)
-
-[c: 'HU_queueChatChar']
-fn hu_queuechatchar(c i8) {
+@[c: 'HU_queueChatChar']
+fn hu_queue_chat_char(c i8) {
 	if ((head + 1) & (128 - 1)) == tail {
 		plr.message = deh_string(c'[Message unsent]')
 	} else {
@@ -424,8 +1630,8 @@ fn hu_queuechatchar(c i8) {
 	}
 }
 
-[c: 'HU_dequeueChatChar']
-fn hu_dequeuechatchar() i8 {
+@[c: 'HU_dequeueChatChar']
+fn hu_dequeue_chat_char() i8 {
 	c := i8(0)
 	if head != tail {
 		c = chatchars[tail]
@@ -436,21 +1642,21 @@ fn hu_dequeuechatchar() i8 {
 	return c
 }
 
-[c: 'StartChatInput']
-fn startchatinput(dest int) {
+@[c: 'StartChatInput']
+fn start_chat_input(dest int) {
 	chat_on = true
-	hulib_resetitext(&w_chat)
-	hu_queuechatchar(5)
-	i_starttextinput(0, 8, 320, 16)
+	hu_lib_reset_it_ext(&w_chat)
+	hu_queue_chat_char(5)
+	i_start_text_input(0, 8, 320, 16)
 }
 
-[c: 'StopChatInput']
-fn stopchatinput() {
+@[c: 'StopChatInput']
+fn stop_chat_input() {
 	chat_on = false
-	i_stoptextinput()
+	i_stop_text_input()
 }
 
-[c: 'HU_Responder']
+@[c: 'HU_Responder']
 fn hu_responder(ev &Event_t) bool {
 	lastmessage := [81]i8{}
 	macromessage := &i8(0)
@@ -480,13 +1686,13 @@ fn hu_responder(ev &Event_t) bool {
 			eatkey = true
 		} else if netgame && ev.data2 == key_multi_msg {
 			eatkey = true
-			startchatinput(5)
+			start_chat_input(5)
 		} else if netgame && numplayers > 2 {
 			for i = 0; i < 4; i++ {
 				if ev.data2 == key_multi_msgplayer[i] {
 					if playeringame[i] && i != consoleplayer {
 						eatkey = true
-						startchatinput(i + 1)
+						start_chat_input(i + 1)
 						break
 					} else if i == consoleplayer {
 						num_nobrainers++
@@ -506,35 +1712,45 @@ fn hu_responder(ev &Event_t) bool {
 			}
 		}
 	} else {
+		// send a macro
 		if altdown {
 			c = ev.data1 - `0`
 			if c > 9 {
 				return false
 			}
+			// fprintf(stderr, "got here\n");
 			macromessage = chat_macros[c]
-			hu_queuechatchar(13)
+			// kill last message with a '\n'
+			hu_queue_chat_char(13)
+			// DEBUG!!!
+			// send the macro message
 			for *macromessage {
-				hu_queuechatchar(*macromessage++)
+				hu_queue_chat_char(*macromessage++)
 			}
-			hu_queuechatchar(13)
-			stopchatinput()
-			m_stringcopy(lastmessage, chat_macros[c], sizeof(lastmessage))
+			hu_queue_chat_char(13)
+			// leave chat mode and notify that it was sent
+			stop_chat_input()
+			m_string_copy(lastmessage, chat_macros[c], sizeof(lastmessage))
 			plr.message = lastmessage
 			eatkey = true
 		} else {
 			c = ev.data3
-			eatkey = hulib_keyinitext(&w_chat, c)
+			eatkey = hu_lib_key_in_it_ext(&w_chat, c)
 			if eatkey {
-				hu_queuechatchar(c)
+				// static unsigned char buf[20]; // DEBUG
+				hu_queue_chat_char(c)
+				// M_snprintf(buf, sizeof(buf), "KEY: %d => %d", ev->data1, c);
+
+				//        plr->message = buf;
 			}
 			if c == 13 {
-				stopchatinput()
+				stop_chat_input()
 				if w_chat.l.len {
-					m_stringcopy(lastmessage, w_chat.l.l, sizeof(lastmessage))
+					m_string_copy(lastmessage, w_chat.l.l, sizeof(lastmessage))
 					plr.message = lastmessage
 				}
 			} else if c == 27 {
-				stopchatinput()
+				stop_chat_input()
 			}
 		}
 	}

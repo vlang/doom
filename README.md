@@ -56,5 +56,5 @@ All of these except for the globals are going to be fixed by the translator:
 ```bash
 git clone git@github.com:vlang/doom.git
 cd doom/
-./build_whole_project.sh
+DOOM_FOLDER=`pwd` && ./build_whole_project.sh
 ```

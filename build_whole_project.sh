@@ -17,7 +17,7 @@ v translate src/doom ;
 
 cat << EOF > src/doom/doom_v/vdoom_patch_linux.v
 module main
-const _isspace = 8192
+const _is_space = 8192
 type U16 = u16
 fn C.__ctype_b_loc() &&U16
 fn __ctype_b_loc() &&U16 { return C.__ctype_b_loc() }
