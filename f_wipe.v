@@ -1,64 +1,240 @@
-[translated]
+@[translated]
 module main
 
-[typedef]
-struct C.FILE {}
-
-// vstart
-
-[c: 'Z_Malloc']
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//      Zone Memory Allocation, perhaps NeXT ObjectiveC inspired.
+//	Remark: this was the only stuff that, according
+//	 to John Carmack, might have been useful for
+//	 Quake.
+//
+//
+// ZONE MEMORY
+// PU - purge tags.
+// static entire execution time
+// static while playing
+// static while playing
+// a free block
+// static until level exited
+// a special thinker in a level
+// Tags >= PU_PURGELEVEL are purgable whenever needed.
+// Total number of different tag types
+@[c: 'Z_Malloc']
 fn z_malloc(size int, tag int, ptr voidptr) voidptr
 
-[c: 'Z_Free']
+@[c: 'Z_Free']
 fn z_free(ptr voidptr)
 
-[c: 'I_ReadScreen']
-fn i_readscreen(scr &Pixel_t)
+//
+// This is used to get the local FILE:LINE info from CPP
+// prior to really call the function in question.
+//
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//	Simple basic typedefs, isolated here to make it easier
+//	 separating modules.
+//
+// #define macros to provide functions missing in Windows.
+// Outside Windows, we use strings.h for str[n]casecmp.
+//
+// The packed attribute forces structures to be packed into the minimum
+// space necessary.  If this is not done, the compiler may align structure
+// fields differently to optimize memory access, inflating the overall
+// structure size.  It is important to use the packed attribute on certain
+// structures where alignment is important, particularly data read/written
+// to disk.
+//
+// C99 integer types; with gcc we just use this.  Other compilers
+// should add conditional statements that define the C99 types.
+// What is really wanted here is stdint.h; however, some old versions
+// of Solaris don't have stdint.h and only have inttypes.h (the
+// pre-standardisation version).  inttypes.h is also in the C99
+// standard and defined to include stdint.h, so include this.
+// Use builtin bool type with C++.
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//	System specific interface stuff.
+//
+// Screen width and height.
+// Screen height used when aspect_ratio_correct=true.
+// Called by D_DoomMain,
+// determines the hardware configuration
+// and sets up the video mode
+// Takes full 8 bit values.
+@[c: 'I_ReadScreen']
+fn i_read_screen(scr &Pixel_t)
 
-[c: 'V_DrawBlock']
-fn v_drawblock(x int, y int, width int, height int, src &Pixel_t)
+// Called before processing any tics in a frame (just after displaying a frame).
+// Time consuming syncronous operations are performed here (joystick reading).
+// Called before processing each tic in a frame.
+// Quick syncronous operations are performed here.
+// Enable the loading disk image displayed when reading from disk.
+// Joystic/gamepad hysteresis
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//	Gamma correction LUT.
+//	Functions to draw patches (by post) directly to screen.
+//	Functions to blit a block to the screen.
+//
+// Needed because we are refering to patches.
+//
+// VIDEO
+//
+// haleyjd 08/28/10: implemented for Strife support
+// haleyjd 08/28/10: Patch clipping callback, implemented to support Choco
+// Strife.
+// Allocates buffer screens, call before R_Init.
+// Draw a block from the specified source screen to the screen.
+// villsa [STRIFE]
+// Draw a linear block of pixels into the view buffer.
+@[c: 'V_DrawBlock']
+fn v_draw_block(x int, y int, width int, height int, src &Pixel_t)
 
-[c: 'V_MarkRect']
-fn v_markrect(x int, y int, width int, height int)
+@[c: 'V_MarkRect']
+fn v_mark_rect(x int, y int, width int, height int)
 
-[c: 'M_Random']
+// Draw a raw screen lump
+// Temporarily switch to using a different buffer to draw graphics, etc.
+// Return to using the normal screen buffer to draw graphics.
+// Save a screenshot of the current screen to a file, named in the
+// format described in the string passed to the function, eg.
+// "DOOM%02i.pcx"
+// Load the lookup table for translucency calculations from the TINTTAB
+// lump.
+// villsa [STRIFE]
+// Load the lookup table for translucency calculations from the XLATAB
+// lump.
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//
+//
+// Returns a number from 0 to 255,
+// from a lookup table.
+@[c: 'M_Random']
 fn m_random() int
 
-const ( // empty enum
-)
+// As M_Random, but used only by the play simulation.
+// Fix randoms for demos.
+// Defined version of P_Random() - P_Random()
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//	Mission start screen wipe/melt, special effects.
+//	
+//
+//                       SCREEN WIPE PACKAGE
+//
 
-[c: 'wipe_StartScreen']
-fn wipe_startscreen(x int, y int, width int, height int) int
 
-[c: 'wipe_EndScreen']
-fn wipe_endscreen(x int, y int, width int, height int) int
+@[c: 'wipe_StartScreen']
+fn wipe_start_screen(x int, y int, width int, height int) int
 
-[c: 'wipe_ScreenWipe']
-fn wipe_screenwipe(wipeno int, x int, y int, width int, height int, ticks int) int
+@[c: 'wipe_EndScreen']
+fn wipe_end_screen(x int, y int, width int, height int) int
 
-//!
-[weak]
-__global (
-	go_ = bool(0)
-)
+@[c: 'wipe_ScreenWipe']
+fn wipe_screen_wipe(wipeno int, x int, y int, width int, height int, ticks int) int
 
-[weak]
-__global (
-	wipe_scr_start &Pixel_t
-)
-
-[weak]
-__global (
-	wipe_scr_end &Pixel_t
-)
-
-[weak]
-__global (
-	wipe_scr &Pixel_t
-)
-
-[c: 'wipe_shittyColMajorXform']
-fn wipe_shittycolmajorxform(array &Dpixel_t, width int, height int) {
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//	Mission begin melt/wipe screen special effect.
+//
+//
+//                       SCREEN WIPE PACKAGE
+//
+// when zero, stop the wipe
+@[c: 'wipe_shittyColMajorXform']
+fn wipe_shitty_col_major_xform(array &Dpixel_t, width int, height int) {
 	x := 0
 	y := 0
 	dest := &Dpixel_t(0)
@@ -72,14 +248,14 @@ fn wipe_shittycolmajorxform(array &Dpixel_t, width int, height int) {
 	z_free(dest)
 }
 
-[c: 'wipe_initColorXForm']
-fn wipe_initcolorxform(width int, height int, ticks int) int {
+@[c: 'wipe_initColorXForm']
+fn wipe_init_color_xf_orm(width int, height int, ticks int) int {
 	C.memcpy(wipe_scr, wipe_scr_start, width * height * sizeof(*wipe_scr))
 	return 0
 }
 
-[c: 'wipe_doColorXForm']
-fn wipe_docolorxform(width int, height int, ticks int) int {
+@[c: 'wipe_doColorXForm']
+fn wipe_do_color_xf_orm(width int, height int, ticks int) int {
 	changed := false
 	w := &Pixel_t(0)
 	e := &Pixel_t(0)
@@ -113,24 +289,24 @@ fn wipe_docolorxform(width int, height int, ticks int) int {
 	return !changed
 }
 
-[c: 'wipe_exitColorXForm']
-fn wipe_exitcolorxform(width int, height int, ticks int) int {
+@[c: 'wipe_exitColorXForm']
+fn wipe_exit_color_xf_orm(width int, height int, ticks int) int {
 	return 0
 }
 
-[weak]
-__global (
-	y &int
-)
-
-[c: 'wipe_initMelt']
-fn wipe_initmelt(width int, height int, ticks int) int {
+@[c: 'wipe_initMelt']
+fn wipe_init_melt(width int, height int, ticks int) int {
 	i := 0
 	r := 0
 
+	// copy start screen to main screen
 	C.memcpy(wipe_scr, wipe_scr_start, width * height * sizeof(*wipe_scr))
-	wipe_shittycolmajorxform(&Dpixel_t(wipe_scr_start), width / 2, height)
-	wipe_shittycolmajorxform(&Dpixel_t(wipe_scr_end), width / 2, height)
+	// makes this wipe faster (in theory)
+	// to have stuff in column-major format
+	wipe_shitty_col_major_xform(&Dpixel_t(wipe_scr_start), width / 2, height)
+	wipe_shitty_col_major_xform(&Dpixel_t(wipe_scr_end), width / 2, height)
+	// setup initial column positions
+	// (y<0 => not ready to scroll yet)
 	y = &int(z_malloc(width * sizeof(int), 1, 0))
 	y[0] = -(m_random() % 16)
 	for i = 1; i < width; i++ {
@@ -145,8 +321,8 @@ fn wipe_initmelt(width int, height int, ticks int) int {
 	return 0
 }
 
-[c: 'wipe_doMelt']
-fn wipe_domelt(width int, height int, ticks int) int {
+@[c: 'wipe_doMelt']
+fn wipe_do_melt(width int, height int, ticks int) int {
 	i := 0
 	j := 0
 	dy := 0
@@ -187,42 +363,48 @@ fn wipe_domelt(width int, height int, ticks int) int {
 	return done
 }
 
-[c: 'wipe_exitMelt']
-fn wipe_exitmelt(width int, height int, ticks int) int {
+@[c: 'wipe_exitMelt']
+fn wipe_exit_melt(width int, height int, ticks int) int {
 	z_free(y)
 	z_free(wipe_scr_start)
 	z_free(wipe_scr_end)
 	return 0
 }
 
-[c: 'wipe_StartScreen']
-fn wipe_startscreen(x int, y int, width int, height int) int {
-	wipe_scr_start = z_malloc(320 * 200 * sizeof(*wipe_scr_start), 1, (voidptr(0)))
-	i_readscreen(wipe_scr_start)
+@[c: 'wipe_StartScreen']
+fn wipe_start_screen(x int, y int, width int, height int) int {
+	wipe_scr_start = z_malloc(320 * 200 * sizeof(*wipe_scr_start), 1, (unsafe { nil }))
+	i_read_screen(wipe_scr_start)
 	return 0
 }
 
-[c: 'wipe_EndScreen']
-fn wipe_endscreen(x int, y int, width int, height int) int {
-	wipe_scr_end = z_malloc(320 * 200 * sizeof(*wipe_scr_end), 1, (voidptr(0)))
-	i_readscreen(wipe_scr_end)
-	v_drawblock(x, y, width, height, wipe_scr_start)
+@[c: 'wipe_EndScreen']
+fn wipe_end_screen(x int, y int, width int, height int) int {
+	wipe_scr_end = z_malloc(320 * 200 * sizeof(*wipe_scr_end), 1, (unsafe { nil }))
+	i_read_screen(wipe_scr_end)
+	v_draw_block(x, y, width, height, wipe_scr_start)
+	// restore start scr.
 	return 0
 }
 
-[c: 'wipe_ScreenWipe']
-fn wipe_screenwipe(wipeno int, x int, y int, width int, height int, ticks int) int {
+@[c: 'wipe_ScreenWipe']
+fn wipe_screen_wipe(wipeno int, x int, y int, width int, height int, ticks int) int {
 	rc := 0
-	wipes := [wipe_initcolorxform, wipe_docolorxform, wipe_exitcolorxform, wipe_initmelt, wipe_domelt,
-		wipe_exitmelt]!
+	wipes := [wipe_init_color_xf_orm, wipe_do_color_xf_orm, wipe_exit_color_xf_orm, wipe_init_melt,
+		wipe_do_melt, wipe_exit_melt]!
 
+	// initial stuff
 	if !go_ {
 		go_ = 1
+		// wipe_scr = (pixel_t *) Z_Malloc(width*height, PU_STATIC, 0); // DEBUG
 		wipe_scr = I_VideoBuffer
 		wipes[wipeno * 3](width, height, ticks)
 	}
-	v_markrect(0, 0, width, height)
+	// do a piece of wipe-in
+	v_mark_rect(0, 0, width, height)
 	rc = wipes[wipeno * 3 + 1](width, height, ticks)
+	//  V_DrawBlock(x, y, 0, width, height, wipe_scr); // DEBUG
+	// final stuff
 	if rc {
 		go_ = 0
 		wipes[wipeno * 3 + 2](width, height, ticks)

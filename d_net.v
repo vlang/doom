@@ -1,2316 +1,1307 @@
-[translated]
+@[translated]
 module main
 
-[typedef]
-struct C.FILE {}
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//	Simple basic typedefs, isolated here to make it easier
+//	 separating modules.
+//
+// #define macros to provide functions missing in Windows.
+// Outside Windows, we use strings.h for str[n]casecmp.
+//
+// The packed attribute forces structures to be packed into the minimum
+// space necessary.  If this is not done, the compiler may align structure
+// fields differently to optimize memory access, inflating the overall
+// structure size.  It is important to use the packed attribute on certain
+// structures where alignment is important, particularly data read/written
+// to disk.
+//
+// C99 integer types; with gcc we just use this.  Other compilers
+// should add conditional statements that define the C99 types.
+// What is really wanted here is stdint.h; however, some old versions
+// of Solaris don't have stdint.h and only have inttypes.h (the
+// pre-standardisation version).  inttypes.h is also in the C99
+// standard and defined to include stdint.h, so include this.
+// Use builtin bool type with C++.
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//      System-specific timer interface
+//
+// Called by D_DoomLoop,
+// returns current time in tics.
+// returns current time in ms
+// Pause for a specified number of ms
+// Initialize timer
+// Wait for vertical retrace or pause a bit.
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//   Functions and definitions relating to the game type and operational
+//   mode.
+//
+// The "mission" controls what game we are playing.
+// The "mode" allows more accurate specification of the game mode we are
+// in: eg. shareware vs. registered.  So doom1.wad and doom.wad are the
+// same mission, but a different mode.
+// What version are we emulating?
+// What IWAD variant are we using?
+// Skill level.
+// #ifndef __D_MODE__
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//  Internally used data structures for virtually everything,
+//   lots of other stuff.
+//
+//
+// Global parameters/defines.
+//
+// DOOM version
+// Version code for cph's longtics hack ("v1.91")
+// If rangecheck is undefined,
+// most parameter validation debugging code will not be compiled
+// The maximum number of players, multiplayer/networking.
+// The current state of the game: whether we are
+// playing, gazing at the intermission screen,
+// the game final animation, or a demo.
+//
+// Difficulty/skill settings/filters.
+//
+// Skill flags.
+// Deaf monsters/do not react to sound.
+//
+// Key cards.
+//
+// The defined weapons,
+//  including a marker indicating
+//  user has not changed weapon.
+// Ammunition types defined.
+// Power up artifacts.
+//
+// Power up durations,
+//  how many seconds till expiration,
+//  assuming TICRATE is 35 ticks/second.
+//
+// __DOOMDEF__
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//	System specific interface stuff.
+//
+// Read events from all input devices
+@[c: 'D_ProcessEvents']
+fn d_process_events()
 
-// vstart
+//
+// BASE LEVEL
+//
+@[c: 'D_DoAdvanceDemo']
+fn d_do_advance_demo()
 
-struct Lldiv_t {
-	quot i64
-	rem  i64
-}
+//
+// GLOBAL VARIABLES
+//
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//  Nil.
+//
+//
+// MISC
+//
+// Returns the position of the given parameter
+// in the arg list (0 if not found).
+@[c: 'M_CheckParm']
+fn m_check_parm(check &i8) int
 
-fn system(&i8) int
+// Same as M_CheckParm, but checks that num_args arguments are available
+// following the specified argument.
+// Parameter has been specified?
+@[c: 'M_ParmExists']
+fn m_parm_exists(check &i8) bool
 
-type Byte = u8
-type Pixel_t = u8
-type Dpixel_t = i16
-
-enum GameMission_t {
-	doom
-	doom2
-	pack_tnt
-	pack_plut
-	pack_chex
-	pack_hacx
-	heretic
-	hexen
-	strife
-	none_
-}
-
-enum GameMode_t {
-	shareware
-	registered
-	commercial
-	retail
-	indetermined
-}
-
-enum GameVersion_t {
-	exe_doom_1_2
-	exe_doom_1_666
-	exe_doom_1_7
-	exe_doom_1_8
-	exe_doom_1_9
-	exe_hacx
-	exe_ultimate
-	exe_final
-	exe_final2
-	exe_chex
-	exe_heretic_1_3
-	exe_hexen_1_1
-	exe_strife_1_2
-	exe_strife_1_31
-}
-
-enum GameVariant_t {
-	vanilla
-	freedoom
-	freedm
-	bfgedition
-}
-
-enum Skill_t {
-	sk_noitems = -1
-	sk_baby = 0
-	sk_easy
-	sk_medium
-	sk_hard
-	sk_nightmare
-}
-
-enum Gamestate_t {
-	gs_level
-	gs_intermission
-	gs_finale
-	gs_demoscreen
-}
-
-enum Gameaction_t {
-	ga_nothing
-	ga_loadlevel
-	ga_newgame
-	ga_loadgame
-	ga_savegame
-	ga_playdemo
-	ga_completed
-	ga_victory
-	ga_worlddone
-	ga_screenshot
-}
-
-enum Card_t {
-	it_bluecard
-	it_yellowcard
-	it_redcard
-	it_blueskull
-	it_yellowskull
-	it_redskull
-	numcards
-}
-
-enum Weapontype_t {
-	wp_fist
-	wp_pistol
-	wp_shotgun
-	wp_chaingun
-	wp_missile
-	wp_plasma
-	wp_bfg
-	wp_chainsaw
-	wp_supershotgun
-	numweapons
-	wp_nochange
-}
-
-enum Ammotype_t {
-	am_clip
-	am_shell
-	am_cell
-	am_misl
-	numammo
-	am_noammo
-}
-
-enum Powertype_t {
-	pw_invulnerability
-	pw_strength
-	pw_invisibility
-	pw_ironfeet
-	pw_allmap
-	pw_infrared
-	numpowers
-}
-
-enum Powerduration_t {
-	invulntics = 30 * 35
-	invistics = 60 * 35
-	infratics = 120 * 35
-	irontics = 60 * 35
-}
-
-[c: 'D_ProcessEvents']
-fn d_processevents()
-
-[c: 'D_DoAdvanceDemo']
-fn d_doadvancedemo()
-
-[c: 'M_CheckParm']
-fn m_checkparm(check &i8) int
-
-[c: 'M_ParmExists']
-fn m_parmexists(check &i8) bool
-
-enum Evtype_t {
-	ev_keydown
-	ev_keyup
-	ev_mouse
-	ev_joystick
-	ev_quit
-}
-
-struct Event_t {
-	type_ Evtype_t
-	data1 int
-	data2 int
-	data3 int
-	data4 int
-	data5 int
-}
-
-enum Buttoncode_t {
-	bt_attack = 1
-	bt_use = 2
-	bt_special = 128
-	bt_specialmask = 3
-	bt_change = 4
-	bt_weaponmask = 8 + 16 + 32
-	bt_weaponshift = 3
-	bts_pause = 1
-	bts_savegame = 2
-	bts_savemask = 4 + 8 + 16
-	bts_saveshift = 2
-}
-
-enum Buttoncode2_t {
-	bt2_lookup = 1
-	bt2_lookdown = 2
-	bt2_centerview = 4
-	bt2_invuse = 8
-	bt2_invdrop = 16
-	bt2_jump = 32
-	bt2_health = 128
-}
-
-[c: 'M_Ticker']
+// Get name of executable used to run this program:
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//
+//
+//
+// Event handling.
+//
+// Input event types.
+// Event structure.
+//
+// Button/action code definitions.
+//
+// villsa [STRIFE] Strife specific buttons
+// TODO - not finished
+// Called by IO functions when input is detected.
+// Read an event from the event queue
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//   Menu widget stuff, episode selection and such.
+//
+//
+// MENUS
+//
+// Called by main loop,
+// saves config file and calls I_Quit when user exits.
+// Even when the menu is not displayed,
+// this can resize the view and change game parameters.
+// Does all the real work of the menu interaction.
+// Called by main loop,
+// only used for menu (skull cursor) animation.
+@[c: 'M_Ticker']
 fn m_ticker()
 
-[c: 'M_StringCopy']
-fn m_stringcopy(dest &i8, src &i8, dest_size usize) bool
+// Called by main loop,
+// draws the menus directly into the screen buffer.
+// Called by D_DoomMain,
+// loads the config file.
+// Called by intro code to force menu up upon a keypress,
+// does nothing if menu is already up.
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//      Miscellaneous.
+//
+@[c: 'M_StringCopy']
+fn m_string_copy(dest &i8, src &i8, dest_size usize) bool
 
-struct Ticcmd_t {
-	forwardmove i8
-	sidemove    i8
-	angleturn   i16
-	chatchar    u8
-	buttons     u8
-	consistancy u8
-	buttons2    u8
-	inventory   int
-	lookfly     u8
-	arti        u8
-}
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 1993-2008 Raven Software
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//	System specific interface stuff.
+//
+// The data sampled per tick (single player)
+// and transmitted to other peers (multiplayer).
+// Mainly movements/button commands per game tick,
+// plus a checksum for internal state consistency.
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//	System specific interface stuff.
+//
+// Called by DoomMain.
+// Called by startup code
+// to get the ammount of memory to malloc
+// for the zone management.
+// Asynchronous interrupt functions should maintain private queues
+// that are read by the synchronous functions
+// to be converted into events.
+// Either returns a null ticcmd,
+// or calls a loadable driver to build it.
+// This ticcmd will then be modified by the gameloop
+// for normal input.
+// Called by M_Responder when quit is selected.
+// Clean exit, displays sell blurb.
+// Schedule a function to be called when the program exits.
+// If run_if_error is true, the function is called if the exit
+// is due to an error (I_Error)
+// Add all system-specific config file variable bindings.
+// Print startup banner copyright message.
+// Print a centered text banner displaying the given string.
+// Print a dividing line for startup banners.
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//	System specific interface stuff.
+//
+// Screen width and height.
+// Screen height used when aspect_ratio_correct=true.
+// Called by D_DoomMain,
+// determines the hardware configuration
+// and sets up the video mode
+// Takes full 8 bit values.
+// Called before processing any tics in a frame (just after displaying a frame).
+// Time consuming syncronous operations are performed here (joystick reading).
+// Called before processing each tic in a frame.
+// Quick syncronous operations are performed here.
+// Enable the loading disk image displayed when reading from disk.
+// Joystic/gamepad hysteresis
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//   Duh.
+//
+//
+// GAME
+//
+// Can be called by the startup code or M_Responder.
+// A normal game starts at map 1,
+// but a warp test can start elsewhere
+// Can be called by the startup code or M_Responder,
+// calls P_SetupLevel or W_EnterWorld.
+// Called by M_Responder.
+// Only called by startup code.
+@[c: 'G_CheckDemoStatus']
+fn g_check_demo_status() bool
 
-type Atexit_func_t = fn ()
+// Read current data from inputs and build a player movement command.
+@[c: 'G_BuildTiccmd']
+fn g_build_ticcmd(cmd &Ticcmd_t, maketic int)
 
-type Grabmouse_callback_t = fn () bool
-
-[c: 'G_CheckDemoStatus']
-fn g_checkdemostatus() bool
-
-[c: 'G_BuildTiccmd']
-fn g_buildticcmd(cmd &Ticcmd_t, maketic int)
-
-[c: 'G_Ticker']
+@[c: 'G_Ticker']
 fn g_ticker()
 
-const ( // empty enum
-	ml_label    = 0
-	ml_things   = 1
-	ml_linedefs = 2
-	ml_sidedefs = 3
-	ml_vertexes = 4
-	ml_segs     = 5
-	ml_ssectors = 6
-	ml_nodes    = 7
-	ml_sectors  = 8
-	ml_reject   = 9
-	ml_blockmap = 10
-)
-
-struct Mapvertex_t {
-	x i16
-	y i16
-}
-
-struct Mapsidedef_t {
-	textureoffset i16
-	rowoffset     i16
-	toptexture    [8]i8
-	bottomtexture [8]i8
-	midtexture    [8]i8
-	sector        i16
-}
-
-struct Maplinedef_t {
-	v1      i16
-	v2      i16
-	flags   i16
-	special i16
-	tag     i16
-	sidenum [2]i16
-}
-
-struct Mapsector_t {
-	floorheight   i16
-	ceilingheight i16
-	floorpic      [8]i8
-	ceilingpic    [8]i8
-	lightlevel    i16
-	special       i16
-	tag           i16
-}
-
-struct Mapsubsector_t {
-	numsegs  i16
-	firstseg i16
-}
-
-struct Mapseg_t {
-	v1      i16
-	v2      i16
-	angle   i16
-	linedef i16
-	side    i16
-	offset  i16
-}
-
-struct Mapnode_t {
-	x        i16
-	y        i16
-	dx       i16
-	dy       i16
-	bbox     [2][4]i16
-	children [2]u16
-}
-
-struct Mapthing_t {
-	x       i16
-	y       i16
-	angle   i16
-	type_   i16
-	options i16
-}
-
-type Sha1_context_t = Sha1_context_s
-type Sha1_digest_t = [20]u8
-
-struct Sha1_context_s {
-	h0      u32
-	h1      u32
-	h2      u32
-	h3      u32
-	h4      u32
-	nblocks u32
-	buf     [64]u8
-	count   int
-}
-
-type Net_module_t = Net_module_s
-type Net_packet_t = Net_packet_s
-type Net_addr_t = Net_addr_s
-
-struct Net_packet_s {
-	data    &u8
-	len     usize
-	alloced usize
-	pos     u32
-}
-
-struct Net_module_s {
-	InitClient     fn () bool
-	InitServer     fn () bool
-	SendPacket     fn (&Net_addr_t, &Net_packet_t)
-	RecvPacket     fn (&&Net_addr_t, &&Net_packet_t) bool
-	AddrToString   fn (&Net_addr_t, &i8, int)
-	FreeAddress    fn (&Net_addr_t)
-	ResolveAddress fn (&i8) &Net_addr_t
-}
-
-struct Net_addr_s {
-	module_  &Net_module_t
-	refcount int
-	handle   voidptr
-}
-
-enum Net_protocol_t {
-	net_protocol_chocolate_doom_0
-	net_num_protocols
-	net_protocol_unknown
-}
-
-enum Net_packet_type_t {
-	net_packet_type_syn
-	net_packet_type_ack
-	net_packet_type_rejected
-	net_packet_type_keepalive
-	net_packet_type_waiting_data
-	net_packet_type_gamestart
-	net_packet_type_gamedata
-	net_packet_type_gamedata_ack
-	net_packet_type_disconnect
-	net_packet_type_disconnect_ack
-	net_packet_type_reliable_ack
-	net_packet_type_gamedata_resend
-	net_packet_type_console_message
-	net_packet_type_query
-	net_packet_type_query_response
-	net_packet_type_launch
-	net_packet_type_nat_hole_punch
-}
-
-enum Net_master_packet_type_t {
-	net_master_packet_type_add
-	net_master_packet_type_add_response
-	net_master_packet_type_query
-	net_master_packet_type_query_response
-	net_master_packet_type_get_metadata
-	net_master_packet_type_get_metadata_response
-	net_master_packet_type_sign_start
-	net_master_packet_type_sign_start_response
-	net_master_packet_type_sign_end
-	net_master_packet_type_sign_end_response
-	net_master_packet_type_nat_hole_punch
-	net_master_packet_type_nat_hole_punch_all
-}
-
-struct Net_connect_data_t {
-	gamemode     int
-	gamemission  int
-	lowres_turn  int
-	drone        int
-	max_players  int
-	is_freedoom  int
-	wad_sha1sum  Sha1_digest_t
-	deh_sha1sum  Sha1_digest_t
-	player_class int
-}
-
-struct Net_gamesettings_t {
-	ticdup           int
-	extratics        int
-	deathmatch       int
-	episode          int
-	nomonsters       int
-	fast_monsters    int
-	respawn_monsters int
-	map_             int
-	skill            int
-	gameversion      int
-	lowres_turn      int
-	new_sync         int
-	timelimit        int
-	loadgame         int
-	random           int
-	num_players      int
-	consoleplayer    int
-	player_classes   [8]int
-}
-
-struct Net_ticdiff_t {
-	diff u32
-	cmd  Ticcmd_t
-}
-
-struct Net_full_ticcmd_t {
-	latency      int
-	seq          u32
-	playeringame [8]bool
-	cmds         [8]Net_ticdiff_t
-}
-
-struct Net_querydata_t {
-	version      &i8
-	server_state int
-	num_players  int
-	max_players  int
-	gamemode     int
-	gamemission  int
-	description  &i8
-	protocol     Net_protocol_t
-}
-
-struct Net_waitdata_t {
-	num_players   int
-	num_drones    int
-	ready_players int
-	max_players   int
-	is_controller int
-	consoleplayer int
-	player_names  [8][30]i8
-	player_addrs  [8][30]i8
-	wad_sha1sum   Sha1_digest_t
-	deh_sha1sum   Sha1_digest_t
-	is_freedoom   int
-}
-
-type Netgame_startup_callback_t = fn (int, int) bool
-
-struct Loop_interface_t {
-	ProcessEvents fn ()
-	BuildTiccmd   fn (&Ticcmd_t, int)
-	RunTic        fn (&Ticcmd_t, &bool)
-	RunMenu       fn ()
-}
-
-[c: 'D_RegisterLoopCallbacks']
-fn d_registerloopcallbacks(i &Loop_interface_t)
-
-[c: 'D_InitNetGame']
-fn d_initnetgame(connect_data &Net_connect_data_t) bool
-
-[c: 'D_StartNetGame']
-fn d_startnetgame(settings &Net_gamesettings_t, callback Netgame_startup_callback_t)
-
-struct Weaponinfo_t {
-	ammo       Ammotype_t
-	upstate    int
-	downstate  int
-	readystate int
-	atkstate   int
-	flashstate int
-}
-
-type Fixed_t = int
-type Angle_t = u32
-type Actionf_v = fn ()
-
-type Actionf_p1 = fn (voidptr)
-
-type Actionf_p2 = fn (voidptr, voidptr)
-
-union Actionf_t {
-	acv  Actionf_v
-	acp1 Actionf_p1
-	acp2 Actionf_p2
-}
-
-type Think_t = Actionf_t
-
-struct Thinker_t {
-	prev     &Thinker_t
-	next     &Thinker_t
-	function Think_t
-}
-
-enum Spritenum_t {
-	spr_troo
-	spr_shtg
-	spr_pung
-	spr_pisg
-	spr_pisf
-	spr_shtf
-	spr_sht2
-	spr_chgg
-	spr_chgf
-	spr_misg
-	spr_misf
-	spr_sawg
-	spr_plsg
-	spr_plsf
-	spr_bfgg
-	spr_bfgf
-	spr_blud
-	spr_puff
-	spr_bal1
-	spr_bal2
-	spr_plss
-	spr_plse
-	spr_misl
-	spr_bfs1
-	spr_bfe1
-	spr_bfe2
-	spr_tfog
-	spr_ifog
-	spr_play
-	spr_poss
-	spr_spos
-	spr_vile
-	spr_fire
-	spr_fatb
-	spr_fbxp
-	spr_skel
-	spr_manf
-	spr_fatt
-	spr_cpos
-	spr_sarg
-	spr_head
-	spr_bal7
-	spr_boss
-	spr_bos2
-	spr_skul
-	spr_spid
-	spr_bspi
-	spr_apls
-	spr_apbx
-	spr_cybr
-	spr_pain
-	spr_sswv
-	spr_keen
-	spr_bbrn
-	spr_bosf
-	spr_arm1
-	spr_arm2
-	spr_bar1
-	spr_bexp
-	spr_fcan
-	spr_bon1
-	spr_bon2
-	spr_bkey
-	spr_rkey
-	spr_ykey
-	spr_bsku
-	spr_rsku
-	spr_ysku
-	spr_stim
-	spr_medi
-	spr_soul
-	spr_pinv
-	spr_pstr
-	spr_pins
-	spr_mega
-	spr_suit
-	spr_pmap
-	spr_pvis
-	spr_clip
-	spr_ammo
-	spr_rock
-	spr_brok
-	spr_cell
-	spr_celp
-	spr_shel
-	spr_sbox
-	spr_bpak
-	spr_bfug
-	spr_mgun
-	spr_csaw
-	spr_laun
-	spr_plas
-	spr_shot
-	spr_sgn2
-	spr_colu
-	spr_smt2
-	spr_gor1
-	spr_pol2
-	spr_pol5
-	spr_pol4
-	spr_pol3
-	spr_pol1
-	spr_pol6
-	spr_gor2
-	spr_gor3
-	spr_gor4
-	spr_gor5
-	spr_smit
-	spr_col1
-	spr_col2
-	spr_col3
-	spr_col4
-	spr_cand
-	spr_cbra
-	spr_col6
-	spr_tre1
-	spr_tre2
-	spr_elec
-	spr_ceye
-	spr_fsku
-	spr_col5
-	spr_tblu
-	spr_tgrn
-	spr_tred
-	spr_smbt
-	spr_smgt
-	spr_smrt
-	spr_hdb1
-	spr_hdb2
-	spr_hdb3
-	spr_hdb4
-	spr_hdb5
-	spr_hdb6
-	spr_pob1
-	spr_pob2
-	spr_brs1
-	spr_tlmp
-	spr_tlp2
-	numsprites
-}
-
-enum Statenum_t {
-	s_null
-	s_lightdone
-	s_punch
-	s_punchdown
-	s_punchup
-	s_punch1
-	s_punch2
-	s_punch3
-	s_punch4
-	s_punch5
-	s_pistol
-	s_pistoldown
-	s_pistolup
-	s_pistol1
-	s_pistol2
-	s_pistol3
-	s_pistol4
-	s_pistolflash
-	s_sgun
-	s_sgundown
-	s_sgunup
-	s_sgun1
-	s_sgun2
-	s_sgun3
-	s_sgun4
-	s_sgun5
-	s_sgun6
-	s_sgun7
-	s_sgun8
-	s_sgun9
-	s_sgunflash1
-	s_sgunflash2
-	s_dsgun
-	s_dsgundown
-	s_dsgunup
-	s_dsgun1
-	s_dsgun2
-	s_dsgun3
-	s_dsgun4
-	s_dsgun5
-	s_dsgun6
-	s_dsgun7
-	s_dsgun8
-	s_dsgun9
-	s_dsgun10
-	s_dsnr1
-	s_dsnr2
-	s_dsgunflash1
-	s_dsgunflash2
-	s_chain
-	s_chaindown
-	s_chainup
-	s_chain1
-	s_chain2
-	s_chain3
-	s_chainflash1
-	s_chainflash2
-	s_missile
-	s_missiledown
-	s_missileup
-	s_missile1
-	s_missile2
-	s_missile3
-	s_missileflash1
-	s_missileflash2
-	s_missileflash3
-	s_missileflash4
-	s_saw
-	s_sawb
-	s_sawdown
-	s_sawup
-	s_saw1
-	s_saw2
-	s_saw3
-	s_plasma
-	s_plasmadown
-	s_plasmaup
-	s_plasma1
-	s_plasma2
-	s_plasmaflash1
-	s_plasmaflash2
-	s_bfg
-	s_bfgdown
-	s_bfgup
-	s_bfg1
-	s_bfg2
-	s_bfg3
-	s_bfg4
-	s_bfgflash1
-	s_bfgflash2
-	s_blood1
-	s_blood2
-	s_blood3
-	s_puff1
-	s_puff2
-	s_puff3
-	s_puff4
-	s_tball1
-	s_tball2
-	s_tballx1
-	s_tballx2
-	s_tballx3
-	s_rball1
-	s_rball2
-	s_rballx1
-	s_rballx2
-	s_rballx3
-	s_plasball
-	s_plasball2
-	s_plasexp
-	s_plasexp2
-	s_plasexp3
-	s_plasexp4
-	s_plasexp5
-	s_rocket
-	s_bfgshot
-	s_bfgshot2
-	s_bfgland
-	s_bfgland2
-	s_bfgland3
-	s_bfgland4
-	s_bfgland5
-	s_bfgland6
-	s_bfgexp
-	s_bfgexp2
-	s_bfgexp3
-	s_bfgexp4
-	s_explode1
-	s_explode2
-	s_explode3
-	s_tfog
-	s_tfog01
-	s_tfog02
-	s_tfog2
-	s_tfog3
-	s_tfog4
-	s_tfog5
-	s_tfog6
-	s_tfog7
-	s_tfog8
-	s_tfog9
-	s_tfog10
-	s_ifog
-	s_ifog01
-	s_ifog02
-	s_ifog2
-	s_ifog3
-	s_ifog4
-	s_ifog5
-	s_play
-	s_play_run1
-	s_play_run2
-	s_play_run3
-	s_play_run4
-	s_play_atk1
-	s_play_atk2
-	s_play_pain
-	s_play_pain2
-	s_play_die1
-	s_play_die2
-	s_play_die3
-	s_play_die4
-	s_play_die5
-	s_play_die6
-	s_play_die7
-	s_play_xdie1
-	s_play_xdie2
-	s_play_xdie3
-	s_play_xdie4
-	s_play_xdie5
-	s_play_xdie6
-	s_play_xdie7
-	s_play_xdie8
-	s_play_xdie9
-	s_poss_stnd
-	s_poss_stnd2
-	s_poss_run1
-	s_poss_run2
-	s_poss_run3
-	s_poss_run4
-	s_poss_run5
-	s_poss_run6
-	s_poss_run7
-	s_poss_run8
-	s_poss_atk1
-	s_poss_atk2
-	s_poss_atk3
-	s_poss_pain
-	s_poss_pain2
-	s_poss_die1
-	s_poss_die2
-	s_poss_die3
-	s_poss_die4
-	s_poss_die5
-	s_poss_xdie1
-	s_poss_xdie2
-	s_poss_xdie3
-	s_poss_xdie4
-	s_poss_xdie5
-	s_poss_xdie6
-	s_poss_xdie7
-	s_poss_xdie8
-	s_poss_xdie9
-	s_poss_raise1
-	s_poss_raise2
-	s_poss_raise3
-	s_poss_raise4
-	s_spos_stnd
-	s_spos_stnd2
-	s_spos_run1
-	s_spos_run2
-	s_spos_run3
-	s_spos_run4
-	s_spos_run5
-	s_spos_run6
-	s_spos_run7
-	s_spos_run8
-	s_spos_atk1
-	s_spos_atk2
-	s_spos_atk3
-	s_spos_pain
-	s_spos_pain2
-	s_spos_die1
-	s_spos_die2
-	s_spos_die3
-	s_spos_die4
-	s_spos_die5
-	s_spos_xdie1
-	s_spos_xdie2
-	s_spos_xdie3
-	s_spos_xdie4
-	s_spos_xdie5
-	s_spos_xdie6
-	s_spos_xdie7
-	s_spos_xdie8
-	s_spos_xdie9
-	s_spos_raise1
-	s_spos_raise2
-	s_spos_raise3
-	s_spos_raise4
-	s_spos_raise5
-	s_vile_stnd
-	s_vile_stnd2
-	s_vile_run1
-	s_vile_run2
-	s_vile_run3
-	s_vile_run4
-	s_vile_run5
-	s_vile_run6
-	s_vile_run7
-	s_vile_run8
-	s_vile_run9
-	s_vile_run10
-	s_vile_run11
-	s_vile_run12
-	s_vile_atk1
-	s_vile_atk2
-	s_vile_atk3
-	s_vile_atk4
-	s_vile_atk5
-	s_vile_atk6
-	s_vile_atk7
-	s_vile_atk8
-	s_vile_atk9
-	s_vile_atk10
-	s_vile_atk11
-	s_vile_heal1
-	s_vile_heal2
-	s_vile_heal3
-	s_vile_pain
-	s_vile_pain2
-	s_vile_die1
-	s_vile_die2
-	s_vile_die3
-	s_vile_die4
-	s_vile_die5
-	s_vile_die6
-	s_vile_die7
-	s_vile_die8
-	s_vile_die9
-	s_vile_die10
-	s_fire1
-	s_fire2
-	s_fire3
-	s_fire4
-	s_fire5
-	s_fire6
-	s_fire7
-	s_fire8
-	s_fire9
-	s_fire10
-	s_fire11
-	s_fire12
-	s_fire13
-	s_fire14
-	s_fire15
-	s_fire16
-	s_fire17
-	s_fire18
-	s_fire19
-	s_fire20
-	s_fire21
-	s_fire22
-	s_fire23
-	s_fire24
-	s_fire25
-	s_fire26
-	s_fire27
-	s_fire28
-	s_fire29
-	s_fire30
-	s_smoke1
-	s_smoke2
-	s_smoke3
-	s_smoke4
-	s_smoke5
-	s_tracer
-	s_tracer2
-	s_traceexp1
-	s_traceexp2
-	s_traceexp3
-	s_skel_stnd
-	s_skel_stnd2
-	s_skel_run1
-	s_skel_run2
-	s_skel_run3
-	s_skel_run4
-	s_skel_run5
-	s_skel_run6
-	s_skel_run7
-	s_skel_run8
-	s_skel_run9
-	s_skel_run10
-	s_skel_run11
-	s_skel_run12
-	s_skel_fist1
-	s_skel_fist2
-	s_skel_fist3
-	s_skel_fist4
-	s_skel_miss1
-	s_skel_miss2
-	s_skel_miss3
-	s_skel_miss4
-	s_skel_pain
-	s_skel_pain2
-	s_skel_die1
-	s_skel_die2
-	s_skel_die3
-	s_skel_die4
-	s_skel_die5
-	s_skel_die6
-	s_skel_raise1
-	s_skel_raise2
-	s_skel_raise3
-	s_skel_raise4
-	s_skel_raise5
-	s_skel_raise6
-	s_fatshot1
-	s_fatshot2
-	s_fatshotx1
-	s_fatshotx2
-	s_fatshotx3
-	s_fatt_stnd
-	s_fatt_stnd2
-	s_fatt_run1
-	s_fatt_run2
-	s_fatt_run3
-	s_fatt_run4
-	s_fatt_run5
-	s_fatt_run6
-	s_fatt_run7
-	s_fatt_run8
-	s_fatt_run9
-	s_fatt_run10
-	s_fatt_run11
-	s_fatt_run12
-	s_fatt_atk1
-	s_fatt_atk2
-	s_fatt_atk3
-	s_fatt_atk4
-	s_fatt_atk5
-	s_fatt_atk6
-	s_fatt_atk7
-	s_fatt_atk8
-	s_fatt_atk9
-	s_fatt_atk10
-	s_fatt_pain
-	s_fatt_pain2
-	s_fatt_die1
-	s_fatt_die2
-	s_fatt_die3
-	s_fatt_die4
-	s_fatt_die5
-	s_fatt_die6
-	s_fatt_die7
-	s_fatt_die8
-	s_fatt_die9
-	s_fatt_die10
-	s_fatt_raise1
-	s_fatt_raise2
-	s_fatt_raise3
-	s_fatt_raise4
-	s_fatt_raise5
-	s_fatt_raise6
-	s_fatt_raise7
-	s_fatt_raise8
-	s_cpos_stnd
-	s_cpos_stnd2
-	s_cpos_run1
-	s_cpos_run2
-	s_cpos_run3
-	s_cpos_run4
-	s_cpos_run5
-	s_cpos_run6
-	s_cpos_run7
-	s_cpos_run8
-	s_cpos_atk1
-	s_cpos_atk2
-	s_cpos_atk3
-	s_cpos_atk4
-	s_cpos_pain
-	s_cpos_pain2
-	s_cpos_die1
-	s_cpos_die2
-	s_cpos_die3
-	s_cpos_die4
-	s_cpos_die5
-	s_cpos_die6
-	s_cpos_die7
-	s_cpos_xdie1
-	s_cpos_xdie2
-	s_cpos_xdie3
-	s_cpos_xdie4
-	s_cpos_xdie5
-	s_cpos_xdie6
-	s_cpos_raise1
-	s_cpos_raise2
-	s_cpos_raise3
-	s_cpos_raise4
-	s_cpos_raise5
-	s_cpos_raise6
-	s_cpos_raise7
-	s_troo_stnd
-	s_troo_stnd2
-	s_troo_run1
-	s_troo_run2
-	s_troo_run3
-	s_troo_run4
-	s_troo_run5
-	s_troo_run6
-	s_troo_run7
-	s_troo_run8
-	s_troo_atk1
-	s_troo_atk2
-	s_troo_atk3
-	s_troo_pain
-	s_troo_pain2
-	s_troo_die1
-	s_troo_die2
-	s_troo_die3
-	s_troo_die4
-	s_troo_die5
-	s_troo_xdie1
-	s_troo_xdie2
-	s_troo_xdie3
-	s_troo_xdie4
-	s_troo_xdie5
-	s_troo_xdie6
-	s_troo_xdie7
-	s_troo_xdie8
-	s_troo_raise1
-	s_troo_raise2
-	s_troo_raise3
-	s_troo_raise4
-	s_troo_raise5
-	s_sarg_stnd
-	s_sarg_stnd2
-	s_sarg_run1
-	s_sarg_run2
-	s_sarg_run3
-	s_sarg_run4
-	s_sarg_run5
-	s_sarg_run6
-	s_sarg_run7
-	s_sarg_run8
-	s_sarg_atk1
-	s_sarg_atk2
-	s_sarg_atk3
-	s_sarg_pain
-	s_sarg_pain2
-	s_sarg_die1
-	s_sarg_die2
-	s_sarg_die3
-	s_sarg_die4
-	s_sarg_die5
-	s_sarg_die6
-	s_sarg_raise1
-	s_sarg_raise2
-	s_sarg_raise3
-	s_sarg_raise4
-	s_sarg_raise5
-	s_sarg_raise6
-	s_head_stnd
-	s_head_run1
-	s_head_atk1
-	s_head_atk2
-	s_head_atk3
-	s_head_pain
-	s_head_pain2
-	s_head_pain3
-	s_head_die1
-	s_head_die2
-	s_head_die3
-	s_head_die4
-	s_head_die5
-	s_head_die6
-	s_head_raise1
-	s_head_raise2
-	s_head_raise3
-	s_head_raise4
-	s_head_raise5
-	s_head_raise6
-	s_brball1
-	s_brball2
-	s_brballx1
-	s_brballx2
-	s_brballx3
-	s_boss_stnd
-	s_boss_stnd2
-	s_boss_run1
-	s_boss_run2
-	s_boss_run3
-	s_boss_run4
-	s_boss_run5
-	s_boss_run6
-	s_boss_run7
-	s_boss_run8
-	s_boss_atk1
-	s_boss_atk2
-	s_boss_atk3
-	s_boss_pain
-	s_boss_pain2
-	s_boss_die1
-	s_boss_die2
-	s_boss_die3
-	s_boss_die4
-	s_boss_die5
-	s_boss_die6
-	s_boss_die7
-	s_boss_raise1
-	s_boss_raise2
-	s_boss_raise3
-	s_boss_raise4
-	s_boss_raise5
-	s_boss_raise6
-	s_boss_raise7
-	s_bos2_stnd
-	s_bos2_stnd2
-	s_bos2_run1
-	s_bos2_run2
-	s_bos2_run3
-	s_bos2_run4
-	s_bos2_run5
-	s_bos2_run6
-	s_bos2_run7
-	s_bos2_run8
-	s_bos2_atk1
-	s_bos2_atk2
-	s_bos2_atk3
-	s_bos2_pain
-	s_bos2_pain2
-	s_bos2_die1
-	s_bos2_die2
-	s_bos2_die3
-	s_bos2_die4
-	s_bos2_die5
-	s_bos2_die6
-	s_bos2_die7
-	s_bos2_raise1
-	s_bos2_raise2
-	s_bos2_raise3
-	s_bos2_raise4
-	s_bos2_raise5
-	s_bos2_raise6
-	s_bos2_raise7
-	s_skull_stnd
-	s_skull_stnd2
-	s_skull_run1
-	s_skull_run2
-	s_skull_atk1
-	s_skull_atk2
-	s_skull_atk3
-	s_skull_atk4
-	s_skull_pain
-	s_skull_pain2
-	s_skull_die1
-	s_skull_die2
-	s_skull_die3
-	s_skull_die4
-	s_skull_die5
-	s_skull_die6
-	s_spid_stnd
-	s_spid_stnd2
-	s_spid_run1
-	s_spid_run2
-	s_spid_run3
-	s_spid_run4
-	s_spid_run5
-	s_spid_run6
-	s_spid_run7
-	s_spid_run8
-	s_spid_run9
-	s_spid_run10
-	s_spid_run11
-	s_spid_run12
-	s_spid_atk1
-	s_spid_atk2
-	s_spid_atk3
-	s_spid_atk4
-	s_spid_pain
-	s_spid_pain2
-	s_spid_die1
-	s_spid_die2
-	s_spid_die3
-	s_spid_die4
-	s_spid_die5
-	s_spid_die6
-	s_spid_die7
-	s_spid_die8
-	s_spid_die9
-	s_spid_die10
-	s_spid_die11
-	s_bspi_stnd
-	s_bspi_stnd2
-	s_bspi_sight
-	s_bspi_run1
-	s_bspi_run2
-	s_bspi_run3
-	s_bspi_run4
-	s_bspi_run5
-	s_bspi_run6
-	s_bspi_run7
-	s_bspi_run8
-	s_bspi_run9
-	s_bspi_run10
-	s_bspi_run11
-	s_bspi_run12
-	s_bspi_atk1
-	s_bspi_atk2
-	s_bspi_atk3
-	s_bspi_atk4
-	s_bspi_pain
-	s_bspi_pain2
-	s_bspi_die1
-	s_bspi_die2
-	s_bspi_die3
-	s_bspi_die4
-	s_bspi_die5
-	s_bspi_die6
-	s_bspi_die7
-	s_bspi_raise1
-	s_bspi_raise2
-	s_bspi_raise3
-	s_bspi_raise4
-	s_bspi_raise5
-	s_bspi_raise6
-	s_bspi_raise7
-	s_arach_plaz
-	s_arach_plaz2
-	s_arach_plex
-	s_arach_plex2
-	s_arach_plex3
-	s_arach_plex4
-	s_arach_plex5
-	s_cyber_stnd
-	s_cyber_stnd2
-	s_cyber_run1
-	s_cyber_run2
-	s_cyber_run3
-	s_cyber_run4
-	s_cyber_run5
-	s_cyber_run6
-	s_cyber_run7
-	s_cyber_run8
-	s_cyber_atk1
-	s_cyber_atk2
-	s_cyber_atk3
-	s_cyber_atk4
-	s_cyber_atk5
-	s_cyber_atk6
-	s_cyber_pain
-	s_cyber_die1
-	s_cyber_die2
-	s_cyber_die3
-	s_cyber_die4
-	s_cyber_die5
-	s_cyber_die6
-	s_cyber_die7
-	s_cyber_die8
-	s_cyber_die9
-	s_cyber_die10
-	s_pain_stnd
-	s_pain_run1
-	s_pain_run2
-	s_pain_run3
-	s_pain_run4
-	s_pain_run5
-	s_pain_run6
-	s_pain_atk1
-	s_pain_atk2
-	s_pain_atk3
-	s_pain_atk4
-	s_pain_pain
-	s_pain_pain2
-	s_pain_die1
-	s_pain_die2
-	s_pain_die3
-	s_pain_die4
-	s_pain_die5
-	s_pain_die6
-	s_pain_raise1
-	s_pain_raise2
-	s_pain_raise3
-	s_pain_raise4
-	s_pain_raise5
-	s_pain_raise6
-	s_sswv_stnd
-	s_sswv_stnd2
-	s_sswv_run1
-	s_sswv_run2
-	s_sswv_run3
-	s_sswv_run4
-	s_sswv_run5
-	s_sswv_run6
-	s_sswv_run7
-	s_sswv_run8
-	s_sswv_atk1
-	s_sswv_atk2
-	s_sswv_atk3
-	s_sswv_atk4
-	s_sswv_atk5
-	s_sswv_atk6
-	s_sswv_pain
-	s_sswv_pain2
-	s_sswv_die1
-	s_sswv_die2
-	s_sswv_die3
-	s_sswv_die4
-	s_sswv_die5
-	s_sswv_xdie1
-	s_sswv_xdie2
-	s_sswv_xdie3
-	s_sswv_xdie4
-	s_sswv_xdie5
-	s_sswv_xdie6
-	s_sswv_xdie7
-	s_sswv_xdie8
-	s_sswv_xdie9
-	s_sswv_raise1
-	s_sswv_raise2
-	s_sswv_raise3
-	s_sswv_raise4
-	s_sswv_raise5
-	s_keenstnd
-	s_commkeen
-	s_commkeen2
-	s_commkeen3
-	s_commkeen4
-	s_commkeen5
-	s_commkeen6
-	s_commkeen7
-	s_commkeen8
-	s_commkeen9
-	s_commkeen10
-	s_commkeen11
-	s_commkeen12
-	s_keenpain
-	s_keenpain2
-	s_brain
-	s_brain_pain
-	s_brain_die1
-	s_brain_die2
-	s_brain_die3
-	s_brain_die4
-	s_braineye
-	s_braineyesee
-	s_braineye1
-	s_spawn1
-	s_spawn2
-	s_spawn3
-	s_spawn4
-	s_spawnfire1
-	s_spawnfire2
-	s_spawnfire3
-	s_spawnfire4
-	s_spawnfire5
-	s_spawnfire6
-	s_spawnfire7
-	s_spawnfire8
-	s_brainexplode1
-	s_brainexplode2
-	s_brainexplode3
-	s_arm1
-	s_arm1a
-	s_arm2
-	s_arm2a
-	s_bar1
-	s_bar2
-	s_bexp
-	s_bexp2
-	s_bexp3
-	s_bexp4
-	s_bexp5
-	s_bbar1
-	s_bbar2
-	s_bbar3
-	s_bon1
-	s_bon1a
-	s_bon1b
-	s_bon1c
-	s_bon1d
-	s_bon1e
-	s_bon2
-	s_bon2a
-	s_bon2b
-	s_bon2c
-	s_bon2d
-	s_bon2e
-	s_bkey
-	s_bkey2
-	s_rkey
-	s_rkey2
-	s_ykey
-	s_ykey2
-	s_bskull
-	s_bskull2
-	s_rskull
-	s_rskull2
-	s_yskull
-	s_yskull2
-	s_stim
-	s_medi
-	s_soul
-	s_soul2
-	s_soul3
-	s_soul4
-	s_soul5
-	s_soul6
-	s_pinv
-	s_pinv2
-	s_pinv3
-	s_pinv4
-	s_pstr
-	s_pins
-	s_pins2
-	s_pins3
-	s_pins4
-	s_mega
-	s_mega2
-	s_mega3
-	s_mega4
-	s_suit
-	s_pmap
-	s_pmap2
-	s_pmap3
-	s_pmap4
-	s_pmap5
-	s_pmap6
-	s_pvis
-	s_pvis2
-	s_clip
-	s_ammo
-	s_rock
-	s_brok
-	s_cell
-	s_celp
-	s_shel
-	s_sbox
-	s_bpak
-	s_bfug
-	s_mgun
-	s_csaw
-	s_laun
-	s_plas
-	s_shot
-	s_shot2
-	s_colu
-	s_stalag
-	s_bloodytwitch
-	s_bloodytwitch2
-	s_bloodytwitch3
-	s_bloodytwitch4
-	s_deadtorso
-	s_deadbottom
-	s_headsonstick
-	s_gibs
-	s_headonastick
-	s_headcandles
-	s_headcandles2
-	s_deadstick
-	s_livestick
-	s_livestick2
-	s_meat2
-	s_meat3
-	s_meat4
-	s_meat5
-	s_stalagtite
-	s_tallgrncol
-	s_shrtgrncol
-	s_tallredcol
-	s_shrtredcol
-	s_candlestik
-	s_candelabra
-	s_skullcol
-	s_torchtree
-	s_bigtree
-	s_techpillar
-	s_evileye
-	s_evileye2
-	s_evileye3
-	s_evileye4
-	s_floatskull
-	s_floatskull2
-	s_floatskull3
-	s_heartcol
-	s_heartcol2
-	s_bluetorch
-	s_bluetorch2
-	s_bluetorch3
-	s_bluetorch4
-	s_greentorch
-	s_greentorch2
-	s_greentorch3
-	s_greentorch4
-	s_redtorch
-	s_redtorch2
-	s_redtorch3
-	s_redtorch4
-	s_btorchshrt
-	s_btorchshrt2
-	s_btorchshrt3
-	s_btorchshrt4
-	s_gtorchshrt
-	s_gtorchshrt2
-	s_gtorchshrt3
-	s_gtorchshrt4
-	s_rtorchshrt
-	s_rtorchshrt2
-	s_rtorchshrt3
-	s_rtorchshrt4
-	s_hangnoguts
-	s_hangbnobrain
-	s_hangtlookdn
-	s_hangtskull
-	s_hangtlookup
-	s_hangtnobrain
-	s_colongibs
-	s_smallpool
-	s_brainstem
-	s_techlamp
-	s_techlamp2
-	s_techlamp3
-	s_techlamp4
-	s_tech2lamp
-	s_tech2lamp2
-	s_tech2lamp3
-	s_tech2lamp4
-	numstates
-}
-
-struct State_t {
-	sprite    Spritenum_t
-	frame     int
-	tics      int
-	action    Actionf_t
-	nextstate Statenum_t
-	misc1     int
-	misc2     int
-}
-
-enum Mobjtype_t {
-	mt_player
-	mt_possessed
-	mt_shotguy
-	mt_vile
-	mt_fire
-	mt_undead
-	mt_tracer
-	mt_smoke
-	mt_fatso
-	mt_fatshot
-	mt_chainguy
-	mt_troop
-	mt_sergeant
-	mt_shadows
-	mt_head
-	mt_bruiser
-	mt_bruisershot
-	mt_knight
-	mt_skull
-	mt_spider
-	mt_baby
-	mt_cyborg
-	mt_pain
-	mt_wolfss
-	mt_keen
-	mt_bossbrain
-	mt_bossspit
-	mt_bosstarget
-	mt_spawnshot
-	mt_spawnfire
-	mt_barrel
-	mt_troopshot
-	mt_headshot
-	mt_rocket
-	mt_plasma
-	mt_bfg
-	mt_arachplaz
-	mt_puff
-	mt_blood
-	mt_tfog
-	mt_ifog
-	mt_teleportman
-	mt_extrabfg
-	mt_misc0
-	mt_misc1
-	mt_misc2
-	mt_misc3
-	mt_misc4
-	mt_misc5
-	mt_misc6
-	mt_misc7
-	mt_misc8
-	mt_misc9
-	mt_misc10
-	mt_misc11
-	mt_misc12
-	mt_inv
-	mt_misc13
-	mt_ins
-	mt_misc14
-	mt_misc15
-	mt_misc16
-	mt_mega
-	mt_clip
-	mt_misc17
-	mt_misc18
-	mt_misc19
-	mt_misc20
-	mt_misc21
-	mt_misc22
-	mt_misc23
-	mt_misc24
-	mt_misc25
-	mt_chaingun
-	mt_misc26
-	mt_misc27
-	mt_misc28
-	mt_shotgun
-	mt_supershotgun
-	mt_misc29
-	mt_misc30
-	mt_misc31
-	mt_misc32
-	mt_misc33
-	mt_misc34
-	mt_misc35
-	mt_misc36
-	mt_misc37
-	mt_misc38
-	mt_misc39
-	mt_misc40
-	mt_misc41
-	mt_misc42
-	mt_misc43
-	mt_misc44
-	mt_misc45
-	mt_misc46
-	mt_misc47
-	mt_misc48
-	mt_misc49
-	mt_misc50
-	mt_misc51
-	mt_misc52
-	mt_misc53
-	mt_misc54
-	mt_misc55
-	mt_misc56
-	mt_misc57
-	mt_misc58
-	mt_misc59
-	mt_misc60
-	mt_misc61
-	mt_misc62
-	mt_misc63
-	mt_misc64
-	mt_misc65
-	mt_misc66
-	mt_misc67
-	mt_misc68
-	mt_misc69
-	mt_misc70
-	mt_misc71
-	mt_misc72
-	mt_misc73
-	mt_misc74
-	mt_misc75
-	mt_misc76
-	mt_misc77
-	mt_misc78
-	mt_misc79
-	mt_misc80
-	mt_misc81
-	mt_misc82
-	mt_misc83
-	mt_misc84
-	mt_misc85
-	mt_misc86
-	nummobjtypes
-}
-
-struct Mobjinfo_t {
-	doomednum    int
-	spawnstate   int
-	spawnhealth  int
-	seestate     int
-	seesound     int
-	reactiontime int
-	attacksound  int
-	painstate    int
-	painchance   int
-	painsound    int
-	meleestate   int
-	missilestate int
-	deathstate   int
-	xdeathstate  int
-	deathsound   int
-	speed        int
-	radius       int
-	height       int
-	mass         int
-	damage       int
-	activesound  int
-	flags        int
-	raisestate   int
-}
-
-enum Psprnum_t {
-	ps_weapon
-	ps_flash
-	numpsprites
-}
-
-struct Pspdef_t {
-	state &State_t
-	tics  int
-	sx    int
-	sy    int
-}
-
-enum Mobjflag_t {
-	mf_special = 1
-	mf_solid = 2
-	mf_shootable = 4
-	mf_nosector = 8
-	mf_noblockmap = 16
-	mf_ambush = 32
-	mf_justhit = 64
-	mf_justattacked = 128
-	mf_spawnceiling = 256
-	mf_nogravity = 512
-	mf_dropoff = 1024
-	mf_pickup = 2048
-	mf_noclip = 4096
-	mf_slide = 8192
-	mf_float = 16384
-	mf_teleport = 32768
-	mf_missile = 65536
-	mf_dropped = 131072
-	mf_shadow = 262144
-	mf_noblood = 524288
-	mf_corpse = 1048576
-	mf_infloat = 2097152
-	mf_countkill = 4194304
-	mf_countitem = 8388608
-	mf_skullfly = 16777216
-	mf_notdmatch = 33554432
-	mf_translation = 201326592
-	mf_transshift = 26
-}
-
-struct Mobj_t {
-	thinker      Thinker_t
-	x            int
-	y            int
-	z            int
-	snext        &Mobj_t
-	sprev        &Mobj_t
-	angle        Angle_t
-	sprite       Spritenum_t
-	frame        int
-	bnext        &Mobj_t
-	bprev        &Mobj_t
-	subsector    &Subsector_t
-	floorz       int
-	ceilingz     int
-	radius       int
-	height       int
-	momx         int
-	momy         int
-	momz         int
-	validcount   int
-	type_        Mobjtype_t
-	info         &Mobjinfo_t
-	tics         int
-	state        &State_t
-	flags        int
-	health       int
-	movedir      int
-	movecount    int
-	target       &Mobj_t
-	reactiontime int
-	threshold    int
-	player       &Player_t
-	lastlook     int
-	spawnpoint   Mapthing_t
-	tracer       &Mobj_t
-}
-
-enum Playerstate_t {
-	pst_live
-	pst_dead
-	pst_reborn
-}
-
-enum Cheat_t {
-	cf_noclip = 1
-	cf_godmode = 2
-	cf_nomomentum = 4
-}
-
-struct Player_t {
-	mo              &Mobj_t
-	playerstate     Playerstate_t
-	cmd             Ticcmd_t
-	viewz           int
-	viewheight      int
-	deltaviewheight int
-	bob             int
-	health          int
-	armorpoints     int
-	armortype       int
-	powers          [6]int
-	cards           [6]bool
-	backpack        bool
-	frags           [4]int
-	readyweapon     Weapontype_t
-	pendingweapon   Weapontype_t
-	weaponowned     [9]int
-	ammo            [4]int
-	maxammo         [4]int
-	attackdown      int
-	usedown         int
-	cheats          int
-	refire          int
-	killcount       int
-	itemcount       int
-	secretcount     int
-	message         &i8
-	damagecount     int
-	bonuscount      int
-	attacker        &Mobj_t
-	extralight      int
-	fixedcolormap   int
-	colormap        int
-	psprites        [2]Pspdef_t
-	didsecret       bool
-}
-
-struct Wbplayerstruct_t {
-	in_     bool
-	skills  int
-	sitems  int
-	ssecret int
-	stime   int
-	frags   [4]int
-	score   int
-}
-
-struct Wbstartstruct_t {
-	epsd      int
-	didsecret bool
-	last      int
-	next      int
-	maxkills  int
-	maxitems  int
-	maxsecret int
-	maxfrags  int
-	partime   int
-	pnum      int
-	plyr      [4]Wbplayerstruct_t
-}
-
-[weak]
-__global (
-	nomonsters bool
-)
-
-[weak]
-__global (
-	respawnparm bool
-)
-
-[weak]
-__global (
-	fastparm bool
-)
-
-[weak]
-__global (
-	gamemode GameMode_t
-)
-
-[weak]
-__global (
-	gamemission GameMission_t
-)
-
-[weak]
-__global (
-	gameversion GameVersion_t
-)
-
-[weak]
-__global (
-	startskill Skill_t
-)
-
-[weak]
-__global (
-	startepisode int
-)
-
-[weak]
-__global (
-	startmap int
-)
-
-[weak]
-__global (
-	startloadgame int
-)
-
-[weak]
-__global (
-	autostart bool
-)
-
-[weak]
-__global (
-	timelimit int
-)
-
-[weak]
-__global (
-	netgame bool
-)
-
-[weak]
-__global (
-	deathmatch int
-)
-
-[weak]
-__global (
-	viewangleoffset int
-)
-
-[weak]
-__global (
-	consoleplayer int
-)
-
-[weak]
-__global (
-	demoplayback bool
-)
-
-[weak]
-__global (
-	demorecording bool
-)
-
-[weak]
-__global (
-	lowres_turn bool
-)
-
-[c_extern]
-__global (
-	players [4]Player_t
-)
-
-[c_extern]
-__global (
-	playeringame [4]bool
-)
-
-[weak]
-__global (
-	netcmds &Ticcmd_t
-)
-
-[c: 'W_Checksum']
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//  all external data is defined here
+//  most of the data is loaded into different structures at run time
+//  some internal structures shared by many modules are here
+//
+// The most basic types we use, portability.
+// Some global defines, that configure the game.
+//
+// Map level types.
+// The following data structures define the persistent format
+// used in the lumps of the WAD files.
+//
+// Lump order in a map WAD: each map needs a couple of lumps
+// to provide a complete scene geometry description.
+
+
+// A single Vertex.
+// A separator, name, ExMx or MAPxx
+// Monsters, items..
+// LineDefs, from editing                   // A single Vertex.
+// SideDefs, from editing                   typedef PACKED_STRUCT (
+// Vertices, edited and BSP splits generated{
+// LineSegs, from LineDefs split by BSP       short		x;
+// SubSectors, list of LineSegs               short		y;
+// BSP nodes                                }) mapvertex_t;
+// Sectors, from editing
+// LUT, sector-sector visibility	
+// LUT, motion clipping, walls/grid element // A SideDef, defining the visual appearance of a wall,
+// by setting textures and offsets.
+// A LineDef, as used for editing, and as input
+// to the BSP builder.
+//
+// LineDef attributes.
+//
+// Solid, is an obstacle.
+// Blocks monsters only.
+// Backside will not be present at all
+//  if not two sided.
+// If a texture is pegged, the texture will have
+// the end exposed to air held constant at the
+// top or bottom of the texture (stairs or pulled
+// down things) and will move with a height change
+// of one of the neighbor sectors.
+// Unpegged textures allways have the first row of
+// the texture at the top pixel of the line for both
+// top and bottom textures (use next to windows).
+// upper texture unpegged
+// lower texture unpegged
+// In AutoMap: don't map as two sided: IT'S A SECRET!
+// Sound rendering: don't let sound cross two of these.
+// Don't draw on the automap at all.
+// Set if already seen, thus drawn in automap.
+// Sector definition, from editing.
+// SubSector, as generated by BSP.
+// LineSeg, generated by splitting LineDefs
+// using partition lines selected by BSP builder.
+// BSP node structure.
+// Indicate a leaf.
+// Thing definition, position, orientation and type,
+// plus skill/visibility flags and attributes.
+// __DOOMDATA__
+//
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//     SHA-1 digest.
+//
+// #ifndef __SHA1_H__
+//
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//     Definitions for use in networking code.
+//
+// Absolute maximum number of "nodes" in the game.  This is different to
+// NET_MAXPLAYERS, as there may be observers that are not participating
+// (eg. left/right monitors)
+// The maximum number of players, multiplayer/networking.
+// This is the maximum supported by the networking code; individual games
+// have their own values for MAXPLAYERS that can be smaller.
+// Maximum length of a player's name.
+// Networking and tick handling related.
+// net_addr_t
+// Magic number sent when connecting to check this is a valid client
+// Old magic number used by Chocolate Doom versions before v3.0:
+// header field value indicating that the packet is a reliable packet
+// Supported protocols. If you're developing a fork of Chocolate
+// Doom, you can add your own entry to this list while maintaining
+// compatibility with Chocolate Doom servers. Higher-numbered enum values
+// will be preferred when negotiating a protocol for the client and server
+// to use, so the order matters.
+// NOTE: The values in this enum do not have any special value outside of
+// the program they're compiled in. What matters is the string representation.
+// packet types
+// Settings specified when the client connects to the server.
+// Game settings sent by client to server when initiating game start,
+// and received from the server by clients when the game starts.
+// Complete set of ticcmds from all players
+// Data sent in response to server queries
+// Data sent by the server while waiting for the game to start.
+// #ifndef NET_DEFS_H
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//	Main loop stuff.
+//
+// Callback function invoked while waiting for the netgame to start.
+// The callback is invoked when new players are ready. The callback
+// should return true, or return false to abort startup.
+// Register callback functions for the main loop code to use.
+@[c: 'D_RegisterLoopCallbacks']
+fn d_register_loop_callbacks(i &Loop_interface_t)
+
+// Create any new ticcmds and broadcast to other players.
+// Broadcasts special packets to other players
+//  to notify of game exit
+//? how many ticks to run?
+// Called at start of game loop to initialize timers
+// Initialize networking code and connect to server.
+@[c: 'D_InitNetGame']
+fn d_init_net_game(connect_data &Net_connect_data_t) bool
+
+// Start game with specified settings. The structure will be updated
+// with the actual settings for the game.
+@[c: 'D_StartNetGame']
+fn d_start_net_game(settings &Net_gamesettings_t, callback Netgame_startup_callback_t)
+
+// Check if it is permitted to record a demo with a non-vanilla feature.
+// Check if it is permitted to play back a demo with a non-vanilla feature.
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//	Items: key cards, artifacts, weapon, ammunition.
+//
+// Weapon info: sprite frames, ammunition use.
+// skipping global dup "weaponinfo"
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//	Fixed point arithemtics, implementation.
+//
+//
+// Fixed point, 32bit as 16.16.
+//
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 1993-2008 Raven Software
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//	Lookup tables.
+//	Do not try to look them up :-).
+//	In the order of appearance:
+//
+//	int finetangent[4096]	- Tangens LUT.
+//	 Should work with BAM fairly well (12 of 16bit,
+//      effectively, by shifting).
+//
+//	int finesine[10240]		- Sine lookup.
+//	 Guess what, serves as cosine, too.
+//	 Remarkable thing is, how to use BAMs with this?
+//
+//	int tantoangle[2049]	- ArcTan LUT,
+//	  maps tan(angle) to angle fast. Gotta search.	
+//
+// 0x100000000 to 0x2000
+// Effective size is 10240.
+// Re-use data, is just PI/2 pahse shift.
+// Effective size is 4096.
+// Gamma correction tables.
+// Binary Angle Measument, BAM.
+// Heretic code uses this definition as though it represents one
+// degree, but it is not!  This is actually ~1.40 degrees.
+// Effective size is 2049;
+// The +1 size is to handle the case when x==y
+//  without additional checking.
+// Utility function,
+//  called by R_PointToAngle.
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//  MapObj data. Map Objects or mobjs are actors, entities,
+//  thinker, take-your-pick... anything that moves, acts, or
+//  suffers state changes of more or less violent nature.
+//
+//
+// Experimental stuff.
+// To compile this as "ANSI C with classes"
+//  we will need to handle the various
+//  action functions cleanly.
+//
+// Historically, "think_t" is yet another
+//  function pointer to a routine to handle
+//  an actor.
+// Doubly linked list of actors.
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//	Thing frame/state LUT,
+//	generated by multigen utilitiy.
+//	This one is the original DOOM version, preserved.
+//
+// Needed for action function pointer handling.
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//  Sprite animation.
+//
+// Basic data types.
+// Needs fixed point, and BAM angles.
+//
+// Needs to include the precompiled
+//  sprite animation tables.
+// Header generated by multigen utility.
+// This includes all the data for thing animation,
+// i.e. the Thing Atrributes table
+// and the Frame Sequence table.
+//
+// Frame flags:
+// handles maximum brightness (torches, muzzle flare, light sources)
+//
+// flag in thing->frame
+//
+// Overlay psprites are scaled shapes
+// drawn directly on the view screen,
+// coordinates are given for a 320*200 view screen.
+//
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//	Map Objects, MObj, definition and handling.
+//
+// Basics.
+// We need the thinker_t stuff.
+// We need the WAD data structure for Map things,
+// from the THINGS lump.
+// States are tied to finite states are
+//  tied to animation frames.
+// Needs precompiled tables/data structures.
+//
+// NOTES: mobj_t
+//
+// mobj_ts are used to tell the refresh where to draw an image,
+// tell the world simulation when objects are contacted,
+// and tell the sound driver how to position a sound.
+//
+// The refresh uses the next and prev links to follow
+// lists of things in sectors as they are being drawn.
+// The sprite, frame, and angle elements determine which patch_t
+// is used to draw the sprite if it is visible.
+// The sprite and frame values are allmost allways set
+// from state_t structures.
+// The statescr.exe utility generates the states.h and states.c
+// files that contain the sprite/frame numbers from the
+// statescr.txt source file.
+// The xyz origin point represents a point at the bottom middle
+// of the sprite (between the feet of a biped).
+// This is the default origin position for patch_ts grabbed
+// with lumpy.exe.
+// A walking creature will have its z equal to the floor
+// it is standing on.
+//
+// The sound code uses the x,y, and subsector fields
+// to do stereo positioning of any sound effited by the mobj_t.
+//
+// The play simulation uses the blocklinks, x,y,z, radius, height
+// to determine when mobj_ts are touching each other,
+// touching lines in the map, or hit by trace lines (gunshots,
+// lines of sight, etc).
+// The mobj_t->flags element has various bit flags
+// used by the simulation.
+//
+// Every mobj_t is linked into a single sector
+// based on its origin coordinates.
+// The subsector_t is found with R_PointInSubsector(x,y),
+// and the sector_t can be found with subsector->sector.
+// The sector links are only used by the rendering code,
+// the play simulation does not care about them at all.
+//
+// Any mobj_t that needs to be acted upon by something else
+// in the play world (block movement, be shot, etc) will also
+// need to be linked into the blockmap.
+// If the thing has the MF_NOBLOCK flag set, it will not use
+// the block links. It can still interact with other things,
+// but only as the instigator (missiles will run into other
+// things, but nothing can run into a missile).
+// Each block in the grid is 128*128 units, and knows about
+// every line_t that it contains a piece of, and every
+// interactable mobj_t that has its origin contained.
+//
+// A valid mobj_t is a mobj_t that has the proper subsector_t
+// filled in for its xy coordinates and is linked into the
+// sector from which the subsector was made, or has the
+// MF_NOSECTOR flag set (the subsector_t needs to be valid
+// even if MF_NOSECTOR is set), and is linked into a blockmap
+// block or has the MF_NOBLOCKMAP flag set.
+// Links should only be modified by the P_[Un]SetThingPosition()
+// functions.
+// Do not change the MF_NO? flags while a thing is valid.
+//
+// Any questions?
+//
+//
+// Misc. mobj flags
+//
+// Map Object definition.
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//
+//
+// The player data structure depends on a number
+// of other structs: items (internal inventory),
+// animation states (closely tied to the sprites
+// used to represent them, unfortunately).
+// In addition, the player is just a special
+// case of the generic moving object/actor.
+// Finally, for odd reasons, the player input
+// is buffered within the player data struct,
+// as commands per game tick.
+//
+// Player states.
+//
+//
+// Player internal flags, for cheats and debug.
+//
+//
+// Extended player object info: player_t
+//
+//
+// INTERMISSION
+// Structure passed e.g. to WI_Start(wb)
+//
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//   All the global variables that store the internal state.
+//   Theoretically speaking, the internal state of the engine
+//    should be found by looking at the variables collected
+//    here, and every relevant module will have to include
+//    this header file.
+//   In practice, things are a bit messy.
+//
+// We need globally shared data structures,
+//  for defining the global state variables.
+// We need the playr data structure as well.
+// Game mode/mission
+// ------------------------
+// Command line parameters.
+//
+// skipping global dup "nomonsters"
+// checkparm of -nomonsters
+// skipping global dup "respawnparm"
+// checkparm of -respawn
+// skipping global dup "fastparm"
+// checkparm of -fast
+// skipping global dup "devparm"
+// DEBUG: launched with -devparm
+// -----------------------------------------------------
+// Game Mode - identify IWAD as shareware, retail etc.
+//
+// Convenience macro.
+// 'gamemission' can be equal to pack_chex or pack_hacx, but these are
+// just modified versions of doom and doom2, and should be interpreted
+// as the same most of the time.
+//
+//#define logical_gamemission                             \
+//    (gamemission == pack_chex ? doom :                  \
+//     gamemission == pack_hacx ? doom2 : gamemission)
+//
+// Set if homebrew PWAD stuff has been added.
+// -------------------------------------------
+// Selected skill type, map etc.
+//
+// Defaults for menu, methinks.
+// skipping global dup "startskill"
+// skipping global dup "startepisode"
+// skipping global dup "startmap"
+// Savegame slot to load on startup.  This is the value provided to
+// the -loadgame option.  If this has not been provided, this is -1.
+// skipping global dup "startloadgame"
+// skipping global dup "autostart"
+// Selected by user.
+// If non-zero, exit the level after this number of minutes
+// Nightmare mode flag, single player.
+// Netgame? Only true if >1 player.
+// 0=Cooperative; 1=Deathmatch; 2=Altdeath
+// -------------------------
+// Internal parameters for sound rendering.
+// These have been taken from the DOS version,
+//  but are not (yet) supported with Linux
+//  (e.g. no sound volume adjustment with menu.
+// From m_menu.c:
+//  Sound FX volume has default, 0 - 15
+//  Music volume has default, 0 - 15
+// These are multiplied by 8.
+// Current music/sfx card - index useless
+//  w/o a reference LUT in a sound module.
+// Ideally, this would use indices found
+//  in: /usr/include/linux/soundcard.h
+// Config file? Same disclaimer as above.
+// -------------------------
+// Status flags for refresh.
+//
+// Depending on view size - no status bar?
+// Note that there is no way to disable the
+//  status bar explicitely.
+// skipping global dup "automapactive"
+// In AutoMap mode?
+// Menu overlayed?
+// Game Pause?
+// This one is related to the 3-screen display mode.
+// ANG90 = left side, ANG270 = right
+// Player taking events, and displaying.
+// -------------------------------------
+// Scores, rating.
+// Statistics on a given map, for intermission.
+//
+// Timer, for scores.
+// gametic at level start
+// tics in game play for par
+// --------------------------------------
+// DEMO playback/recording related stuff.
+// No demo, there is a human player in charge?
+// Disable save/end game?
+//?
+// Round angleturn in ticcmds to the nearest 256.  This is used when
+// recording Vanilla demos in netgames.
+// Quit after playing a demo from cmdline.
+//?
+//-----------------------------
+// Internal parameters, fixed.
+// These are set by the engine, and not changed
+//  according to user inputs. Partly load from
+//  WAD, partly set at startup time.
+// Bookkeeping on players - state.
+// Alive? Disconnected?
+// Player spawn spots for deathmatch.
+// skipping global dup "deathmatchstarts"
+// skipping global dup "deathmatch_p"
+// Player spawn spots.
+// skipping global dup "playerstarts"
+// skipping global dup "playerstartsingame"
+// Intermission stats.
+// Parameters for world map / intermission.
+//-----------------------------------------
+// Internal parameters, used for engine.
+//
+// File handling stuff.
+// skipping global dup "savegamedir"
+// if true, load all graphics at level load
+// wipegamestate can be set to -1
+//  to force a wipe on the next draw
+// skipping global dup "wipegamestate"
+// Needed to store the number of the dummy sky flat.
+// Used for rendering,
+//  as well as tracking projectiles etc.
+// skipping global dup "skyflatnum"
+// Netgame stuff (buffers and pointers, i.e. indices).
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//       Generate a checksum of the WAD directory.
+//
+@[c: 'W_Checksum']
 fn w_checksum(digest &u8)
 
-type Wad_file_t = Wad_file_s
+// #ifndef W_CHECKSUM_H
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//	WAD I/O functions.
+//
+// Open the specified file. Returns a pointer to a new wad_file_t
+// handle for the WAD file, or NULL if it could not be opened.
+// Close the specified WAD file.
+// Read data from the specified file into the provided buffer.  The
+// data is read from the specified offset from the start of the file.
+// Returns the number of bytes read.
+// #ifndef __W_FILE__
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//	WAD I/O functions.
+//
+//
+// TYPES
+//
+//
+// WADFILE I/O related stuff.
+//
+@[c: 'W_CheckNumForName']
+fn w_check_num_for_name(name &i8) Lumpindex_t
 
-struct Wad_file_class_t {
-	OpenFile  fn (&i8) &Wad_file_t
-	CloseFile fn (&Wad_file_t)
-	Read      fn (&Wad_file_t, u32, voidptr, usize) usize
-}
-
-struct Wad_file_s {
-	file_class &Wad_file_class_t
-	mapped     &u8
-	length     u32
-	path       &i8
-}
-
-type Lumpinfo_t = Lumpinfo_s
-type Lumpindex_t = int
-
-struct Lumpinfo_s {
-	name     [8]i8
-	wad_file &Wad_file_t
-	position int
-	size     int
-	cache    voidptr
-	next     Lumpindex_t
-}
-
-[c: 'W_CheckNumForName']
-fn w_checknumforname(name &i8) Lumpindex_t
-
-struct Patch_t {
-	width      i16
-	height     i16
-	leftoffset i16
-	topoffset  i16
-	columnofs  [8]int
-}
-
-struct Post_t {
-	topdelta u8
-	length   u8
-}
-
-type Column_t = Post_t
-
-struct Vertex_t {
-	x int
-	y int
-}
-
-struct Degenmobj_t {
-	thinker Thinker_t
-	x       int
-	y       int
-	z       int
-}
-
-struct Sector_t {
-	floorheight    int
-	ceilingheight  int
-	floorpic       i16
-	ceilingpic     i16
-	lightlevel     i16
-	special        i16
-	tag            i16
-	soundtraversed int
-	soundtarget    &Mobj_t
-	blockbox       [4]int
-	soundorg       Degenmobj_t
-	validcount     int
-	thinglist      &Mobj_t
-	specialdata    voidptr
-	linecount      int
-	lines          &&Line_t
-}
-
-struct Side_t {
-	textureoffset int
-	rowoffset     int
-	toptexture    i16
-	bottomtexture i16
-	midtexture    i16
-	sector        &Sector_t
-}
-
-enum Slopetype_t {
-	st_horizontal
-	st_vertical
-	st_positive
-	st_negative
-}
-
-struct Line_t {
-	v1          &Vertex_t
-	v2          &Vertex_t
-	dx          int
-	dy          int
-	flags       i16
-	special     i16
-	tag         i16
-	sidenum     [2]i16
-	bbox        [4]int
-	slopetype   Slopetype_t
-	frontsector &Sector_t
-	backsector  &Sector_t
-	validcount  int
-	specialdata voidptr
-}
-
-struct Subsector_t {
-	sector    &Sector_t
-	numlines  i16
-	firstline i16
-}
-
-struct Seg_t {
-	v1          &Vertex_t
-	v2          &Vertex_t
-	offset      int
-	angle       Angle_t
-	sidedef     &Side_t
-	linedef     &Line_t
-	frontsector &Sector_t
-	backsector  &Sector_t
-}
-
-struct Node_t {
-	x        int
-	y        int
-	dx       int
-	dy       int
-	bbox     [2][4]int
-	children [2]u16
-}
-
-type Lighttable_t = u8
-
-struct Drawseg_t {
-	curline          &Seg_t
-	x1               int
-	x2               int
-	scale1           int
-	scale2           int
-	scalestep        int
-	silhouette       int
-	bsilheight       int
-	tsilheight       int
-	sprtopclip       &i16
-	sprbottomclip    &i16
-	maskedtexturecol &i16
-}
-
-struct Vissprite_t {
-	prev       &Vissprite_t
-	next       &Vissprite_t
-	x1         int
-	x2         int
-	gx         int
-	gy         int
-	gz         int
-	gzt        int
-	startfrac  int
-	scale      int
-	xiscale    int
-	texturemid int
-	patch      int
-	colormap   &Lighttable_t
-	mobjflags  int
-}
-
-struct Spriteframe_t {
-	rotate bool
-	lump   [8]i16
-	flip   [8]u8
-}
-
-struct Spritedef_t {
-	numframes    int
-	spriteframes &Spriteframe_t
-}
-
-struct Visplane_t {
-	height     int
-	picnum     int
-	lightlevel int
-	minx       int
-	maxx       int
-	pad1       u8
-	top        [320]u8
-	pad2       u8
-	pad3       u8
-	bottom     [320]u8
-	pad4       u8
-}
-
-[c: 'DEH_String']
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//      Refresh/rendering module, shared data struct definitions.
+//
+// Screenwidth.
+// Some more or less basic data types
+// we depend on.
+// We rely on the thinker data struct
+// to handle sound origins in sectors.
+// SECTORS do store MObjs anyway.
+// Silhouette, needed for clipping Segs (mainly)
+// and sprites representing things.
+//
+// INTERNAL MAP TYPES
+//  used by play and refresh
+//
+//
+// Your plain vanilla vertex.
+// Note: transformed values not buffered locally,
+//  like some DOOM-alikes ("wt", "WebView") did.
+//
+// Forward of LineDefs, for Sectors.
+// Each sector has a degenmobj_t in its center
+//  for sound origin purposes.
+// I suppose this does not handle sound from
+//  moving objects (doppler), because
+//  position is prolly just buffered, not
+//  updated.
+//
+// The SECTORS record, at runtime.
+// Stores things/mobjs.
+//
+//
+// The SideDef.
+//
+//
+// Move clipping aid for LineDefs.
+//
+//
+// A SubSector.
+// References a Sector.
+// Basically, this is a list of LineSegs,
+//  indicating the visible walls that define
+//  (all or some) sides of a convex BSP leaf.
+//
+//
+// The LineSeg.
+//
+//
+// BSP node.
+//
+// PC direct to screen pointers
+// B UNUSED - keep till detailshift in r_draw.c resolved
+// extern byte*	destview;
+// extern byte*	destscreen;
+//
+// OTHER TYPES
+//
+// This could be wider for >8 bit display.
+// Indeed, true color support is posibble
+//  precalculating 24bpp lightmap/colormap LUT.
+//  from darkening PLAYPAL to all black.
+// Could even us emore than 32 levels.
+// typedef pixel_t		lighttable_t;
+// XTODO  alias to alias
+//
+// ?
+//
+// A vissprite_t is a thing
+//  that will be drawn during a refresh.
+// I.e. a sprite object that is partly visible.
+//	
+// Sprites are patches with a special naming convention
+//  so they can be recognized by R_InitSprites.
+// The base name is NNNNFx or NNNNFxFx, with
+//  x indicating the rotation, x = 0, 1-7.
+// The sprite and frame specified by a thing_t
+//  is range checked at run time.
+// A sprite is a patch_t that is assumed to represent
+//  a three dimensional object and may have multiple
+//  rotations pre drawn.
+// Horizontal flipping is used to save space,
+//  thus NNNNF2F5 defines a mirrored patch.
+// Some sprites will only have one picture used
+// for all views: NNNNF0
+//
+//
+// A sprite definition:
+//  a number of animation frames.
+//
+//
+// Now what is a visplane, anyway?
+//
+//
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+//
+// Dehacked string replacements
+//
+// Used to do dehacked text substitutions throughout the program
+@[c: 'DEH_String']
 fn deh_string(s &i8) &i8
 
-[c: 'DEH_printf']
-[c2v_variadic]
+@[c: 'DEH_printf']
+@[c2v_variadic]
 fn deh_printf(fmt ...&i8)
 
-[c: 'DEH_Checksum']
+// Static macro versions of the functions above
+// #ifndef DEH_STR_H
+//
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+//
+// Dehacked entrypoint and common code
+//
+// These are the limits that dehacked uses (from dheinit.h in the dehacked
+// source).  If these limits are exceeded, it does not generate an error, but
+// a warning is displayed.
+@[c: 'DEH_Checksum']
 fn deh_checksum(digest &u8)
 
-[c: 'PlayerQuitGame']
-fn playerquitgame(player &Player_t) {
+// #ifndef DEH_MAIN_H
+//
+// Copyright(C) 1993-1996 Id Software, Inc.
+// Copyright(C) 2005-2014 Simon Howard
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// DESCRIPTION:
+//	DOOM Network game communication and protocol,
+//	all OS independend parts.
+//
+// XTODO
+// Called when a player leaves the game
+@[c: 'PlayerQuitGame']
+fn player_quit_game(player &Player_t) {
 	exitmsg := [80]i8{}
 	player_num := u32(0)
 	player_num = player - players
-	m_stringcopy(exitmsg, deh_string(c'Player 1 left the game'), sizeof(exitmsg))
+	// Do this the same way as Vanilla Doom does, to allow dehacked
+	// replacements of this message
+	m_string_copy(exitmsg, deh_string(c'Player 1 left the game'), sizeof(exitmsg))
 	exitmsg[7] += player_num
 	playeringame[player_num] = false
 	players[consoleplayer].message = exitmsg
+	// TODO: check if it is sensible to do this:
 	if demorecording {
-		g_checkdemostatus()
+		g_check_demo_status()
 	}
 }
 
-[weak]
-__global (
-	advancedemo bool
-)
-
-[c: 'RunTic']
-fn runtic(cmds &Ticcmd_t, ingame &bool) {
+// skipping global dup "advancedemo"
+@[c: 'RunTic']
+fn run_tic(cmds &Ticcmd_t, ingame &bool) {
 	i := u32(0)
+	// Check for player quits.
 	for i = 0; i < 4; i++ {
 		if !demoplayback && playeringame[i] && !ingame[i] {
-			playerquitgame(&players[i])
+			player_quit_game(&players[i])
 		}
 	}
 	netcmds = cmds
+	// check that there are players in the game.  if not, we cannot
+	// run a tic.
 	if advancedemo {
-		d_doadvancedemo()
+		d_do_advance_demo()
 	}
 	g_ticker()
 }
 
-//!
-[weak]
-__global (
-	doom_loop_interface = Loop_interface_t{d_processevents, g_buildticcmd, runtic, m_ticker}
-)
-
-[c: 'LoadGameSettings']
-fn loadgamesettings(settings &Net_gamesettings_t) {
+// Load game settings from the specified structure and
+// set global variables.
+@[c: 'LoadGameSettings']
+fn load_game_settings(settings &Net_gamesettings_t) {
 	i := u32(0)
 	deathmatch = settings.deathmatch
 	startepisode = settings.episode
@@ -2331,8 +1322,12 @@ fn loadgamesettings(settings &Net_gamesettings_t) {
 	}
 }
 
-[c: 'SaveGameSettings']
-fn savegamesettings(settings &Net_gamesettings_t) {
+// Save the game settings from global variables to the specified
+// game settings structure.
+@[c: 'SaveGameSettings']
+fn save_game_settings(settings &Net_gamesettings_t) {
+	// Fill in game settings structure with appropriate parameters
+	// for the new game
 	settings.deathmatch = deathmatch
 	settings.episode = startepisode
 	settings.map_ = startmap
@@ -2343,59 +1338,94 @@ fn savegamesettings(settings &Net_gamesettings_t) {
 	settings.fast_monsters = fastparm
 	settings.respawn_monsters = respawnparm
 	settings.timelimit = timelimit
-	settings.lowres_turn = (m_parmexists(c'-record') && !m_parmexists(c'-longtics'))
-		|| m_parmexists(c'-shorttics')
+	settings.lowres_turn = (m_parm_exists(c'-record') && !m_parm_exists(c'-longtics'))
+		|| m_parm_exists(c'-shorttics')
 }
 
-[c: 'InitConnectData']
-fn initconnectdata(connect_data &Net_connect_data_t) {
+@[c: 'InitConnectData']
+fn init_connect_data(connect_data &Net_connect_data_t) {
 	shorttics := false
 	connect_data.max_players = 4
 	connect_data.drone = false
-	if m_checkparm(c'-left') > 0 {
+	//!
+	// @category net
+	//
+	// Run as the left screen in three screen mode.
+	//
+	if m_check_parm(c'-left') > 0 {
 		viewangleoffset = 1073741824
 		connect_data.drone = true
 	}
-	if m_checkparm(c'-right') > 0 {
+	//!
+	// @category net
+	//
+	// Run as the right screen in three screen mode.
+	//
+	if m_check_parm(c'-right') > 0 {
 		viewangleoffset = 3221225472
 		connect_data.drone = true
 	}
+	//
+	// Connect data
+	//
+	// Game type fields:
 	connect_data.gamemode = gamemode
 	connect_data.gamemission = gamemission
-	shorttics = m_parmexists(c'-shorttics')
-	connect_data.lowres_turn = (m_parmexists(c'-record') && !m_parmexists(c'-longtics'))
+	//!
+	// @category demo
+	//
+	// Play with low turning resolution to emulate demo recording.
+	//
+	shorttics = m_parm_exists(c'-shorttics')
+	// Are we recording a demo? Possibly set lowres turn mode
+	connect_data.lowres_turn = (m_parm_exists(c'-record') && !m_parm_exists(c'-longtics'))
 		|| shorttics
+	// Read checksums of our WAD directory and dehacked information
 	w_checksum(connect_data.wad_sha1sum)
 	deh_checksum(connect_data.deh_sha1sum)
-	connect_data.is_freedoom = w_checknumforname(c'FREEDOOM') >= 0
+	// Are we playing with the Freedoom IWAD?
+	connect_data.is_freedoom = w_check_num_for_name(c'FREEDOOM') >= 0
 }
 
-[c: 'D_ConnectNetGame']
-fn d_connectnetgame() {
+@[c: 'D_ConnectNetGame']
+fn d_connect_net_game() {
 	connect_data := Net_connect_data_t{}
-	initconnectdata(&connect_data)
-	netgame = d_initnetgame(&connect_data)
-	if m_checkparm(c'-solo-net') > 0 {
+	init_connect_data(&connect_data)
+	netgame = d_init_net_game(&connect_data)
+	//!
+	// @category net
+	//
+	// Start the game playing as though in a netgame with a single
+	// player.  This can also be used to play back single player netgame
+	// demos.
+	//
+	if m_check_parm(c'-solo-net') > 0 {
 		netgame = true
 	}
 }
 
-[c: 'D_CheckNetGame']
-fn d_checknetgame() {
+//
+// D_CheckNetGame
+// Works out player numbers among the net participants
+//
+@[c: 'D_CheckNetGame']
+fn d_check_net_game() {
 	settings := Net_gamesettings_t{}
 	if netgame {
 		autostart = true
 	}
-	d_registerloopcallbacks(&doom_loop_interface)
-	savegamesettings(&settings)
-	d_startnetgame(&settings, (voidptr(0)))
-	loadgamesettings(&settings)
+	d_register_loop_callbacks(&doom_loop_interface)
+	save_game_settings(&settings)
+	d_start_net_game(&settings, (unsafe { nil }))
+	load_game_settings(&settings)
 	deh_printf(c'startskill %i  deathmatch: %i  startmap: %i  startepisode: %i\n', startskill,
 		deathmatch, startmap, startepisode)
 	deh_printf(c'player %i of %i (%i nodes)\n', consoleplayer + 1, settings.num_players,
 		settings.num_players)
+	// Show players here; the server might have specified a time limit
 	if timelimit > 0 && deathmatch {
-		if timelimit == 20 && m_checkparm(c'-avg') {
+		// Gross hack to work like Vanilla:
+		if timelimit == 20 && m_check_parm(c'-avg') {
 			deh_printf(c'Austin Virtual Gaming: Levels will end after 20 minutes\n')
 		} else {
 			deh_printf(c'Levels will end after %d minute', timelimit)
